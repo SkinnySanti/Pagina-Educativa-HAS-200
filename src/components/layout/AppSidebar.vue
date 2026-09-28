@@ -1,0 +1,114 @@
+<script setup>
+import { RouterLink } from 'vue-router'
+import AppIcon from '../common/AppIcon.vue'
+import LogoMark from '../common/LogoMark.vue'
+import { useI18n } from '../../i18n'
+
+defineProps({
+  collapsed: Boolean, // versión angosta (solo íconos), en escritorio
+  open: Boolean,      // cajón abierto, en móvil
+  inert: Boolean,     // cajón cerrado en móvil: que el teclado no llegue a él
+})
+const emit = defineEmits(['navigate'])
+const { t } = useI18n()
+
+// to: null = módulo aún no construido (se muestra deshabilitado).
+const items = [
+  { key: 'inicio', icon: 'home', to: '/' },
+  { key: 'guias', icon: 'book', to: null },
+  { key: 'examenes', icon: 'clipboard', to: null },
+  { key: 'feedback', icon: 'chat', to: null },
+]
+</script>
+
+<template>
+  <aside
+    id="sidebar"
+    class="sidebar"
+    :class="{ collapsed, open }"
+    :inert="inert ? '' : undefined"
+    :aria-label="t.nav.label"
+  >
+    <div class="brand">
+      <LogoMark />
+      <div class="brand-text"><b>HAS 200</b><span>Learning</span></div>
+    </div>
+
+    <ul class="nav">
+      <li v-for="item in items" :key="item.key">
+        <RouterLink
+          v-if="item.to"
+          :to="item.to"
+          class="nav-link"
+          :aria-label="t.nav[item.key]"
+          :title="collapsed ? t.nav[item.key] : undefined"
+          @click="emit('navigate')"
+        >
+          <AppIcon :name="item.icon" />
+          <span class="label">{{ t.nav[item.key] }}</span>
+        </RouterLink>
+
+        <span
+          v-else
+          class="nav-link is-disabled"
+          aria-disabled="true"
+          :title="t.nav.soonTitle"
+        >
+          <AppIcon :name="item.icon" />
+          <span class="text">
+            <span class="label">{{ t.nav[item.key] }}</span>
+            <span class="soon">{{ t.nav.soon }}</span>
+          </span>
+        </span>
+      </li>
+    </ul>
+  </aside>
+</template>
+
+<style scoped>
+.sidebar {
+  position: fixed; inset: 0 auto 0 0; z-index: 40;
+  width: var(--sidebar-w);
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transition: width 0.2s ease, transform 0.2s ease;
+}
+.sidebar.collapsed { width: var(--sidebar-w-collapsed); }
+
+.brand { display: flex; align-items: center; gap: 10px; padding: 0 21px; height: var(--header-h); flex: none; }
+.brand-text { line-height: 1.1; white-space: nowrap; }
+.brand-text b { display: block; font-size: 20px; font-weight: 700; color: var(--blue-900); }
+.brand-text span { display: block; font-size: 15px; font-weight: 600; color: var(--teal-600); }
+
+.nav { list-style: none; margin: 12px 0; }
+.nav-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 22px;
+  color: var(--ink-2); font-weight: 500; font-size: 15px;
+  text-decoration: none; white-space: nowrap;
+}
+.nav-link:hover:not(.is-disabled) { background: #f5f8fd; }
+.nav-link[aria-current='page'] {
+  background: var(--tint-blue); color: var(--blue-900);
+  box-shadow: inset 3px 0 0 var(--blue-900);
+}
+.nav-link svg { flex: none; }
+
+.is-disabled { opacity: 0.6; cursor: default; }
+.text { display: flex; flex-direction: column; line-height: 1.25; }
+.soon { font-size: 12px; font-weight: 600; color: var(--blue-900); }
+
+/* --- versión angosta (escritorio) --- */
+.collapsed .brand-text,
+.collapsed .label,
+.collapsed .text { display: none; }
+.collapsed .nav-link { justify-content: center; padding-inline: 0; }
+
+/* --- móvil: cajón que entra desde la izquierda --- */
+@media (max-width: 960px) {
+  .sidebar { width: var(--sidebar-w); transform: translateX(-100%); }
+  .sidebar.open { transform: none; box-shadow: 0 0 40px rgba(15, 25, 50, 0.3); }
+}
+</style>

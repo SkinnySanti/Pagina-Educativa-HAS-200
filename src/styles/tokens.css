@@ -1,0 +1,31 @@
+/* Tokens de diseño sacados del mockup del dashboard.
+   Si ajustas un color, cámbialo solo aquí. */
+:root {
+  --blue-900: #1b4f9c;
+  --teal-600: #0e9f8a;
+  --green-cta: #0b8564;        /* un poco más oscuro que el mockup: contraste AA con texto blanco */
+  --green-cta-hover: #097556;
+
+  --bg: #eef2f9;
+  --surface: #ffffff;
+  --ink: #1f2a44;
+  --ink-2: #55647f;
+  --line: #dce3ef;
+  --tint-blue: #e4edfb;
+  --tint-green: #ddf3ec;
+
+  --grad: linear-gradient(100deg, #1b4f9c 0%, #0e9f8a 100%);
+
+  --radius: 16px;
+  --radius-lg: 20px;
+  --radius-btn: 12px;
+  --shadow: 0 4px 16px rgba(20, 40, 80, 0.06);
+
+  --sidebar-w: 240px;
+  --sidebar-w-collapsed: 76px;
+  --header-h: 64px;
+  --subnav-h: 56px;
+
+  --focus: #1b4f9c;
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
