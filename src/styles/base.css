@@ -40,10 +40,10 @@ img { max-width: 100%; display: block; }
   display: inline-flex; align-items: center; justify-content: center;
   padding: 13px 22px; border-radius: var(--radius-btn);
   font-weight: 600; font-size: 15px; text-decoration: none; cursor: pointer;
-  border: 2px solid transparent; transition: background 0.15s;
+  border: 2px solid transparent; transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
 }
 .btn-primary { background: var(--green-cta); color: #fff; border-color: rgba(255, 255, 255, 0.55); }
-.btn-primary:hover { background: var(--green-cta-hover); }
+.btn-primary:hover { background: var(--green-cta-hover); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(11, 133, 100, 0.35); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

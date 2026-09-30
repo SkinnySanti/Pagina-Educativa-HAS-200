@@ -15,6 +15,11 @@ const paths = {
   image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-8 8"/>',
   'chevron-left': '<path d="m15 6-6 6 6 6"/>',
   'chevron-right': '<path d="m9 6 6 6-6 6"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z"/>',
+  sparkles: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><path d="m7 7 2 2M15 15l2 2M17 7l-2 2M9 15l-2 2"/><circle cx="12" cy="12" r="2.2"/>',
+  pencil: '<path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="m13.5 8 2.5 2.5"/>',
+  flag: '<path d="M5 21V4"/><path d="M5 4h13l-3 4 3 4H5"/>',
+  target: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/>',
 }
 </script>
 

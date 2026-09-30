@@ -48,10 +48,11 @@ const items = [
           <span class="label">{{ t.nav[item.key] }}</span>
         </RouterLink>
 
-        <span
+        <button
           v-else
+          type="button"
           class="nav-link is-disabled"
-          aria-disabled="true"
+          disabled
           :title="t.nav.soonTitle"
         >
           <AppIcon :name="item.icon" />
@@ -59,7 +60,7 @@ const items = [
             <span class="label">{{ t.nav[item.key] }}</span>
             <span class="soon">{{ t.nav.soon }}</span>
           </span>
-        </span>
+        </button>
       </li>
     </ul>
   </aside>
@@ -85,7 +86,8 @@ const items = [
 .nav { list-style: none; margin: 12px 0; }
 .nav-link {
   display: flex; align-items: center; gap: 12px;
-  padding: 13px 22px;
+  width: 100%; padding: 13px 22px;
+  background: none; border: 0; text-align: left;
   color: var(--ink-2); font-weight: 500; font-size: 15px;
   text-decoration: none; white-space: nowrap;
 }
@@ -96,7 +98,10 @@ const items = [
 }
 .nav-link svg { flex: none; }
 
-.is-disabled { opacity: 0.6; cursor: default; }
+/* Antes: opacity 0.6 en todo el ítem, lo que bajaba el contraste del texto
+   de 5.97:1 a 2.57:1 (falla WCAG AA). Ahora el color se queda igual de
+   legible; lo "deshabilitado" se comunica con la etiqueta "Pronto" y el cursor. */
+.is-disabled { cursor: not-allowed; }
 .text { display: flex; flex-direction: column; line-height: 1.25; }
 .soon { font-size: 12px; font-weight: 600; color: var(--blue-900); }
 

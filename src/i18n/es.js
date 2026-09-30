@@ -1,25 +1,4 @@
 // Textos en español. Reemplaza los placeholders por el contenido real del HAS-200.
-// La estructura de cada sección debe ser idéntica en es.js y en.js.
-
-const section = (letter) => ({
-  short: `Sección ${letter}`,
-  title: `Sección ${letter}: título pendiente`,
-  summary: 'Resumen de una o dos líneas de esta parte del sistema.',
-  components: [1, 2, 3, 4].map((n) => ({
-    name: `Componente ${n}`,
-    desc: 'Qué es y qué hace, en una frase.',
-  })),
-  mechanism: [
-    { term: 'Qué hace', text: 'Su función dentro del sistema.' },
-    { term: 'Cómo lo hace', text: 'El principio de funcionamiento, paso a paso y sin jerga.' },
-    { term: 'Con qué se conecta', text: 'Qué recibe de otras partes y qué les entrega.' },
-  ],
-  steps: [
-    { title: 'Entrada', text: 'Qué recibe esta parte.' },
-    { title: 'Proceso', text: 'Qué ocurre adentro.' },
-    { title: 'Salida', text: 'Qué entrega al resto del sistema.' },
-  ],
-})
 
 export default {
   brand: 'HAS 200 Learning',
@@ -39,45 +18,58 @@ export default {
   },
   hero: {
     title: 'Conoce el HAS-200',
-    text: 'Recorre el sistema completo, parte por parte: qué lo compone, cómo funciona cada mecanismo y cómo se integra todo.',
-    cta: 'Empezar el recorrido',
-    modelLabel: 'Modelo 3D del sistema completo',
+    text: 'Tu punto de partida antes del laboratorio: sigue tu ruta de aprendizaje, paso a paso.',
+    cta: 'Ver mi ruta de aprendizaje',
   },
-  subnav: {
-    label: 'Secciones de la página',
-    integration: 'Cómo se integran',
-    glossary: 'Glosario y preguntas',
+  welcome: {
+    badge: 'Inducción oficial del laboratorio',
+    title: '¡Te damos la bienvenida a HAS 200 Learning!',
+    text: 'Este espacio es tu inducción oficial antes de entrar al laboratorio: aquí aprendes a tu ritmo cómo funciona el HAS-200. Explora con calma, vuelve las veces que quieras y, cuando te sientas listo, pon a prueba lo aprendido.',
   },
-  tabs: {
-    detail: 'Detalle de la sección',
-    components: 'Componentes',
-    mechanism: 'Mecanismo',
-    operation: 'Funcionamiento',
-    carousel: 'Carrusel de componentes',
-    prev: 'Anterior',
-    next: 'Siguiente',
-  },
-  placeholders: {
-    image: 'Imagen pendiente',
-    model: 'Modelo 3D pendiente',
-    componentImage: 'Foto o render del componente',
-    mechanismImage: 'Esquema del mecanismo',
-    sectionModel: 'Vista 3D de esta parte',
-  },
-  sections: { a: section('A'), b: section('B'), c: section('C') },
-  integration: {
-    title: 'Cómo se integran las tres partes',
-    text: 'Una vista de todo el sistema: qué recibe y qué entrega cada parte.',
-    signal: 'señal',
-    caption: 'Reemplaza este esquema por el diagrama real: flujo de datos, energía o señales entre las partes.',
-    alt: 'Diagrama de integración: la sección A envía una señal a la sección B, y la B a la C.',
-  },
-  faq: {
-    title: 'Glosario y preguntas frecuentes',
-    items: [
-      { q: 'Término 1', a: 'Definición corta y clara, en lenguaje del estudiante.' },
-      { q: 'Término 2', a: 'Definición corta y clara, en lenguaje del estudiante.' },
-      { q: '¿Por dónde empiezo?', a: 'Recorre las secciones A, B y C en orden. Pronto podrás practicar con guías y exámenes.' },
+  overview: {
+    title: '¿Qué es esta página y para qué sirve?',
+    text: 'HAS 200 Learning es tu plataforma de preparación: conoces el sistema HAS-200, practicas con guías y compruebas lo aprendido antes de tu visita al laboratorio, como un sistema integrado y no solo por partes sueltas.',
+    goalsTitle: 'Al terminar podrás:',
+    goals: [
+      'Identificar los componentes principales del sistema.',
+      'Explicar el mecanismo de cada parte independiente.',
+      'Describir cómo funcionan e interactúan los subsistemas.',
     ],
+  },
+  path: {
+    title: 'Tu ruta de aprendizaje',
+    text: 'Tu mapa de navegación: cada tarjeta te lleva a un módulo. Sigue el orden para aprovecharlo mejor.',
+    diagnostic: {
+      badge: 'Paso 1 · Empieza aquí',
+      title: 'Evaluación diagnóstica',
+      text: 'Antes de las guías, responde una evaluación breve para conocer tu punto de partida.',
+      cta: 'Comenzar evaluación',
+    },
+    modules: [
+      {
+        title: 'Guías informativas',
+        bullets: ['Conoce los componentes y mecanismos del HAS-200.', 'Ejemplos cotidianos y datos curiosos.'],
+        cta: 'Entrar al módulo',
+      },
+      {
+        title: 'Guías con ejercicios',
+        bullets: ['Practica lo aprendido con actividades guiadas.', 'A tu propio ritmo, paso a paso.'],
+        cta: 'Entrar al módulo',
+      },
+      {
+        title: 'Dos exámenes finales',
+        bullets: ['Evalúa tu dominio del HAS-200.', 'Obtén tu puntaje al terminar cada uno.'],
+        cta: 'Entrar al módulo',
+      },
+    ],
+  },
+  bilingual: {
+    title: '¿Por qué importa el inglés aquí?',
+    text: 'Buena parte de los términos técnicos del HAS-200 vienen del inglés: por ejemplo, el "cerebro" de la máquina se llama PLC. Los conocerás a fondo, en los dos idiomas, en las guías.',
+  },
+  aiTutor: {
+    title: 'Un tutor de IA a tu disposición',
+    text: 'En el módulo Tutor de IA podrás resolver dudas sobre el HAS-200 y las guías cuando lo necesites, a tu propio ritmo, como si tuvieras un compañero de estudio disponible todo el tiempo.',
+    badge: 'Próximamente en tu menú',
   },
 }
