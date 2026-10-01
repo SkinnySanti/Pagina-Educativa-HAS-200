@@ -3,8 +3,10 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import AppSidebar from './components/layout/AppSidebar.vue'
 import AppTopbar from './components/layout/AppTopbar.vue'
 import { useI18n } from './i18n'
+import { useTheme } from './composables/useTheme'
 
 const { t } = useI18n()
+useTheme()
 
 /* ---------- Estado del menú lateral ----------
    Escritorio: se contrae a solo íconos (y se recuerda la preferencia).
@@ -84,7 +86,7 @@ function focusMain() {
 .shell.collapsed { margin-left: var(--sidebar-w-collapsed); }
 main:focus { outline: none; }
 
-.scrim { position: fixed; inset: 0; z-index: 35; background: rgba(15, 25, 50, 0.4); }
+.scrim { position: fixed; inset: 0; z-index: 35; background: var(--overlay); }
 
 @media (max-width: 960px) {
   .shell, .shell.collapsed { margin-left: 0; }

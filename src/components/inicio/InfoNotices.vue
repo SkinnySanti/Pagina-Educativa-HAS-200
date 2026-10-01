@@ -33,7 +33,7 @@ const { t } = useI18n()
   border-top: 4px solid transparent;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.notice:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(20, 40, 80, 0.12); }
+.notice:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
 .bilingual { border-top-color: var(--blue-900); }
 .tutor { border-top-color: var(--teal-600); }
 

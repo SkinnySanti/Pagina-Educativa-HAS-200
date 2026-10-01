@@ -18,6 +18,9 @@ export default {
   topbar: {
     toggleMenu: 'Mostrar u ocultar el menú',
     language: 'Idioma',
+    theme: 'Tema',
+    themeLight: 'Modo claro',
+    themeDark: 'Modo oscuro',
   },
   hero: {
     title: 'Conoce el HAS-200',

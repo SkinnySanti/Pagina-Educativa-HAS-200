@@ -10,11 +10,11 @@
 }
 .guia .btn-ghost:hover:not(:disabled) {
   color: var(--blue-900); border-color: var(--blue-900);
-  transform: translateY(-1px); box-shadow: 0 6px 16px rgba(20, 40, 80, 0.12);
+  transform: translateY(-1px); box-shadow: var(--shadow-card);
 }
-.guia .btn-danger { background: var(--danger); color: #fff; border-color: rgba(255, 255, 255, 0.55); font-weight: 700; }
+.guia .btn-danger { background: var(--danger); color: var(--on-cta); border-color: var(--on-grad-border); font-weight: 700; }
 .guia .btn-danger:hover:not(:disabled) {
-  background: var(--danger-hover); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(192, 57, 43, 0.35);
+  background: var(--danger-hover); transform: translateY(-1px); box-shadow: var(--shadow-danger);
 }
 
 /* chips de selección (ejemplos, industrias) */
@@ -26,10 +26,10 @@
   transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
 .g-chip svg { color: var(--blue-900); transition: color 0.2s ease, transform 0.25s ease; }
-.g-chip:hover { transform: translateY(-2px); border-color: var(--blue-900); box-shadow: 0 6px 14px rgba(20, 40, 80, 0.1); }
+.g-chip:hover { transform: translateY(-2px); border-color: var(--blue-900); box-shadow: var(--shadow-lift); }
 .g-chip:hover svg { transform: scale(1.12) rotate(-6deg); }
-.g-chip[aria-pressed='true'] { background: var(--blue-900); border-color: var(--blue-900); color: #fff; }
-.g-chip[aria-pressed='true'] svg { color: #fff; }
+.g-chip[aria-pressed='true'] { background: var(--blue-900); border-color: var(--blue-900); color: var(--on-accent); }
+.g-chip[aria-pressed='true'] svg { color: var(--on-accent); }
 
 /* cuadro de explicación ("say") */
 .g-say { background: var(--tint-blue); border-radius: 14px; padding: 14px 16px; font-size: 15px; min-height: 56px; }
@@ -49,13 +49,13 @@
 }
 button.g-tile { cursor: pointer; font-weight: 700; }
 .g-tile .g-ico {
-  width: 52px; height: 52px; border-radius: 14px; background: #fff; color: var(--ct);
+  width: 52px; height: 52px; border-radius: 14px; background: var(--surface-2); color: var(--ct);
   display: grid; place-items: center; transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
 }
-.g-tile:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(20, 40, 80, 0.12); }
-.g-tile:hover .g-ico { transform: scale(1.1) rotate(-6deg); background: var(--c); color: #fff; }
+.g-tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.g-tile:hover .g-ico { transform: scale(1.1) rotate(-6deg); background: var(--c); color: var(--on-cta); }
 .g-tile[aria-pressed='true'] { border-color: var(--c); }
-.g-tile[aria-pressed='true'] .g-ico { background: var(--c); color: #fff; }
+.g-tile[aria-pressed='true'] .g-ico { background: var(--c); color: var(--on-cta); }
 .g-tile small { font-size: 13px; font-weight: 700; }
 .g-tile .g-tx { font-size: 14px; color: var(--ink); font-weight: 500; line-height: 1.35; }
 

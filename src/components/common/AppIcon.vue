@@ -46,6 +46,8 @@ const paths = {
   spool: '<rect x="5" y="4" width="14" height="3" rx="1"/><rect x="5" y="17" width="14" height="3" rx="1"/><path d="M7 7v10M17 7v10M9 10l6 2M9 13l6 2"/>',
   grain: '<path d="M12 21V8"/><path d="M12 8c-2.5 0-4-1.5-4-4 2.5 0 4 1.5 4 4zM12 8c2.5 0 4-1.5 4-4-2.5 0-4 1.5-4 4z"/><path d="M12 14c-2.5 0-4-1.5-4-4 2.5 0 4 1.5 4 4zM12 14c2.5 0 4-1.5 4-4-2.5 0-4 1.5-4 4z"/>',
   target: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6.2 6.2 4.8 4.8M19.2 19.2l-1.4-1.4M6.2 17.8 4.8 19.2M19.2 4.8l-1.4 1.4"/>',
+  moon: '<path d="M20 14.6A8.2 8.2 0 0 1 9.4 4 7 7 0 1 0 20 14.6z"/>',
 }
 </script>
 

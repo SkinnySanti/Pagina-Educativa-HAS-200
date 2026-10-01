@@ -65,5 +65,5 @@ a {
   padding: 8px 16px; border-radius: 999px;
 }
 a:hover { border-color: var(--blue-900); color: var(--blue-900); }
-a[aria-current='true'] { background: var(--blue-900); border-color: var(--blue-900); color: #fff; }
+a[aria-current='true'] { background: var(--blue-900); border-color: var(--blue-900); color: var(--on-accent); }
 </style>

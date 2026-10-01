@@ -45,30 +45,30 @@ const chips = computed(() => spots.map((s, i) => ({ ...s, icon: props.icons[i] }
 .blob { position: absolute; border-radius: 50%; filter: blur(2px); }
 .b1 {
   width: 190px; height: 190px; top: 8%; left: 20%;
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--on-grad-soft);
 }
 .b2 {
   width: 130px; height: 130px; bottom: 4%; right: 12%;
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--on-grad-softer);
 }
 .ring {
   position: absolute; width: 220px; height: 220px; border-radius: 50%;
-  border: 2px dashed rgba(255, 255, 255, 0.35);
+  border: 2px dashed var(--on-grad-border);
 }
 
 .chip {
   position: absolute;
   width: 46px; height: 46px; border-radius: 14px;
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  color: #fff;
+  background: var(--on-grad-chip);
+  border: 1px solid var(--on-grad-border);
+  color: var(--on-grad);
   display: grid; place-items: center;
   animation: float 5s ease-in-out infinite;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 .chip:hover {
   transform: scale(1.18) !important;
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--on-grad-chip-hover);
   animation-play-state: paused;
 }
 @keyframes float {

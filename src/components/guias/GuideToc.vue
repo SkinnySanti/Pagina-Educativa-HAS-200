@@ -67,7 +67,7 @@ watch(
   position: sticky; top: calc(var(--header-h) + 16px); padding: 20px;
   transition: box-shadow 0.25s ease;
 }
-.toc:hover { box-shadow: 0 8px 22px rgba(20, 40, 80, 0.1); }
+.toc:hover { box-shadow: var(--shadow-lift); }
 h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
 .bar { height: 8px; border-radius: 9px; background: var(--line); overflow: hidden; margin-bottom: 8px; }
 .bar i { display: block; height: 100%; background: var(--grad); transition: width 0.4s ease; }
@@ -80,15 +80,15 @@ li button {
   background: none; border: 0; padding: 9px 8px; border-radius: 10px; cursor: pointer;
   font-size: 14px; color: var(--ink-2); line-height: 1.35; transition: background-color 0.15s ease, color 0.15s ease;
 }
-li button:hover { background: #f5f8fd; color: var(--blue-900); }
+li button:hover { background: var(--hover); color: var(--blue-900); }
 .d {
   flex: none; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line);
   display: grid; place-items: center; font-size: 11px; font-weight: 700; transition: transform 0.2s ease;
 }
 li button:hover .d { transform: scale(1.12); }
-li.done .d { background: var(--green-cta); border-color: var(--green-cta); color: #fff; }
+li.done .d { background: var(--green-cta); border-color: var(--green-cta); color: var(--on-cta); }
 li.on button { background: var(--tint-blue); color: var(--blue-900); font-weight: 600; box-shadow: inset 3px 0 0 var(--blue-900); }
-li.on .d { background: var(--blue-900); border-color: var(--blue-900); color: #fff; }
+li.on .d { background: var(--blue-900); border-color: var(--blue-900); color: var(--on-accent); }
 
 @media (max-width: 1040px) {
   .toc { position: static; }

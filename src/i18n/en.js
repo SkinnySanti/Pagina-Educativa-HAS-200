@@ -18,6 +18,9 @@ export default {
   topbar: {
     toggleMenu: 'Show or hide the menu',
     language: 'Language',
+    theme: 'Theme',
+    themeLight: 'Light mode',
+    themeDark: 'Dark mode',
   },
   hero: {
     title: 'Meet the HAS-200',

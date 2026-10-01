@@ -76,34 +76,34 @@ const guide = useGuideProgress()
   border-radius: var(--radius-lg);
   padding: 24px 28px;
   background: var(--grad);
-  color: #fff;
+  color: var(--on-grad);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .diagnostic:hover {
   transform: translateY(-3px);
-  box-shadow: 0 16px 32px rgba(15, 45, 90, 0.25);
+  box-shadow: var(--shadow-cta);
 }
 .diagnostic:hover .ico { transform: scale(1.08) rotate(-6deg); }
 .badge {
   display: inline-block; font-size: 12px; font-weight: 700;
-  background: rgba(255, 255, 255, 0.2); padding: 4px 12px; border-radius: 999px;
+  background: var(--on-grad-chip-strong); padding: 4px 12px; border-radius: 999px;
   margin-bottom: 14px;
 }
 .row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
 .diagnostic .ico {
   flex: none; width: 54px; height: 54px; border-radius: 14px;
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--on-grad-chip);
   display: grid; place-items: center;
   transition: transform 0.25s ease;
 }
 .diagnostic .copy { flex: 1 1 260px; }
 .diagnostic h3 { font-size: 20px; font-weight: 700; }
-.diagnostic p { margin-top: 4px; color: #eaf4ff; font-size: 14.5px; max-width: 60ch; }
+.diagnostic p { margin-top: 4px; color: var(--on-grad-muted); font-size: 14.5px; max-width: 60ch; }
 
 .cta {
   flex: none; display: inline-flex; align-items: center; gap: 8px;
   border: 0; font-size: 14px; font-weight: 700;
-  background: #fff; color: var(--blue-900);
+  background: var(--on-grad-cta); color: var(--brand);
   padding: 11px 18px; border-radius: 999px;
 }
 /* disabled real (no <span>): el navegador ya la salta del tab order.
@@ -115,10 +115,10 @@ const guide = useGuideProgress()
   background: var(--tint-blue); color: var(--blue-900); padding: 2px 8px; border-radius: 999px;
 }
 .cta.secondary { background: var(--tint-blue); color: var(--blue-900); font-size: 13.5px; padding: 9px 16px; }
-.cta.secondary em { background: #fff; }
+.cta.secondary em { background: var(--surface); }
 /* enlace real (módulo que ya existe): se comporta como los demás botones de Inicio */
 a.cta { text-decoration: none; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
-a.cta.secondary:hover { background: var(--blue-900); color: #fff; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(27, 79, 156, 0.3); }
+a.cta.secondary:hover { background: var(--blue-900); color: var(--on-accent); transform: translateY(-1px); box-shadow: var(--shadow-accent); }
 
 .prog { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 13px; font-weight: 600; color: var(--ink-teal); }
 .prog .bar { flex: 1; height: 6px; border-radius: 9px; background: var(--line); overflow: hidden; }
@@ -140,10 +140,10 @@ a.cta.secondary:hover { background: var(--blue-900); color: #fff; transform: tra
 }
 .mod:hover {
   transform: translateY(-4px);
-  box-shadow: 0 14px 28px rgba(20, 40, 80, 0.12);
+  box-shadow: var(--shadow-hover);
   border-color: var(--tint-blue);
 }
-.mod:hover .ico { background: var(--blue-900); color: #fff; transform: scale(1.08); }
+.mod:hover .ico { background: var(--blue-900); color: var(--on-accent); transform: scale(1.08); }
 .mod .ico {
   width: 46px; height: 46px; border-radius: 12px;
   background: var(--tint-blue); color: var(--blue-900);

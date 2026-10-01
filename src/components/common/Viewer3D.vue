@@ -58,13 +58,13 @@ model-viewer { min-height: 320px; background: var(--tint-blue); border-radius: 1
 }
 
 .hotspot {
-  background: #fff; border: 2px solid var(--teal-600); border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--teal-600); border-radius: 50%;
   width: 22px; height: 22px; padding: 0; cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-pin);
 }
 .hotspot-label {
   position: absolute; left: 30px; top: -6px; width: max-content; max-width: 200px;
-  background: #fff; color: var(--ink); font-size: 13px; text-align: left;
+  background: var(--surface); color: var(--ink); font-size: 13px; text-align: left;
   padding: 8px 10px; border-radius: 10px; box-shadow: var(--shadow);
   opacity: 0; pointer-events: none; transition: opacity 0.15s;
 }

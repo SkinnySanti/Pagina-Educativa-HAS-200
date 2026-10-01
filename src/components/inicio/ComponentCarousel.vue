@@ -49,7 +49,7 @@ function scroll(direction) {
 }
 .comp {
   flex: 0 0 min(240px, 78%); scroll-snap-align: start;
-  border: 1px solid var(--line); border-radius: 14px; padding: 12px; background: #fff;
+  border: 1px solid var(--line); border-radius: 14px; padding: 12px; background: var(--surface);
 }
 .comp img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; }
 .comp-ph { aspect-ratio: 4 / 3; height: auto; }
@@ -59,7 +59,7 @@ p { font-size: 14px; color: var(--ink-2); }
 .controls { display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px; }
 .controls button {
   width: 38px; height: 38px; border-radius: 50%;
-  border: 1px solid var(--line); background: #fff; color: var(--blue-900);
+  border: 1px solid var(--line); background: var(--surface); color: var(--blue-900);
   cursor: pointer; display: grid; place-items: center;
 }
 .controls button:hover { background: var(--tint-blue); }

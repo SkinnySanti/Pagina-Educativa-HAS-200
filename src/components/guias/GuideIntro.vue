@@ -17,7 +17,7 @@ const g = computed(() => t.value.guias.intro)
 
 <style scoped>
 .intro { padding: 22px 28px; display: grid; gap: 10px; border-left: 6px solid var(--teal-600); transition: box-shadow 0.25s ease; }
-.intro:hover { box-shadow: 0 8px 22px rgba(20, 40, 80, 0.1); }
+.intro:hover { box-shadow: var(--shadow-lift); }
 .hook { font-size: 19px; font-weight: 600; line-height: 1.4; }
 .rest { color: var(--ink-2); max-width: 75ch; }
 .rest :deep(b) { color: var(--ink); }

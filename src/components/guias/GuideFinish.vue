@@ -39,7 +39,7 @@ const g = computed(() => t.value.guias.finish)
 <style scoped>
 .done { padding: 34px 28px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .trophy {
-  width: 72px; height: 72px; border-radius: 20px; background: var(--grad); color: #fff;
+  width: 72px; height: 72px; border-radius: 20px; background: var(--grad); color: var(--on-grad);
   display: grid; place-items: center; transition: transform 0.25s ease;
 }
 .done:hover .trophy { transform: scale(1.08) rotate(-6deg); }

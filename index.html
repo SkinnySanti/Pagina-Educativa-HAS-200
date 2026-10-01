@@ -7,6 +7,24 @@
     <meta name="description" content="HAS 200 Learning: conoce el sistema HAS-200, sus componentes, mecanismos y subsistemas." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>HAS 200 Learning</title>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('has200-theme')
+          if (t !== 'light' && t !== 'dark') {
+            t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+          }
+          document.documentElement.setAttribute('data-theme', t)
+          document.documentElement.style.colorScheme = t
+          if (t === 'dark') {
+            var m = document.querySelector('meta[name="theme-color"]')
+            if (m) m.setAttribute('content', '#163a78')
+          }
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light')
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>

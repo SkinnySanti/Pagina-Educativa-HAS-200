@@ -1,18 +1,31 @@
-/* Tokens de diseño sacados del mockup del dashboard.
-   Si ajustas un color, cámbialo solo aquí. */
+/* Tokens de diseño. Los semánticos (--bg, --ink, --surface…) cambian con
+   data-theme. Los componentes nuevos deben usar estos nombres, no hex. */
 :root {
   --blue-900: #1b4f9c;
   --teal-600: #0e9f8a;
   --green-cta: #0b8564;        /* un poco más oscuro que el mockup: contraste AA con texto blanco */
   --green-cta-hover: #097556;
+  --brand: #1b4f9c;            /* azul de marca fijo (texto sobre blanco en el header) */
+  --brand-teal: #0e9f8a;
 
   --bg: #eef2f9;
   --surface: #ffffff;
+  --surface-2: #ffffff;
+  --hover: #f5f8fd;
   --ink: #1f2a44;
   --ink-2: #55647f;
   --line: #dce3ef;
   --tint-blue: #e4edfb;
   --tint-green: #ddf3ec;
+  --tint-muted: #e4e9f1;
+  --tint-muted-hover: #cfe0f5;
+  --welcome-line: #cfe0ee;
+  --ph-line: #9db3d6;
+  --danger-tint: #fdecea;
+  --track-fill: rgba(255, 255, 255, 0.8);
+  --dot: #9aa5b8;
+  --glass: rgba(255, 255, 255, 0.7);
+  --overlay: rgba(15, 25, 50, 0.4);
 
   /* Guías: colores con significado (entrada / proceso / salida). Siempre van con
      fondo tenue + texto oscuro, nunca texto blanco sobre el color claro (contraste AA). */
@@ -29,12 +42,42 @@
   --danger: #c0392b;
   --danger-hover: #a93226;
 
+  --on-accent: #ffffff;
+  --on-cta: #ffffff;
+  --on-grad: #ffffff;
+  --on-grad-muted: #eaf4ff;
+  --on-grad-chip: rgba(255, 255, 255, 0.16);
+  --on-grad-chip-strong: rgba(255, 255, 255, 0.2);
+  --on-grad-chip-hover: rgba(255, 255, 255, 0.28);
+  --on-grad-soft: rgba(255, 255, 255, 0.14);
+  --on-grad-softer: rgba(255, 255, 255, 0.12);
+  --on-grad-border: rgba(255, 255, 255, 0.35);
+  --on-grad-ring: rgba(255, 255, 255, 0.4);
+  --on-grad-cta: #ffffff;
+  --focus-on-dark: #ffffff;
+
   --grad: linear-gradient(100deg, #1b4f9c 0%, #0e9f8a 100%);
 
   --radius: 16px;
   --radius-lg: 20px;
   --radius-btn: 12px;
   --shadow: 0 4px 16px rgba(20, 40, 80, 0.06);
+  --shadow-hover: 0 14px 28px rgba(20, 40, 80, 0.12);
+  --shadow-lift: 0 8px 22px rgba(20, 40, 80, 0.1);
+  --shadow-cta: 0 16px 32px rgba(15, 45, 90, 0.25);
+  --shadow-primary: 0 6px 16px rgba(11, 133, 100, 0.35);
+  --shadow-accent: 0 6px 16px rgba(27, 79, 156, 0.3);
+  --shadow-danger: 0 6px 16px rgba(192, 57, 43, 0.35);
+  --shadow-overlay: 0 0 40px rgba(15, 25, 50, 0.3);
+  --shadow-pin: 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-card: 0 10px 22px rgba(20, 40, 80, 0.12);
+  --shadow-flip: drop-shadow(0 12px 18px rgba(20, 40, 80, 0.16));
+
+  --beacon-cap: #2b3a47;
+  --beacon-body: #37474f;
+  --lamp-r: #eb5757;
+  --lamp-y: #f2c94c;
+  --lamp-g: #27ae60;
 
   --sidebar-w: 240px;
   --sidebar-w-collapsed: 76px;
@@ -43,4 +86,59 @@
 
   --focus: #1b4f9c;
   --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+[data-theme='dark'] {
+  --blue-900: #8bb6ff;
+  --teal-600: #3dceb8;
+  --green-cta: #1aa37a;
+  --green-cta-hover: #15916c;
+
+  --bg: #0f1624;
+  --surface: #172033;
+  --surface-2: #1e2b44;
+  --hover: #1e2b44;
+  --ink: #e8eef8;
+  --ink-2: #a3b0c6;
+  --line: #2c3a54;
+  --tint-blue: #1a2744;
+  --tint-green: #14332e;
+  --tint-muted: #243044;
+  --tint-muted-hover: #2d3d58;
+  --welcome-line: #2a3d52;
+  --ph-line: #5a7194;
+  --danger-tint: #3a1e1c;
+  --track-fill: rgba(255, 255, 255, 0.12);
+  --dot: #6b7890;
+  --glass: rgba(15, 22, 36, 0.55);
+  --overlay: rgba(4, 8, 18, 0.62);
+
+  --in: #5a9ad4;
+  --pr: #e8a05c;
+  --out: #3ecf7a;
+  --tint-in: #1a283c;
+  --tint-pr: #2c2418;
+  --tint-out: #14281c;
+  --ink-in: #8bb6ff;
+  --ink-pr: #f0b07a;
+  --ink-out: #5dce8a;
+  --ink-teal: #4ecdb8;
+  --danger: #e85a4d;
+  --danger-hover: #f07064;
+
+  --on-accent: #0f1624;
+  --grad: linear-gradient(100deg, #163a78 0%, #0a7a6a 100%);
+
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 0 14px 28px rgba(0, 0, 0, 0.45);
+  --shadow-lift: 0 8px 22px rgba(0, 0, 0, 0.38);
+  --shadow-cta: 0 16px 32px rgba(0, 0, 0, 0.45);
+  --shadow-primary: 0 6px 16px rgba(26, 163, 122, 0.35);
+  --shadow-accent: 0 6px 16px rgba(139, 182, 255, 0.22);
+  --shadow-danger: 0 6px 16px rgba(232, 90, 77, 0.35);
+  --shadow-overlay: 0 0 40px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 10px 22px rgba(0, 0, 0, 0.4);
+  --shadow-flip: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.45));
+
+  --focus: #8bb6ff;
 }

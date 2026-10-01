@@ -29,7 +29,7 @@ defineProps({
   text-align: center;
   padding: 16px;
   border-radius: 12px;
-  border: 2px dashed #9db3d6;
+  border: 2px dashed var(--ph-line);
   background: linear-gradient(135deg, var(--tint-blue), var(--tint-green));
   color: var(--ink-2);
   font-size: 14px;
@@ -38,9 +38,9 @@ defineProps({
 .ph small { font-size: 12px; }
 
 .ph.dark {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.6);
-  color: #fff;
+  background: var(--on-grad-softer);
+  border-color: var(--on-grad-border);
+  color: var(--on-grad);
 }
-.ph.dark svg { color: #fff; }
+.ph.dark svg { color: var(--on-grad); }
 </style>

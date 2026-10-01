@@ -139,7 +139,7 @@ dd { margin: 2px 0 0; color: var(--ink-2); font-size: 15px; }
 .steps li::before {
   content: counter(step);
   display: grid; place-items: center; width: 28px; height: 28px; margin-bottom: 10px;
-  border-radius: 50%; background: var(--blue-900); color: #fff; font-weight: 700; font-size: 14px;
+  border-radius: 50%; background: var(--blue-900); color: var(--on-accent); font-weight: 700; font-size: 14px;
 }
 .steps h3 { font-size: 16px; margin-bottom: 4px; }
 .steps p { font-size: 14px; color: var(--ink-2); }

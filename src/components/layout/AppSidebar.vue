@@ -91,7 +91,7 @@ const items = [
   color: var(--ink-2); font-weight: 500; font-size: 15px;
   text-decoration: none; white-space: nowrap;
 }
-.nav-link:hover:not(.is-disabled) { background: #f5f8fd; }
+.nav-link:hover:not(.is-disabled) { background: var(--hover); }
 .nav-link[aria-current='page'] {
   background: var(--tint-blue); color: var(--blue-900);
   box-shadow: inset 3px 0 0 var(--blue-900);
@@ -114,6 +114,6 @@ const items = [
 /* --- móvil: cajón que entra desde la izquierda --- */
 @media (max-width: 960px) {
   .sidebar { width: var(--sidebar-w); transform: translateX(-100%); }
-  .sidebar.open { transform: none; box-shadow: 0 0 40px rgba(15, 25, 50, 0.3); }
+  .sidebar.open { transform: none; box-shadow: var(--shadow-overlay); }
 }
 </style>

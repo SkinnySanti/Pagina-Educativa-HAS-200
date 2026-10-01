@@ -26,13 +26,13 @@ const { t } = useI18n()
 
 <style scoped>
 .hero {
-  background: var(--grad); color: #fff;
+  background: var(--grad); color: var(--on-grad);
   border-radius: var(--radius-lg); padding: 40px;
   display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   gap: 32px; align-items: center;
 }
 h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
-p { margin-top: 14px; font-size: 17px; max-width: 46ch; color: #eaf4ff; }
+p { margin-top: 14px; font-size: 17px; max-width: 46ch; color: var(--on-grad-muted); }
 .actions { margin-top: 26px; }
 .media { min-height: 300px; display: flex; }
 

@@ -130,8 +130,8 @@ const answerName = (k) => (k === 's' ? quiz.value.sensor : quiz.value.actuator)
   font-size: 16px; font-weight: 700; cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
-.opt .g-ico { width: 42px; height: 42px; border-radius: 12px; background: #fff; display: grid; place-items: center; transition: transform 0.25s ease; }
-.opt:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(20, 40, 80, 0.12); border-color: var(--c); }
+.opt .g-ico { width: 42px; height: 42px; border-radius: 12px; background: var(--surface-2); display: grid; place-items: center; transition: transform 0.25s ease; }
+.opt:hover:not(:disabled) { transform: translateY(-3px); box-shadow: var(--shadow-card); border-color: var(--c); }
 .opt:hover:not(:disabled) .g-ico { transform: scale(1.1) rotate(-6deg); }
 .opt:disabled { cursor: default; }
 .opt.right { border-color: var(--out); box-shadow: 0 0 0 3px var(--tint-out); }
@@ -144,7 +144,7 @@ const answerName = (k) => (k === 's' ? quiz.value.sensor : quiz.value.actuator)
 .why { margin-top: 2px; font-size: 14px; color: var(--ink-2); }
 
 .result { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
-.trophy { width: 56px; height: 56px; border-radius: 16px; background: var(--grad); color: #fff; display: grid; place-items: center; }
+.trophy { width: 56px; height: 56px; border-radius: 16px; background: var(--grad); color: var(--on-grad); display: grid; place-items: center; }
 
 @media (max-width: 640px) { .duo, .opts { grid-template-columns: minmax(0, 1fr); } }
 </style>

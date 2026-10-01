@@ -127,7 +127,7 @@ const activeData = computed(() => activeLevel.value ? p.value.levels[activeLevel
 .level { cursor: pointer; outline: none; }
 .level polygon {
   fill: var(--blue-900);
-  stroke: #fff;
+  stroke: var(--bg);
   stroke-width: 2px;
   transform-origin: 50%;
   transform-box: fill-box;
@@ -138,7 +138,7 @@ const activeData = computed(() => activeLevel.value ? p.value.levels[activeLevel
 .level.active polygon { filter: brightness(1.08); transform: scale(1.035); }
 .level:focus-visible polygon { stroke: var(--blue-900); stroke-width: 3px; }
 .level text {
-  fill: #fff;
+  fill: var(--on-grad);
   paint-order: stroke;
   stroke: #0000002e;
   stroke-width: 3px;
@@ -148,7 +148,7 @@ const activeData = computed(() => activeLevel.value ? p.value.levels[activeLevel
 .level.muted polygon { fill: var(--tint-blue); stroke: var(--surface); }
 .level.muted text { fill: var(--ink-2); stroke: none; font-size: 12px; font-weight: 500; }
 .level.muted:hover polygon,
-.level.muted.active polygon { filter: none; fill: #cfe0f5; }
+.level.muted.active polygon { filter: none; fill: var(--tint-muted-hover); }
 
 .tooltip {
   position: absolute;
@@ -187,7 +187,7 @@ const activeData = computed(() => activeLevel.value ? p.value.levels[activeLevel
   font-size: 11px;
   font-weight: 700;
 }
-.tooltip .tag.out { color: var(--ink-2); background: #e4e9f1; }
+.tooltip .tag.out { color: var(--ink-2); background: var(--tint-muted); }
 .tooltip p { color: var(--ink-2); font-size: 13px; line-height: 1.4; margin: 4px 0 0; }
 
 .hint { text-align: center; font-style: italic; color: var(--ink-2); font-size: 13px; margin-top: 12px; }

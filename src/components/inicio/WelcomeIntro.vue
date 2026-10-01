@@ -43,13 +43,13 @@ const { t } = useI18n()
   display: flex; gap: 18px; align-items: flex-start;
   padding: 24px 28px; border-radius: var(--radius-lg);
   background: linear-gradient(135deg, var(--tint-blue), var(--tint-green));
-  border: 1px solid #cfe0ee; border-left: 6px solid var(--teal-600);
+  border: 1px solid var(--welcome-line); border-left: 6px solid var(--teal-600);
 }
 .portrait-slot { flex: none; }
 .badge {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 12px; font-weight: 700; letter-spacing: 0.02em;
-  color: var(--teal-600); background: rgba(255, 255, 255, 0.7);
+  color: var(--teal-600); background: var(--glass);
   padding: 3px 10px 3px 6px; border-radius: 999px; margin-bottom: 8px;
 }
 .badge-mark { width: 16px; height: 16px; }
@@ -64,7 +64,7 @@ const { t } = useI18n()
   padding: 24px 28px;
   transition: box-shadow 0.25s ease;
 }
-.box:hover { box-shadow: 0 8px 22px rgba(20, 40, 80, 0.1); }
+.box:hover { box-shadow: var(--shadow-lift); }
 .box h3 { font-size: 20px; font-weight: 700; line-height: 1.25; }
 .copy p { margin-top: 8px; color: var(--ink-2); }
 .box h4 { margin: 0; font-size: 14px; font-weight: 600; line-height: 1.25; color: var(--blue-900); }
@@ -73,7 +73,7 @@ const { t } = useI18n()
 .goals li { position: relative; padding-left: 24px; font-size: 14.5px; color: var(--ink-2); }
 .goals li::before {
   content: ''; position: absolute; left: 0; top: 0.45em; width: 12px; height: 12px;
-  border-radius: 50%; background: var(--teal-600); box-shadow: inset 0 0 0 3px #fff, 0 0 0 2px var(--teal-600);
+  border-radius: 50%; background: var(--teal-600); box-shadow: inset 0 0 0 3px var(--surface), 0 0 0 2px var(--teal-600);
 }
 
 @media (max-width: 960px) {

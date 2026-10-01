@@ -36,14 +36,14 @@ defineProps({
 
 <style scoped>
 .sec { padding: 26px 28px; transition: box-shadow 0.25s ease; }
-.sec:hover { box-shadow: 0 8px 22px rgba(20, 40, 80, 0.1); }
+.sec:hover { box-shadow: var(--shadow-lift); }
 .hd { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
 .num {
   flex: none; width: 42px; height: 42px; border-radius: 12px; background: var(--tint-blue); color: var(--blue-900);
   display: grid; place-items: center; font-weight: 700; font-size: 18px;
   transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
-.sec:hover .num { background: var(--blue-900); color: #fff; transform: scale(1.06); }
+.sec:hover .num { background: var(--blue-900); color: var(--on-accent); transform: scale(1.06); }
 h2 { font-size: 22px; font-weight: 700; line-height: 1.25; }
 h2:focus { outline: none; }
 .body { display: grid; gap: 10px; color: var(--ink-2); }
@@ -59,7 +59,7 @@ h2:focus { outline: none; }
   background: var(--tint-green); border-radius: 14px; padding: 14px 16px; font-size: 14.5px;
 }
 .ni {
-  flex: none; width: 34px; height: 34px; border-radius: 10px; background: #fff; color: var(--teal-600);
+  flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--surface-2); color: var(--teal-600);
   display: grid; place-items: center;
 }
 .note p { padding-top: 5px; }

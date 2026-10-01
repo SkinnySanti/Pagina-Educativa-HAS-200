@@ -23,7 +23,7 @@ const nodes = [
         <title id="diagram-alt">{{ t.integration.alt }}</title>
         <defs>
           <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 10 5 0 10z" fill="#0e9f8a" />
+            <path d="M0 0 10 5 0 10z" fill="var(--teal-600)" />
           </marker>
         </defs>
 

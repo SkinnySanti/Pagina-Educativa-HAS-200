@@ -48,7 +48,7 @@ const g = computed(() => t.value.guias.picker)
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .mod:hover:not(:disabled) {
-  transform: translateY(-4px); box-shadow: 0 14px 28px rgba(20, 40, 80, 0.12); border-color: var(--tint-blue);
+  transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--tint-blue);
 }
 .mod.active { border-color: var(--blue-900); }
 .mod.locked { cursor: not-allowed; }
@@ -56,7 +56,7 @@ const g = computed(() => t.value.guias.picker)
   flex: none; width: 46px; height: 46px; border-radius: 12px; background: var(--tint-blue); color: var(--blue-900);
   display: grid; place-items: center; transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
 }
-.mod:hover:not(:disabled) .ico, .mod.active .ico { background: var(--blue-900); color: #fff; }
+.mod:hover:not(:disabled) .ico, .mod.active .ico { background: var(--blue-900); color: var(--on-accent); }
 .mod:hover:not(:disabled) .ico { transform: scale(1.08); }
 .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .txt b { font-size: 17px; font-weight: 700; }
