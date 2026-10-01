@@ -1,6 +1,9 @@
 // Textos en español. Reemplaza los placeholders por el contenido real del HAS-200.
 
+import guias from './guias.es.js'
+
 export default {
+  guias,
   brand: 'HAS 200 Learning',
   skip: 'Saltar al contenido',
   nav: {
@@ -39,6 +42,9 @@ export default {
   path: {
     title: 'Tu ruta de aprendizaje',
     text: 'Tu mapa de navegación: cada tarjeta te lleva a un módulo. Sigue el orden para aprovecharlo mejor.',
+    progress: (n, total) => `${n} de ${total} pasos`,
+    continue: 'Continuar',
+    review: 'Repasar',
     diagnostic: {
       badge: 'Paso 1 · Empieza aquí',
       title: 'Evaluación diagnóstica',

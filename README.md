@@ -1,7 +1,8 @@
 # HAS 200 Learning — Frontend (Vue 3 + Vite)
 
-Módulo terminado en su alcance actual: **Inicio** (índice/dashboard educativo).
-Pendientes, en este orden sugerido: Guías → Exámenes → Retroalimentación.
+Módulos terminados en su alcance actual: **Inicio** (índice/dashboard educativo) y
+**Guías → Módulo 1 · Guía informativa** (6 pasos con retos interactivos, ES/EN).
+Pendientes, en este orden sugerido: Guías Módulo 2 → Exámenes → Retroalimentación.
 
 ## Requisitos
 - Node.js 20.19+ o 22+ (`node -v`)
@@ -51,15 +52,26 @@ Pendiente real: todo esto es frontend — no hay backend ni persistencia
 todavía, y Guías/Exámenes/Retroalimentación no están construidos (por eso
 sus botones dicen "Pronto").
 
+## Guías (Módulo 1)
+```
+views/GuiasView.vue              arma la página: migas, héroe, selector de módulos, pasos + índice
+components/guias/                GuideHero, ModulePicker, GuideToc, GuideStep (marco de cada paso),
+                                 GuideIntro, GuideFinish
+components/guias/steps/          Step1Flow … Step6Glossary (un archivo por paso)
+composables/useGuideProgress.js  avance guardado en el navegador; lo comparten Guías e Inicio
+i18n/guias.es.js, guias.en.js    TODOS los textos de Guías (misma estructura en los dos)
+styles/guias.css                 clases compartidas (.g-chip, .g-tile, botones…)
+```
+- Los textos aceptan **negrita** con `**así**` (componente `RichText`, sin `v-html`).
+- Los pasos guardan *estados* (no cadenas de texto), por eso al cambiar de idioma todo se traduce al instante.
+- El avance (pasos leídos) se guarda en `localStorage` (`has200-guias-progress`) y se refleja en la tarjeta de Inicio.
+- **Activar el Módulo 2:** en `ModulePicker.vue` pon `available: true` en `m2`, crea sus pasos y
+  muestra su contenido en `GuiasView.vue` según el módulo elegido. Luego habilita el botón de la
+  segunda tarjeta en `LearningPath.vue` (`links = ['/guias', '/guias?...', null]`).
+
 ## Cómo llenar el contenido real del HAS-200 (para el futuro módulo de Guías)
 1. **Textos:** edita `src/i18n/es.js` y `src/i18n/en.js` (títulos, componentes, mecanismo, pasos, glosario).
    Cada sección tiene la misma estructura en los dos archivos.
-2. **Imágenes:** copia el archivo (WebP, ~1600 px, idealmente < 200 KB) a `public/assets/has200/seccion-a/`
-   y en `src/data/sections.js` pon `img: { src: '/assets/has200/seccion-a/x.webp', alt: { es: '...', en: '...' } }`.
-3. **Modelo 3D:** copia el `.glb` (idealmente < 5 MB, comprimido con glTF-Transform) a `public/assets/has200/...`
-   y pon `model: '/assets/has200/seccion-a/parte.glb'`. Los hotspots se definen en el mismo archivo.
-   La librería `<model-viewer>` solo se descarga si hay al menos un modelo configurado.
-4. **Más o menos secciones:** agrega/quita entradas en `sections` (data) y en `sections` (i18n).
 
 ## Cómo agregar un módulo nuevo (ej. Guías)
 1. Crea `src/views/GuiasView.vue` (puedes reusar SectionNav/HasSection/etc., ver arriba).

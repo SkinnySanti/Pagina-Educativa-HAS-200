@@ -1,0 +1,67 @@
+/* Estilos compartidos de la página de Guías. Todo cuelga de .guia (raíz de
+   GuiasView) y las clases propias llevan prefijo g- para no chocar con Inicio.
+   Los valores (radios, sombras, hover) son los mismos de Inicio. */
+
+.guia .btn { gap: 8px; }
+.guia .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.guia .btn-ghost {
+  background: var(--surface); color: var(--ink-2); border-color: var(--line);
+}
+.guia .btn-ghost:hover:not(:disabled) {
+  color: var(--blue-900); border-color: var(--blue-900);
+  transform: translateY(-1px); box-shadow: 0 6px 16px rgba(20, 40, 80, 0.12);
+}
+.guia .btn-danger { background: var(--danger); color: #fff; border-color: rgba(255, 255, 255, 0.55); font-weight: 700; }
+.guia .btn-danger:hover:not(:disabled) {
+  background: var(--danger-hover); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(192, 57, 43, 0.35);
+}
+
+/* chips de selección (ejemplos, industrias) */
+.g-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.g-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 2px solid var(--line); background: var(--surface); color: var(--ink);
+  border-radius: 999px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+.g-chip svg { color: var(--blue-900); transition: color 0.2s ease, transform 0.25s ease; }
+.g-chip:hover { transform: translateY(-2px); border-color: var(--blue-900); box-shadow: 0 6px 14px rgba(20, 40, 80, 0.1); }
+.g-chip:hover svg { transform: scale(1.12) rotate(-6deg); }
+.g-chip[aria-pressed='true'] { background: var(--blue-900); border-color: var(--blue-900); color: #fff; }
+.g-chip[aria-pressed='true'] svg { color: #fff; }
+
+/* cuadro de explicación ("say") */
+.g-say { background: var(--tint-blue); border-radius: 14px; padding: 14px 16px; font-size: 15px; min-height: 56px; }
+.g-say b { color: var(--blue-900); }
+
+/* paleta semántica: entrada / proceso / salida (+ teal para la estación 2) */
+.g-in { --c: var(--in); --t: var(--tint-in); --ct: var(--ink-in); }
+.g-pr { --c: var(--pr); --t: var(--tint-pr); --ct: var(--ink-pr); }
+.g-out { --c: var(--out); --t: var(--tint-out); --ct: var(--ink-out); }
+.g-tl { --c: var(--teal-600); --t: var(--tint-green); --ct: var(--ink-teal); }
+
+/* bloque "ícono + etiqueta + texto" con hover como las tarjetas de Inicio */
+.g-tile {
+  border: 3px solid transparent; border-radius: 18px; background: var(--t); color: var(--ct);
+  display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+button.g-tile { cursor: pointer; font-weight: 700; }
+.g-tile .g-ico {
+  width: 52px; height: 52px; border-radius: 14px; background: #fff; color: var(--ct);
+  display: grid; place-items: center; transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+.g-tile:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(20, 40, 80, 0.12); }
+.g-tile:hover .g-ico { transform: scale(1.1) rotate(-6deg); background: var(--c); color: #fff; }
+.g-tile[aria-pressed='true'] { border-color: var(--c); }
+.g-tile[aria-pressed='true'] .g-ico { background: var(--c); color: #fff; }
+.g-tile small { font-size: 13px; font-weight: 700; }
+.g-tile .g-tx { font-size: 14px; color: var(--ink); font-weight: 500; line-height: 1.35; }
+
+.g-arrow { align-self: center; color: var(--ink-2); display: grid; place-items: center; }
+
+@media (max-width: 720px) {
+  .g-flow { grid-template-columns: minmax(0, 1fr) !important; }
+  .g-flow > .g-arrow { transform: rotate(90deg); }
+}

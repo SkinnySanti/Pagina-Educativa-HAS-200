@@ -15,7 +15,7 @@ const { t } = useI18n()
 // to: null = módulo aún no construido (se muestra deshabilitado).
 const items = [
   { key: 'inicio', icon: 'home', to: '/' },
-  { key: 'guias', icon: 'book', to: null },
+  { key: 'guias', icon: 'book', to: '/guias' },
   { key: 'examenes', icon: 'clipboard', to: null },
   { key: 'feedback', icon: 'chat', to: null },
 ]

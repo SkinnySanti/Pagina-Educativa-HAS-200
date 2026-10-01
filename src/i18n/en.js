@@ -1,6 +1,9 @@
 // English copy. Keep the exact same structure as es.js.
 
+import guias from './guias.en.js'
+
 export default {
+  guias,
   brand: 'HAS 200 Learning',
   skip: 'Skip to content',
   nav: {
@@ -39,6 +42,9 @@ export default {
   path: {
     title: 'Your learning path',
     text: 'Your navigation map: each card takes you to a module. Follow the order to get the most out of it.',
+    progress: (n, total) => `${n} of ${total} steps`,
+    continue: 'Continue',
+    review: 'Review',
     diagnostic: {
       badge: 'Step 1 · Start here',
       title: 'Diagnostic assessment',

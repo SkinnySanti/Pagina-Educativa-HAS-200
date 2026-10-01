@@ -1,9 +1,16 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 import AppIcon from '../common/AppIcon.vue'
+import { useGuideProgress } from '../../composables/useGuideProgress'
 import { useI18n } from '../../i18n'
 
 const { t } = useI18n()
 const icons = ['book', 'pencil', 'flag']
+
+// Cada tarjeta apunta a su módulo. null = todavía no existe (botón deshabilitado).
+const links = ['/guias', null, null]
+// Avance de la guía informativa (se comparte con la página de Guías).
+const guide = useGuideProgress()
 </script>
 
 <template>
@@ -38,7 +45,18 @@ const icons = ['book', 'pencil', 'flag']
         <ul class="bullets">
           <li v-for="b in m.bullets" :key="b">{{ b }}</li>
         </ul>
-        <button type="button" class="cta secondary" disabled :title="t.nav.soonTitle">
+
+        <template v-if="links[i]">
+          <p v-if="i === 0 && guide.count.value > 0" class="prog">
+            <span class="bar" aria-hidden="true"><i :style="{ width: `${(guide.count.value / guide.total) * 100}%` }"></i></span>
+            {{ t.path.progress(guide.count.value, guide.total) }}
+          </p>
+          <RouterLink :to="links[i]" class="cta secondary">
+            {{ i === 0 && guide.count.value > 0 ? (guide.complete.value ? t.path.review : t.path.continue) : m.cta }}
+            <AppIcon name="chevron-right" :size="16" />
+          </RouterLink>
+        </template>
+        <button v-else type="button" class="cta secondary" disabled :title="t.nav.soonTitle">
           {{ m.cta }} <em>{{ t.nav.soon }}</em>
         </button>
       </li>
@@ -98,6 +116,13 @@ const icons = ['book', 'pencil', 'flag']
 }
 .cta.secondary { background: var(--tint-blue); color: var(--blue-900); font-size: 13.5px; padding: 9px 16px; }
 .cta.secondary em { background: #fff; }
+/* enlace real (módulo que ya existe): se comporta como los demás botones de Inicio */
+a.cta { text-decoration: none; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
+a.cta.secondary:hover { background: var(--blue-900); color: #fff; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(27, 79, 156, 0.3); }
+
+.prog { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 13px; font-weight: 600; color: var(--ink-teal); }
+.prog .bar { flex: 1; height: 6px; border-radius: 9px; background: var(--line); overflow: hidden; }
+.prog .bar i { display: block; height: 100%; background: var(--grad); }
 
 .arrow-down {
   width: fit-content; margin: 6px auto;

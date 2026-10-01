@@ -1,16 +1,22 @@
 <script setup>
+import { computed } from 'vue'
 import AppIcon from '../common/AppIcon.vue'
 
 // Antes: un visor 3D placeholder ("Modelo 3D pendiente"). Se veía como algo
 // roto/sin terminar justo en la primera pantalla, y esa pieza técnica ya no
 // pertenece a Inicio (se movió a Guías). Esto es decorativo, no un pendiente:
 // no promete contenido que falta, así que no necesita una etiqueta "pendiente".
-const chips = [
-  { icon: 'target', top: '6%', left: '8%' },
-  { icon: 'book', top: '58%', left: '2%' },
-  { icon: 'pencil', top: '14%', left: '68%' },
-  { icon: 'flag', top: '64%', left: '70%' },
+const props = defineProps({
+  // Íconos de las 4 fichas flotantes. Por defecto, los de Inicio.
+  icons: { type: Array, default: () => ['target', 'book', 'pencil', 'flag'] },
+})
+const spots = [
+  { top: '6%', left: '8%' },
+  { top: '58%', left: '2%' },
+  { top: '14%', left: '68%' },
+  { top: '64%', left: '70%' },
 ]
+const chips = computed(() => spots.map((s, i) => ({ ...s, icon: props.icons[i] })))
 </script>
 
 <template>

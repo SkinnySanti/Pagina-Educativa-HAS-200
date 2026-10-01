@@ -14,6 +14,21 @@
   --tint-blue: #e4edfb;
   --tint-green: #ddf3ec;
 
+  /* Guías: colores con significado (entrada / proceso / salida). Siempre van con
+     fondo tenue + texto oscuro, nunca texto blanco sobre el color claro (contraste AA). */
+  --in: #3d7fc0;
+  --pr: #f39a4a;
+  --out: #27ae60;
+  --tint-in: #e8f0fa;
+  --tint-pr: #fdf1e6;
+  --tint-out: #e6f6ec;
+  --ink-in: #1b4f9c;
+  --ink-pr: #a8541a;
+  --ink-out: #16723d;
+  --ink-teal: #0a6f60;
+  --danger: #c0392b;
+  --danger-hover: #a93226;
+
   --grad: linear-gradient(100deg, #1b4f9c 0%, #0e9f8a 100%);
 
   --radius: 16px;
