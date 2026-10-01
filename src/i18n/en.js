@@ -1,4 +1,4 @@
-// English copy. Keep the exact same structure as es.js.
+// English copy.
 
 import guias from './guias.en.js'
 
@@ -68,6 +68,22 @@ export default {
         cta: 'Enter module',
       },
     ],
+  },
+  pyramid: {
+    title: 'Where does the HAS-200 fit?',
+    text: 'Industrial automation is organized into levels, from the plant floor to business management. These modules cover the first two: Field and Control, right where the HAS-200 operates.',
+    ariaLabel: 'Five-level automation pyramid. From bottom to top: Field, Control, SCADA, MES and ERP. This course covers Field and Control.',
+    inScope: 'Covered here',
+    outScope: 'Outside this course',
+    hint: '**Hover over or select each level to learn about it.**',
+    caption: 'Levels III to V (SCADA, MES, ERP) are outside the scope of this course.',
+    levels: {
+      field: { label: 'I · Field', inScope: true, desc: 'Where everything starts: sensors measure and actuators move or trigger something.' },
+      control: { label: 'II · Control', inScope: true, desc: 'The "brain" that decides what to do with those signals: a PLC, industrial PC or PID controllers.' },
+      scada: { label: 'III · SCADA', inScope: false, desc: 'Supervision screens: they show in real time what is happening on the plant floor.' },
+      mes: { label: 'IV · MES', inScope: false, desc: 'Manages production day by day: what was made, how much and with what quality.' },
+      erp: { label: 'V · ERP', inScope: false, desc: 'The company-wide system: inventory, purchasing, finance and more.' },
+    },
   },
   bilingual: {
     title: 'Why does English matter here?',

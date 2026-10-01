@@ -1,7 +1,7 @@
 <script setup>
 import HeroArt from './HeroArt.vue'
-import { scrollToId } from '../../utils/scroll'
-import { useI18n } from '../../i18n'
+import { scrollToId } from '../../utils/scroll.js'
+import { useI18n } from '../../i18n/index.js'
 
 const { t } = useI18n()
 </script>

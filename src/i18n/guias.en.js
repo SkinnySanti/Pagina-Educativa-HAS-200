@@ -92,8 +92,8 @@ export default {
     title: 'The “senses” and “hands” of the system',
     kicker: 'Mini challenge: sensor or actuator?',
     body: 'For a machine to work “on its own” it needs to notice what is happening and act on it. That is what sensors and actuators are for.',
-    sensor: { title: 'Sensor = the “eyes”', text: 'Detects light, presence or position. It is information that **enters** the system.' },
-    actuator: { title: 'Actuator = the “hands”', text: 'Pushes, moves or grips parts. It is an action that **leaves** the system.' },
+    sensor: { title: 'Sensor (the “eyes”)', text: 'Detects light, presence or position. It is information that **enters** the system.' },
+    actuator: { title: 'Actuator (the “hands”)', text: 'Pushes, moves or grips parts. It is an action that **leaves** the system.' },
     note: '**Think of it like this:** when the tap in a public restroom opens by itself, a sensor detects your hand (the “eyes”) and an actuator opens the valve (the “hands”). The HAS-200 uses this idea to work without moving each part by hand.',
     quiz: {
       progress: (n, total) => `Question ${n} of ${total}`,

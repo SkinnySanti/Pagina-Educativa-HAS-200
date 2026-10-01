@@ -1,7 +1,7 @@
 <script setup>
 import LogoMark from '../common/LogoMark.vue'
 import WelcomePortrait from '../common/WelcomePortrait.vue'
-import { useI18n } from '../../i18n'
+import { useI18n } from '../../i18n/index.js'
 
 const { t } = useI18n()
 </script>
@@ -21,13 +21,17 @@ const { t } = useI18n()
          la Ruta de aprendizaje de abajo: esta tarjeta no lo repite.
          Solo responde "¿para qué me sirve todo esto?". -->
     <article class="card box">
-      <h3>{{ t.overview.title }}</h3>
-      <p>{{ t.overview.text }}</p>
+      <div class="copy">
+        <h3>{{ t.overview.title }}</h3>
+        <p>{{ t.overview.text }}</p>
+      </div>
 
-      <h4>{{ t.overview.goalsTitle }}</h4>
-      <ul class="goals">
-        <li v-for="g in t.overview.goals" :key="g">{{ g }}</li>
-      </ul>
+      <div class="goals-col">
+        <h4>{{ t.overview.goalsTitle }}</h4>
+        <ul class="goals">
+          <li v-for="g in t.overview.goals" :key="g">{{ g }}</li>
+        </ul>
+      </div>
     </article>
   </section>
 </template>
@@ -53,15 +57,19 @@ const { t } = useI18n()
 .welcome p { margin-top: 6px; max-width: 70ch; }
 
 .box {
-  padding: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.9fr);
+  gap: 28px 40px;
+  align-items: start;
+  padding: 24px 28px;
   transition: box-shadow 0.25s ease;
 }
 .box:hover { box-shadow: 0 8px 22px rgba(20, 40, 80, 0.1); }
-.box h3 { font-size: 20px; font-weight: 700; }
-.box > p { margin-top: 8px; color: var(--ink-2); max-width: 80ch; }
-.box h4 { margin-top: 18px; font-size: 14px; font-weight: 600; color: var(--blue-900); }
+.box h3 { font-size: 20px; font-weight: 700; line-height: 1.25; }
+.copy p { margin-top: 8px; color: var(--ink-2); }
+.box h4 { margin: 0; font-size: 14px; font-weight: 600; line-height: 1.25; color: var(--blue-900); }
 
-.goals { list-style: none; margin-top: 10px; display: grid; gap: 10px; max-width: 70ch; }
+.goals { list-style: none; margin-top: 10px; display: grid; gap: 10px; }
 .goals li { position: relative; padding-left: 24px; font-size: 14.5px; color: var(--ink-2); }
 .goals li::before {
   content: ''; position: absolute; left: 0; top: 0.45em; width: 12px; height: 12px;
@@ -71,5 +79,6 @@ const { t } = useI18n()
 @media (max-width: 960px) {
   .welcome { padding: 20px; }
   .portrait-slot { width: 72px; height: auto; }
+  .box { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 20px; }
 }
 </style>

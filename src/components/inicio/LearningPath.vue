@@ -1,8 +1,8 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import AppIcon from '../common/AppIcon.vue'
-import { useGuideProgress } from '../../composables/useGuideProgress'
-import { useI18n } from '../../i18n'
+import { useGuideProgress } from '../../composables/useGuideProgress.js'
+import { useI18n } from '../../i18n/index.js'
 
 const { t } = useI18n()
 const icons = ['book', 'pencil', 'flag']

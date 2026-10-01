@@ -1,6 +1,7 @@
 <script setup>
 import HeroBanner from '../components/inicio/HeroBanner.vue'
 import WelcomeIntro from '../components/inicio/WelcomeIntro.vue'
+import HasPyramid from '../components/inicio/HasPyramid.vue'
 import LearningPath from '../components/inicio/LearningPath.vue'
 import InfoNotices from '../components/inicio/InfoNotices.vue'
 import RevealOnScroll from '../components/common/RevealOnScroll.vue'
@@ -15,6 +16,7 @@ import RevealOnScroll from '../components/common/RevealOnScroll.vue'
          solo los bloques que aparecen al hacer scroll. -->
     <HeroBanner />
     <RevealOnScroll><WelcomeIntro /></RevealOnScroll>
+    <RevealOnScroll><HasPyramid /></RevealOnScroll>
     <RevealOnScroll><LearningPath /></RevealOnScroll>
     <RevealOnScroll><InfoNotices /></RevealOnScroll>
   </div>

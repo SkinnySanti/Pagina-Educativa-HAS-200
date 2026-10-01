@@ -93,8 +93,8 @@ export default {
     title: 'Los “sentidos” y las “manos” del sistema',
     kicker: 'Mini reto: ¿sensor o actuador?',
     body: 'Para que una máquina funcione “sola” necesita darse cuenta de lo que pasa y actuar en consecuencia. De eso se encargan los sensores y los actuadores.',
-    sensor: { title: 'Sensor = los “ojos”', text: 'Detecta luz, presencia o posición. Es información que **entra** al sistema.' },
-    actuator: { title: 'Actuador = las “manos”', text: 'Empuja, mueve o sujeta piezas. Es una acción que **sale** del sistema.' },
+    sensor: { title: 'Sensor (los “ojos”)', text: 'Detecta luz, presencia o posición. Es información que **entra** al sistema.' },
+    actuator: { title: 'Actuador (las “manos”)', text: 'Empuja, mueve o sujeta piezas. Es una acción que **sale** del sistema.' },
     note: '**Piénsalo así:** cuando el grifo de un baño público abre solo, un sensor detecta tu mano (los “ojos”) y un actuador abre la válvula (las “manos”). El HAS-200 usa esta idea para funcionar sin mover cada pieza a mano.',
     quiz: {
       progress: (n, total) => `Pregunta ${n} de ${total}`,

@@ -1,4 +1,4 @@
-// Textos en español. Reemplaza los placeholders por el contenido real del HAS-200.
+// Textos en español.
 
 import guias from './guias.es.js'
 
@@ -68,6 +68,22 @@ export default {
         cta: 'Entrar al módulo',
       },
     ],
+  },
+  pyramid: {
+    title: '¿Dónde encaja el HAS-200?',
+    text: 'La automatización industrial se organiza en niveles, del piso de planta a la gestión del negocio. Estos módulos cubren los dos primeros: Campo y Control, justo donde vive el HAS-200.',
+    ariaLabel: 'Pirámide de automatización de 5 niveles. De abajo hacia arriba: Campo, Control, SCADA, MES y ERP. Este curso cubre Campo y Control.',
+    inScope: 'Lo verás aquí',
+    outScope: 'Fuera de este curso',
+    hint: '**Toca o pasa el cursor sobre cada nivel para conocerlo.**',
+    caption: 'Los niveles III a V (SCADA, MES, ERP) quedan fuera del alcance de este curso.',
+    levels: {
+      field: { label: 'I · Campo', inScope: true, desc: 'Donde todo empieza: sensores que miden y actuadores que mueven o accionan algo.' },
+      control: { label: 'II · Control', inScope: true, desc: 'El "cerebro" que decide qué hacer con esas señales: un PLC, un PC industrial o controladores PID.' },
+      scada: { label: 'III · SCADA', inScope: false, desc: 'Pantallas de supervisión: muestran en tiempo real qué está pasando en la planta.' },
+      mes: { label: 'IV · MES', inScope: false, desc: 'Gestiona la producción día a día: qué se fabricó, cuánto y con qué calidad.' },
+      erp: { label: 'V · ERP', inScope: false, desc: 'El sistema de toda la empresa: inventario, compras, finanzas y más.' },
+    },
   },
   bilingual: {
     title: '¿Por qué importa el inglés aquí?',
