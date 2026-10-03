@@ -1,3 +1,7 @@
 spring:
   application:
     name: Backend_HAS-200
+  profiles:
+    active: dev
+server:
+  port: 8080

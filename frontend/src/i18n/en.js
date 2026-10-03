@@ -75,11 +75,11 @@ export default {
   pyramid: {
     title: 'Where does the HAS-200 fit?',
     text: 'Industrial automation is organized into levels, from the plant floor to business management. These modules cover the first two: Field and Control, right where the HAS-200 operates.',
-    ariaLabel: 'Five-level automation pyramid. From bottom to top: Field, Control, SCADA, MES and ERP. This course covers Field and Control.',
+    ariaLabel: 'Five-level automation pyramid. From bottom to top: Field, Control, SCADA, MES and ERP. This version covers Field and Control.',
     inScope: 'Covered here',
-    outScope: 'Outside this course',
+    outScope: 'Outside this version',
     hint: '**Hover over or select each level to learn about it.**',
-    caption: 'Levels III to V (SCADA, MES, ERP) are outside the scope of this course.',
+    caption: 'Levels III to V (SCADA, MES, ERP) are outside the scope of this version.',
     levels: {
       field: { label: 'I · Field', inScope: true, desc: 'Where everything starts: sensors measure and actuators move or trigger something.' },
       control: { label: 'II · Control', inScope: true, desc: 'The "brain" that decides what to do with those signals: a PLC, industrial PC or PID controllers.' },

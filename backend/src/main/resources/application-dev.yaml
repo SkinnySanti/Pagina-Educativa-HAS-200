@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Backend_HAS-200
+  datasource:
+    url: jdbc:mysql://localhost:3306/has200_learning_db?serverTimezone=UTC&createDatabaseIfNotExists=true
+    username: santi
+    password: ${PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate #Se deshabilita porque Flyway será el encargado del DDL
+    show-sql: true
+  flyway:
+    enabled: true
