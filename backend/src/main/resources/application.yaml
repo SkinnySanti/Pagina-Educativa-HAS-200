@@ -3,5 +3,7 @@ spring:
     name: Backend_HAS-200
   profiles:
     active: dev
+  main:
+    banner-mode: off
 server:
   port: 8080
