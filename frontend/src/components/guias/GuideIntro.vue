@@ -3,8 +3,9 @@ import { computed } from 'vue'
 import RichText from '../common/RichText.vue'
 import { useI18n } from '../../i18n'
 
+const props = defineProps({ module: { type: String, default: 'm1' } })
 const { t } = useI18n()
-const g = computed(() => t.value.guias.intro)
+const g = computed(() => (props.module === 'm2' ? t.value.guias.m2.intro : t.value.guias.intro))
 </script>
 
 <template>

@@ -65,3 +65,12 @@ button.g-tile { cursor: pointer; font-weight: 700; }
   .g-flow { grid-template-columns: minmax(0, 1fr) !important; }
   .g-flow > .g-arrow { transform: rotate(90deg); }
 }
+
+/* retos del Módulo 2 */
+@keyframes g-shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.g-shake { animation: g-shake 0.35s ease; }
+@keyframes g-spin { to { transform: rotate(360deg); } }
+@keyframes g-blink { 50% { opacity: 0.25; } }
+@media (prefers-reduced-motion: reduce) {
+  .g-shake, .g-spin, .g-blink { animation: none !important; }
+}

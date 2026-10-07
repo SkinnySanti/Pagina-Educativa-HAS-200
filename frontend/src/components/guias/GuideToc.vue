@@ -7,11 +7,12 @@ const props = defineProps({
   current: { type: Number, required: true },
   seen: { type: Object, required: true }, // Set con los pasos leídos
   finished: Boolean,
+  steps: { type: Array, required: true }, // títulos de los pasos del módulo activo
 })
 const emit = defineEmits(['go'])
 const { t } = useI18n()
 const g = computed(() => t.value.guias)
-const total = computed(() => g.value.toc.steps.length)
+const total = computed(() => props.steps.length)
 const pct = computed(() => (props.seen.size / total.value) * 100)
 
 // En pantallas angostas la lista se desliza: se centra el paso actual.
@@ -48,7 +49,7 @@ watch(
     </p>
 
     <ol ref="list">
-      <li v-for="(title, i) in g.toc.steps" :key="i" :class="{ on: i === current && !finished, done: seen.has(i) }">
+      <li v-for="(title, i) in steps" :key="i" :class="{ on: i === current && !finished, done: seen.has(i) }">
         <button type="button" :aria-current="i === current && !finished ? 'step' : undefined" @click="emit('go', i)">
           <span class="d">
             <AppIcon v-if="seen.has(i)" name="check" :size="14" />

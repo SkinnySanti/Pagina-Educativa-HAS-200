@@ -2,17 +2,20 @@
 // **doble asterisco** = negrita (lo interpreta components/common/RichText.vue).
 // Módulo 1 = contenido de "Guia_Informativa_HAS200.docx".
 
+import m2 from './guias.m2.es.js'
+
 export default {
-  crumbs: { label: 'Ruta de navegación', home: 'Inicio', guides: 'Guías', module1: 'Módulo 1 · Guía informativa' },
+  crumbs: { label: 'Ruta de navegación', home: 'Inicio', guides: 'Guías', module1: 'Módulo 1 · Guía informativa', module2: 'Módulo 2 · Cómo piensa y se comunica' },
 
   picker: {
     label: 'Módulos de guías',
     here: 'Estás aquí',
     soon: 'Pronto',
+    open: 'Abrir',
     soonTitle: 'Disponible pronto',
     modules: [
       { title: 'Módulo 1 · Guía informativa', text: 'Conoce el HAS-200 antes de tu visita.' },
-      { title: 'Módulo 2 · Guía con ejercicios', text: 'Practica lo aprendido con actividades guiadas.' },
+      { title: 'Módulo 2 · Cómo piensa y se comunica', text: 'Del sensor a la pantalla: PLC, señales, red y SCADA.' },
     ],
   },
 
@@ -190,4 +193,6 @@ export default {
     home: 'Volver al Inicio',
     next: 'Módulo 2',
   },
+
+  m2,
 }

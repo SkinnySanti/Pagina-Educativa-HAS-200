@@ -1,17 +1,20 @@
 // Guides page copy (English). Same structure as guias.es.js.
 // **double asterisks** = bold (handled by components/common/RichText.vue).
 
+import m2 from './guias.m2.en.js'
+
 export default {
-  crumbs: { label: 'Breadcrumb', home: 'Home', guides: 'Guides', module1: 'Module 1 · Informative guide' },
+  crumbs: { label: 'Breadcrumb', home: 'Home', guides: 'Guides', module1: 'Module 1 · Informative guide', module2: 'Module 2 · How it thinks and communicates' },
 
   picker: {
     label: 'Guide modules',
     here: 'You are here',
     soon: 'Soon',
+    open: 'Open',
     soonTitle: 'Available soon',
     modules: [
       { title: 'Module 1 · Informative guide', text: 'Get to know the HAS-200 before your visit.' },
-      { title: 'Module 2 · Guide with exercises', text: 'Practice what you learned with guided activities.' },
+      { title: 'Module 2 · How it thinks and communicates', text: 'From the sensor to the screen: PLC, signals, network and SCADA.' },
     ],
   },
 
@@ -189,4 +192,6 @@ export default {
     home: 'Back to Home',
     next: 'Module 2',
   },
+
+  m2,
 }

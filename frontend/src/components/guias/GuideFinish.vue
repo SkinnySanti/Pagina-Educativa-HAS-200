@@ -4,9 +4,10 @@ import { RouterLink } from 'vue-router'
 import AppIcon from '../common/AppIcon.vue'
 import { useI18n } from '../../i18n'
 
-const emit = defineEmits(['review'])
+const props = defineProps({ module: { type: String, default: 'm1' } })
+const emit = defineEmits(['review', 'next'])
 const { t } = useI18n()
-const g = computed(() => t.value.guias.finish)
+const g = computed(() => (props.module === 'm2' ? t.value.guias.m2.finish : t.value.guias.finish))
 </script>
 
 <template>
@@ -29,7 +30,10 @@ const g = computed(() => t.value.guias.finish)
       <RouterLink to="/" class="btn btn-primary">
         <AppIcon name="home" :size="18" />{{ g.home }}
       </RouterLink>
-      <button type="button" class="btn btn-ghost" disabled :title="t.guias.picker.soonTitle">
+      <button v-if="module === 'm1'" type="button" class="btn btn-ghost" @click="emit('next')">
+        {{ g.next }}<AppIcon name="chevron-right" :size="18" />
+      </button>
+      <button v-else type="button" class="btn btn-ghost" disabled :title="t.guias.picker.soonTitle">
         <AppIcon name="lock" :size="18" />{{ g.next }} · {{ t.guias.picker.soon }}
       </button>
     </div>

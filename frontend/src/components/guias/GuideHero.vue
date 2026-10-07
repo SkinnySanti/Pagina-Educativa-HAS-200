@@ -3,8 +3,10 @@ import { computed } from 'vue'
 import HeroArt from '../inicio/HeroArt.vue'
 import { useI18n } from '../../i18n'
 
+const props = defineProps({ module: { type: String, default: 'm1' } })
 const { t } = useI18n()
-const g = computed(() => t.value.guias.hero)
+const g = computed(() => (props.module === 'm2' ? t.value.guias.m2.hero : t.value.guias.hero))
+const icons = computed(() => (props.module === 'm2' ? ['cpu', 'wave', 'network', 'monitor'] : ['inbox', 'gear', 'eye', 'box']))
 </script>
 
 <template>
@@ -17,7 +19,7 @@ const g = computed(() => t.value.guias.hero)
         <li v-for="c in g.chips" :key="c">{{ c }}</li>
       </ul>
     </div>
-    <div class="media"><HeroArt :icons="['inbox', 'gear', 'eye', 'box']" /></div>
+    <div class="media"><HeroArt :icons="icons" /></div>
   </section>
 </template>
 
