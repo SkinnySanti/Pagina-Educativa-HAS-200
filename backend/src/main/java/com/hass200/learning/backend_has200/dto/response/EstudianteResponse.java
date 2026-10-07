@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 
 public record EstudianteResponse(Long id, String correo, String alias, Instant creadoEn){
+    //Mapper de entity a dto
     public static EstudianteResponse from(Estudiante e){
         return new EstudianteResponse(e.getId(), e.getCorreo(), e.getAlias(), e.getCreadoEn());
     }

@@ -1,19 +1,20 @@
 package com.hass200.learning.backend_has200.service;
 
+import com.hass200.learning.backend_has200.auth.TokenRepository;
 import com.hass200.learning.backend_has200.dto.request.RegistroRequest;
 import com.hass200.learning.backend_has200.dto.response.EstudianteResponse;
 import com.hass200.learning.backend_has200.exceptions.ConflictoException;
+import com.hass200.learning.backend_has200.exceptions.NoAutenticadoException;
 import com.hass200.learning.backend_has200.models.Estudiante;
 import com.hass200.learning.backend_has200.repository.IEstudianteRepository;
-import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,12 +23,14 @@ import java.util.Locale;
 public class EstudianteService{
 
     private final IEstudianteRepository repository;
+    private final TokenRepository tokenRepository;
     private final PasswordEncoder encoder;
     private final Clock reloj;
 
     @Autowired
-    public EstudianteService(IEstudianteRepository repository, PasswordEncoder encoder, Clock reloj){
+    public EstudianteService(IEstudianteRepository repository, PasswordEncoder encoder, Clock reloj, TokenRepository tokenRepository){
         this.repository = repository;
+        this.tokenRepository = tokenRepository;
         this.encoder = encoder;
         this.reloj = reloj;
     }
@@ -65,4 +68,19 @@ public class EstudianteService{
         return EstudianteResponse.from(repository.save(nuevo));
     }
 
+    @Transactional(readOnly = true)
+    public EstudianteResponse perfil(Long id){
+        return repository.findById(id)
+                .map(EstudianteResponse::from)
+                .orElseThrow(()-> new NoAutenticadoException("Sesion invalida"));
+    }
+
+    /*SEGMENTO DE CÓDIGO PARA ELIMINAR CUENTA SI SE NECESITA
+    * MODIFICAR EL ENTITY PARA APLICAR UN SOFTDELETE Y MODIFICAR VARIABLE BOOLEANA*/
+//    @Transactional
+//    public void eliminar(Long id){
+//        log.info("Eliminando estudiante");
+//        tokenRepository.revocarTodosDelEstudiante(id,Instant.now(reloj));
+//        repository.deleteById(id);
+//    }
 }

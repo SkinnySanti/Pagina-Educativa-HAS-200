@@ -20,6 +20,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
 
+    //Excepciones de Autenticación
+    @ExceptionHandler(NoAutenticadoException.class)
+    ProblemDetail noAutenticado(NoAutenticadoException exception){
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, exception.getMessage());
+        problemDetail.setTitle("No autenticado");
+        return problemDetail;
+    }
+
     //Excepciones de Validation
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
