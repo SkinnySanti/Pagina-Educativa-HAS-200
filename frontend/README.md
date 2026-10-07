@@ -1,7 +1,8 @@
 # HAS 200 Learning — Frontend (Vue 3 + Vite)
 
 Módulos terminados en su alcance actual: **Inicio** (índice/dashboard educativo) y
-**Guías → Módulo 1 · Guía informativa** (6 pasos con retos interactivos, ES/EN).
+**Guías → Módulo 1 · Guía informativa** (6 pasos con retos interactivos, ES/EN), más el
+**Acceso** (login y registro), ya preparado para conectarse con el backend Spring (ver «Acceso»).
 Pendientes, en este orden sugerido: Guías Módulo 2 → Exámenes → Retroalimentación.
 
 ## Requisitos
@@ -48,7 +49,7 @@ hover en las tarjetas — todo respeta `prefers-reduced-motion` (ver
 no existe, así el teclado y los lectores de pantalla los saltan
 correctamente.
 
-Pendiente real: todo esto es frontend — no hay backend ni persistencia
+Pendiente real: todo esto es frontend (salvo el Acceso, que ya llama al backend; ver «Acceso») — no hay backend ni persistencia
 todavía, y Guías/Exámenes/Retroalimentación no están construidos (por eso
 sus botones dicen "Pronto").
 
@@ -80,6 +81,56 @@ styles/guias.css                 clases compartidas (.g-chip, .g-tile, botones�
    (deja de verse como "Pronto").
 4. En `LearningPath.vue`, quita `disabled` del botón correspondiente y dale una acción real
    (por ejemplo, navegar a la nueva ruta).
+
+## Acceso (login y registro) — conexión con el backend Spring
+Rutas `/login` y `/registro` (misma vista, `views/AuthView.vue`, sin menú lateral). En la barra superior
+aparece «Iniciar sesión»; con la sesión iniciada se ve el alias y «Cerrar sesión», y `/login` y
+`/registro` redirigen a Inicio. La política de datos se acepta **solo en el registro**.
+
+### ¿Qué archivo maneja la conexión con el backend?
+| Archivo | Para qué sirve |
+| --- | --- |
+| `src/config/api.js` | **Aquí se cambian la URL base, los endpoints y los nombres de campos de la respuesta.** |
+| `src/services/authService.js` | Hace las peticiones `fetch` (login y registro) y convierte los errores HTTP en mensajes. |
+| `src/composables/useAuth.js` | Guarda la sesión en el navegador (`localStorage`, clave `has200-auth`) y expone `authHeader()` para futuras peticiones protegidas. |
+
+### Valores que debes reemplazar por los reales
+| Qué | Dónde | Valor de ejemplo actual |
+| --- | --- | --- |
+| URL base del servidor | `.env` → `VITE_API_BASE_URL` (ver `.env.example`) | vacío (usa rutas relativas y el proxy) |
+| Endpoint de login | `src/config/api.js` → `AUTH_ENDPOINTS.login` | `/api/auth/login` |
+| Endpoint de registro | `src/config/api.js` → `AUTH_ENDPOINTS.register` | `/api/auth/register` |
+| Campos de la respuesta | `src/config/api.js` → `AUTH_RESPONSE_FIELDS` | `token`, `alias`, `email` |
+| Campos que se envían | `src/services/authService.js` (`login` y `register`) | `{ email, password }` y `{ email, alias, password }` |
+| Proxy de desarrollo | `vite.config.js` → `server.proxy` | `http://localhost:8080` |
+
+### Contrato que asume el frontend (ajústalo a lo que devuelva Spring)
+- `POST` login → `200` con `{ "token": "...", "alias": "...", "email": "..." }`.
+- `POST` registro → `200` o `201`, con o sin `token`. Con token inicia sesión; sin token manda al login con un aviso.
+- Errores: `401/403` = credenciales incorrectas · `409` = correo o alias ya existe · `400/422` = datos no válidos ·
+  otro código = error del servidor · sin respuesta = «no pudimos conectar con el servidor».
+
+### Cómo conectarlo
+1. Copia `.env.example` como `.env` y pon `VITE_AUTH_MOCK=false`.
+2. Edita los endpoints en `src/config/api.js` (y los campos en `authService.js` si tu DTO usa otros nombres).
+3. En desarrollo, `npm run dev` reenvía `/api/*` a Spring con el proxy, así que no necesitas CORS. Si Spring corre en otro puerto, cámbialo en `vite.config.js`.
+4. En producción, define `VITE_API_BASE_URL` (ej. `https://api.midominio.com`) **antes** de `npm run build` y habilita CORS en Spring para el dominio del frontend.
+- `VITE_AUTH_MOCK=true` simula login y registro sin backend (útil mientras Spring no esté listo).
+
+### Notas
+- El token se guarda en `localStorage` (accesible desde JavaScript). Si Spring usará una cookie de sesión `HttpOnly`, agrega `credentials: 'include'` en `post()` de `authService.js` y permite credenciales en el CORS de Spring.
+- Las reglas de alias y contraseña están en `src/utils/validators.js`: deben coincidir con las validaciones de Spring.
+- Los textos están en `src/i18n/auth.es.js` y `auth.en.js`. El texto de la política (`policy.text`) sigue pendiente.
+
+```
+views/AuthView.vue                  pestañas Iniciar sesión / Registrarse y recuadro de color que se desliza
+components/auth/LoginForm.vue       formulario de login
+components/auth/RegisterForm.vue    formulario de registro (con la casilla de la política)
+components/auth/AuthField.vue       campo con ícono, ayuda, error y ver/ocultar contraseña
+components/auth/PolicyDialog.vue    ventana con la política de datos
+composables/useFormFields.js        estado y validación de los formularios
+styles/auth.css                     estilos del Acceso (--form-w y --auth-min-h controlan ancho y alto)
+```
 
 ## Accesibilidad incluida
 Enlace "Saltar al contenido", pestañas con teclado (← → Inicio Fin), foco visible,

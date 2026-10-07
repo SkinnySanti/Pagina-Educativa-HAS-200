@@ -1,9 +1,11 @@
 // Textos en español.
 
 import guias from './guias.es.js'
+import auth from './auth.es.js'
 
 export default {
   guias,
+  auth,
   brand: 'HAS 200 Learning',
   skip: 'Saltar al contenido',
   nav: {

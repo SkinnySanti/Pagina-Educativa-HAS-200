@@ -1,5 +1,6 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import AppSidebar from './components/layout/AppSidebar.vue'
 import AppTopbar from './components/layout/AppTopbar.vue'
 import { useI18n } from './i18n'
@@ -7,6 +8,10 @@ import { useTheme } from './composables/useTheme'
 
 const { t } = useI18n()
 useTheme()
+
+// Login y registro se ven sin menú lateral (ver router: meta.layout = 'auth').
+const route = useRoute()
+const isAuth = computed(() => route.meta.layout === 'auth')
 
 /* ---------- Estado del menú lateral ----------
    Escritorio: se contrae a solo íconos (y se recuerda la preferencia).
@@ -43,6 +48,7 @@ function toggleSidebar() {
 }
 
 const closeMobile = () => (mobileOpen.value = false)
+watch(isAuth, (v) => v && closeMobile())
 const onMediaChange = (e) => {
   isMobile.value = e.matches
   if (!e.matches) mobileOpen.value = false
@@ -70,11 +76,11 @@ function focusMain() {
 <template>
   <a class="skip-link" href="#contenido" @click.prevent="focusMain">{{ t.skip }}</a>
 
-  <AppSidebar :collapsed="collapsedNow" :open="mobileOpen" :inert="sidebarInert" @navigate="closeMobile" />
-  <div v-if="mobileOpen" class="scrim" aria-hidden="true" @click="closeMobile" />
+  <AppSidebar v-if="!isAuth" :collapsed="collapsedNow" :open="mobileOpen" :inert="sidebarInert" @navigate="closeMobile" />
+  <div v-if="mobileOpen && !isAuth" class="scrim" aria-hidden="true" @click="closeMobile" />
 
-  <div class="shell" :class="{ collapsed: collapsedNow }">
-    <AppTopbar :expanded="menuExpanded" @toggle-sidebar="toggleSidebar" />
+  <div class="shell" :class="{ collapsed: collapsedNow && !isAuth, noside: isAuth }">
+    <AppTopbar :expanded="menuExpanded" :auth="isAuth" @toggle-sidebar="toggleSidebar" />
     <main id="contenido" tabindex="-1">
       <RouterView />
     </main>
@@ -84,6 +90,7 @@ function focusMain() {
 <style scoped>
 .shell { margin-left: var(--sidebar-w); transition: margin-left 0.2s ease; }
 .shell.collapsed { margin-left: var(--sidebar-w-collapsed); }
+.shell.noside { margin-left: 0; }
 main:focus { outline: none; }
 
 .scrim { position: fixed; inset: 0; z-index: 35; background: var(--overlay); }

@@ -1,0 +1,142 @@
+/* Pantalla de acceso (login / registro). Sin menú lateral: ver App.vue. */
+.auth-page {
+  --form-w: 560px;      /* ancho común de pestañas, login y registro: así el texto queda alineado igual en ambos */
+  --auth-min-h: 800px;  /* alto mínimo fijo en escritorio: el recuadro de color no cambia de alto al cambiar de pestaña */
+  padding: 24px 28px; max-width: 1240px; margin: 0 auto;
+}
+.auth {
+  position: relative; overflow: hidden; width: 100%; max-width: 1180px; margin: 0 auto;
+  min-height: max(calc(100vh - var(--header-h) - 48px), var(--auth-min-h));
+  background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-lift);
+}
+
+/* Recuadro de color: se desliza entre izquierda (login) y derecha (registro) */
+.aside {
+  position: absolute; top: 0; bottom: 0; left: 0; width: 40%; z-index: 2; overflow: hidden;
+  background: var(--grad); color: var(--on-grad); padding: 40px 34px;
+  display: flex; flex-direction: column; justify-content: center; gap: 18px;
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.aside > * { position: relative; }
+.aside h1 { font-size: clamp(24px, 3vw, 32px); font-weight: 700; line-height: 1.2; }
+.aside p { color: var(--on-grad-muted); }
+.aside ul { list-style: none; display: grid; gap: 12px; margin-top: 6px; }
+.aside li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+.aside .ck {
+  flex: none; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--on-grad-chip); display: grid; place-items: center;
+}
+.aside .mark { position: absolute; right: -30px; bottom: -30px; opacity: 0.12; pointer-events: none; }
+.aside .mark svg { width: 260px; height: 260px; }
+.aside .mark svg rect { fill: #fff; }
+
+.panel {
+  width: 60%; padding: 28px 44px 32px; display: flex; flex-direction: column; min-height: inherit;
+  transform: translateX(66.6667%);
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.auth.reg .panel { transform: none; }
+.auth.reg .aside { transform: translateX(150%); }
+
+.tabs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+  background: var(--bg); border-radius: 999px; padding: 4px; margin: 0 auto 20px;
+  width: 100%; max-width: var(--form-w);
+}
+.tabs button {
+  border: 0; background: none; color: var(--ink-2); font-weight: 600; font-size: 14.5px;
+  padding: 10px 14px; border-radius: 999px; cursor: pointer;
+}
+.tabs button[aria-selected='true'] { background: var(--surface); color: var(--blue-900); box-shadow: var(--shadow); }
+
+.tabpanel { flex: 1; display: flex; flex-direction: column; }
+
+/* Formularios: mismo ancho y misma alineación en login y registro */
+.auth-form {
+  flex: 1; display: grid; gap: 16px; align-content: center;
+  width: 100%; max-width: var(--form-w); margin-inline: auto;
+}
+.auth-form.is-register {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 18px;
+  align-items: start; /* cada campo se queda arriba de su fila: Contraseña y Confirmar contraseña quedan alineadas */
+}
+.auth-form .full { grid-column: 1 / -1; }
+.form-title { font-size: 22px; font-weight: 700; line-height: 1.25; }
+.form-sub { color: var(--ink-2); font-size: 14.5px; margin-top: -8px; }
+
+/* Campos */
+.field { display: grid; gap: 6px; align-content: start; }
+.field label { font-size: 14px; font-weight: 600; }
+.input { position: relative; }
+.input input {
+  width: 100%; padding: 12px 44px 12px 42px;
+  border: 1.5px solid var(--line); border-radius: var(--radius-btn);
+  background: var(--surface-2); color: var(--ink); font: inherit; font-size: 15px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input.has-eye input { padding-right: 80px; }
+.input input::placeholder { color: var(--ink-2); opacity: 0.7; }
+.input input:focus {
+  outline: none; border-color: var(--focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 25%, transparent);
+}
+.input .lead {
+  position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+  color: var(--ink-2); pointer-events: none; display: grid;
+}
+.input .trail { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 2px; }
+.input .trail button {
+  background: none; border: 0; color: var(--ink-2); cursor: pointer;
+  padding: 7px; border-radius: 8px; display: grid;
+}
+.input .trail button:hover { background: var(--hover); color: var(--ink); }
+.input .ok { color: var(--ink-out); display: none; padding: 7px; }
+.field.invalid input { border-color: var(--danger); }
+.field.valid input { border-color: var(--out); }
+.field.valid .ok { display: grid; }
+.err { color: var(--danger); font-size: 13px; font-weight: 500; display: flex; gap: 6px; align-items: center; }
+.err svg { flex: none; }
+.hint { font-size: 12.5px; color: var(--ink-2); }
+
+/* Casilla de la política (solo en el registro) */
+.check { display: flex; font-size: 14px; color: var(--ink-2); }
+.check label { position: relative; display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.check input { position: absolute; opacity: 0; width: 20px; height: 20px; margin: 0; }
+.check .box {
+  flex: none; width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid var(--ink-2);
+  display: grid; place-items: center; color: transparent; background: var(--surface-2);
+  margin-top: 1px; transition: background 0.15s;
+}
+.check input:checked + .box { background: var(--green-cta); border-color: var(--green-cta); color: #fff; }
+.check input:focus-visible + .box { outline: 3px solid var(--focus); outline-offset: 2px; }
+.check.invalid .box { border-color: var(--danger); }
+
+.linklike {
+  background: none; border: 0; padding: 0; color: var(--blue-900); font: inherit; font-weight: 600;
+  text-decoration: underline; cursor: pointer;
+  display: inline; text-align: left; /* si el texto es largo, se parte de forma natural junto al resto de la frase */
+}
+.submit { width: 100%; margin-top: 4px; }
+.submit:disabled { opacity: 0.7; cursor: progress; transform: none; box-shadow: none; }
+.status {
+  background: var(--tint-green); color: var(--ink); border-left: 4px solid var(--teal-600);
+  border-radius: 10px; padding: 12px 14px; font-size: 13.5px;
+}
+.status.error { background: var(--danger-tint); border-left-color: var(--danger); }
+.switch { text-align: center; font-size: 14px; color: var(--ink-2); }
+
+/* Cambio de formulario: el actual se desvanece y entra el otro */
+.authform-leave-active { transition: opacity 0.18s ease, transform 0.18s ease; }
+.authform-leave-to { opacity: 0; transform: translateY(8px); }
+.authform-enter-active { animation: authFormIn 0.4s ease both; }
+@keyframes authFormIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 960px) {
+  .auth-page { padding: 16px; }
+  .auth { min-height: 0; }
+  .aside { position: relative; width: auto; padding: 26px 24px; transform: none !important; }
+  .aside ul, .aside .mark { display: none; }
+  .panel { width: auto; padding: 24px 20px; transform: none !important; min-height: 0; }
+  .auth-form.is-register { grid-template-columns: minmax(0, 1fr); }
+}
