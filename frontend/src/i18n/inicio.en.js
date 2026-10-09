@@ -2,10 +2,12 @@
 
 import guias from './guias.en.js'
 import auth from './auth.en.js'
+import examenes from './examenes.en.js'
 
 export default {
   guias,
   auth,
+  examenes,
   brand: 'HAS 200 Learning',
   skip: 'Skip to content',
   nav: {

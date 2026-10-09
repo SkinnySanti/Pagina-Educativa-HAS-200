@@ -2,10 +2,6 @@
 import { computed } from 'vue'
 import AppIcon from '../common/AppIcon.vue'
 
-// Antes: un visor 3D placeholder ("Modelo 3D pendiente"). Se veía como algo
-// roto/sin terminar justo en la primera pantalla, y esa pieza técnica ya no
-// pertenece a Inicio (se movió a Guías). Esto es decorativo, no un pendiente:
-// no promete contenido que falta, así que no necesita una etiqueta "pendiente".
 const props = defineProps({
   // Íconos de las 4 fichas flotantes. Por defecto, los de Inicio.
   icons: { type: Array, default: () => ['target', 'book', 'pencil', 'flag'] },

@@ -8,7 +8,7 @@ const { t } = useI18n()
 const icons = ['book', 'pencil', 'flag']
 
 // Cada tarjeta apunta a su módulo. null = todavía no existe (botón deshabilitado).
-const links = ['/guias', null, null]
+const links = ['/guias', null, '/examenes']
 // Avance de la guía informativa (se comparte con la página de Guías).
 const guide = useGuideProgress()
 </script>
@@ -29,9 +29,9 @@ const guide = useGuideProgress()
           <h3>{{ t.path.diagnostic.title }}</h3>
           <p>{{ t.path.diagnostic.text }}</p>
         </div>
-        <button type="button" class="cta" disabled :title="t.nav.soonTitle">
-          {{ t.path.diagnostic.cta }} <em>{{ t.nav.soon }}</em>
-        </button>
+        <RouterLink to="/examenes" class="cta">
+          {{ t.path.diagnostic.cta }} <AppIcon name="chevron-right" :size="16" />
+        </RouterLink>
       </div>
     </article>
 
@@ -118,6 +118,7 @@ const guide = useGuideProgress()
 .cta.secondary em { background: var(--surface); }
 /* enlace real (módulo que ya existe): se comporta como los demás botones de Inicio */
 a.cta { text-decoration: none; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
+a.cta:hover { transform: translateY(-1px); }
 a.cta.secondary:hover { background: var(--blue-900); color: var(--on-accent); transform: translateY(-1px); box-shadow: var(--shadow-accent); }
 
 .prog { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 13px; font-weight: 600; color: var(--ink-teal); }

@@ -1,0 +1,19 @@
+/* Estilos compartidos de la página de Exámenes. Todo cuelga de .examenes (raíz de ExamenesView)
+   y las clases propias llevan prefijo ex- para no chocar con Inicio ni Guías.
+   Los valores (radios, sombras, hover) son los mismos de Inicio y Guías. */
+
+.examenes .btn { gap: 8px; }
+.examenes .btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+.examenes .btn-ghost { background: var(--surface); color: var(--ink-2); border-color: var(--line); }
+.examenes .btn-ghost:hover:not(:disabled) {
+  color: var(--blue-900); border-color: var(--blue-900);
+  transform: translateY(-1px); box-shadow: var(--shadow-card);
+}
+
+/* pastilla de estado (Disponible / Bloqueado / Requiere sesión) */
+.ex-state {
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+  background: var(--tint-blue); color: var(--blue-900);
+}
+.ex-state.ok { background: var(--tint-green); color: var(--ink-teal); }

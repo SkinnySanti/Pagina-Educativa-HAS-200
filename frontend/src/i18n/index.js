@@ -1,6 +1,6 @@
 import { ref, computed, watch } from 'vue'
-import es from './es.js'
-import en from './en.js'
+import es from './inicio.es.js'
+import en from './inicio.en.js'
 
 const messages = { es, en }
 const STORAGE_KEY = 'has200-lang'

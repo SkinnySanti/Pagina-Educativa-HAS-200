@@ -31,11 +31,11 @@ const g = computed(() => (props.module === 'm2' ? t.value.guias.m2.finish : t.va
         <AppIcon name="home" :size="18" />{{ g.home }}
       </RouterLink>
       <button v-if="module === 'm1'" type="button" class="btn btn-ghost" @click="emit('next')">
-        {{ g.next }}<AppIcon name="chevron-right" :size="18" />
+        <AppIcon name="cpu" :size="18" />{{ g.next }}<AppIcon name="chevron-right" :size="18" />
       </button>
-      <button v-else type="button" class="btn btn-ghost" disabled :title="t.guias.picker.soonTitle">
-        <AppIcon name="lock" :size="18" />{{ g.next }} · {{ t.guias.picker.soon }}
-      </button>
+      <RouterLink v-else to="/examenes" class="btn btn-ghost">
+        <AppIcon name="clipboard" :size="18" />{{ g.next }}<AppIcon name="chevron-right" :size="18" />
+      </RouterLink>
     </div>
   </article>
 </template>

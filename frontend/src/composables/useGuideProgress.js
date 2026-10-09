@@ -26,7 +26,7 @@ function save() {
   }
 }
 
-export function useGuideProgress(moduleId = 'm1', total = MODULE1_STEPS) {
+export function useGuideProgress(moduleId, total) {
   const seen = computed(() => new Set(state.value[moduleId]))
   const count = computed(() => seen.value.size)
   const complete = computed(() => count.value >= total)

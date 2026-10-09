@@ -16,7 +16,7 @@ const { t } = useI18n()
 const items = [
   { key: 'inicio', icon: 'home', to: '/' },
   { key: 'guias', icon: 'book', to: '/guias' },
-  { key: 'examenes', icon: 'clipboard', to: null },
+  { key: 'examenes', icon: 'clipboard', to: '/examenes' },
   { key: 'feedback', icon: 'chat', to: null },
 ]
 </script>

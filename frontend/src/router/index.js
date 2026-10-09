@@ -2,15 +2,18 @@ import { watch } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import InicioView from '../views/InicioView.vue'
 import GuiasView from '../views/GuiasView.vue'
+import ExamenesView from '../views/ExamenesView.vue'
 import AuthView from '../views/AuthView.vue'
 import { useAuth, authReady } from '../composables/useAuth'
 
 // Un módulo nuevo = una ruta nueva aquí + un ítem en AppSidebar.vue.
-// Guías, Exámenes y Retroalimentación se agregan cuando estén terminados.
+// Retroalimentación se agrega cuando esté terminada.
 // meta.layout 'auth' = pantalla sin menú lateral (ver App.vue).
 const routes = [
   { path: '/', name: 'inicio', component: InicioView },
   { path: '/guias', name: 'guias', component: GuiasView },
+  // Pública a propósito: la página reacciona a la sesión (sin sesión se ve, pero no se presenta nada).
+  { path: '/examenes', name: 'examenes', component: ExamenesView },
   { path: '/login', name: 'login', component: AuthView, meta: { layout: 'auth', mode: 'login' } },
   { path: '/registro', name: 'registro', component: AuthView, meta: { layout: 'auth', mode: 'register' } },
   { path: '/:pathMatch(.*)*', redirect: '/' },
@@ -18,7 +21,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  // Al cambiar de página (Inicio ↔ Guías) se empieza desde arriba.
+  // Al cambiar de página (Inicio ↔ Guías ↔ Exámenes) se empieza desde arriba.
   scrollBehavior: () => ({ top: 0 }),
   routes,
 })
