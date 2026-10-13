@@ -24,7 +24,7 @@ CREATE TABLE pregunta (
     examen_id BIGINT NOT NULL,
     posicion SMALLINT NOT NULL,
     enunciado TEXT NOT NULL,
-    idioma CHAR(2) NOT NULL,
+    idioma CHAR(2) COLLATE utf8mb4_bin NOT NULL, -- _bin: 'es' no pasa el CHECK
     referencia_modulo VARCHAR(20) NOT NULL, -- modulo y paso donde se estudia el tema, p. ej. 'm1:3'
     CONSTRAINT uq_pregunta_examen_posicion UNIQUE (examen_id, posicion),
     CONSTRAINT ck_pregunta_idioma CHECK (idioma IN ('ES', 'EN')),
@@ -54,7 +54,7 @@ CREATE TABLE intento (
     aciertos SMALLINT NULL,
     total SMALLINT NULL,
     puntaje SMALLINT NULL,
-    clave_intento_unico VARCHAR(40) NULL UNIQUE, -- solo se llena al pasar a ENVIADO en diagnosticos
+    clave_intento_unico VARCHAR(64) NULL UNIQUE, -- solo se llena al pasar a ENVIADO en diagnosticos
     CONSTRAINT ck_intento_estado CHECK (estado IN ('EN_CURSO', 'ENVIADO', 'VENCIDO')),
     CONSTRAINT fk_intento_estudiante
         FOREIGN KEY (estudiante_id) REFERENCES estudiante (id)
@@ -75,12 +75,3 @@ CREATE TABLE respuesta_intento (
     CONSTRAINT fk_respuesta_intento_opcion
         FOREIGN KEY (opcion_id) REFERENCES opcion (id)
 );
-
--- CREATE TABLE progreso_guia (
---     estudiante_id BIGINT   NOT NULL,
---     modulo_id     SMALLINT NOT NULL,
---     paso_indice   SMALLINT NOT NULL,
---     PRIMARY KEY (estudiante_id, modulo_id, paso_indice),
---     CONSTRAINT fk_progreso_guia_estudiante
---         FOREIGN KEY (estudiante_id) REFERENCES estudiante (id) ON DELETE CASCADE
--- );
