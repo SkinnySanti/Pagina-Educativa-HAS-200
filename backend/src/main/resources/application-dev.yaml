@@ -9,5 +9,6 @@ spring:
     hibernate:
       ddl-auto: validate #Se deshabilita porque Flyway será el encargado del DDL
     show-sql: true
+    open-in-view: false
   flyway:
     enabled: true

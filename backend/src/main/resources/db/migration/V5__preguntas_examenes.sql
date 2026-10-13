@@ -5,7 +5,9 @@
 --
 -- Convenciones:
 --  * Los ids se resuelven por examen.codigo / pregunta.posicion (nada hardcodeado).
---  * opcion.posicion 1..4 = A..D del examen en papel.
+--  * opcion.posicion 1..4 = A..D. La posicion de la opcion correcta se redistribuyo
+--    a proposito (5 por letra entre las 20 preguntas), asi que NO coincide con la
+--    clave de respuestas de los .docx. El texto de las opciones no cambia.
 --  * pregunta.referencia_modulo = 'mX:paso' con paso BASE 0 (igual que progreso_guia, V4).
 --  * Preguntas 1-8 en ES, 9-10 en EN (8 ES + 2 EN, como pide la especificacion).
 --  * Preguntas con el mismo 'concepto' en ES y EN (p. ej. funcion-actuador) permiten
@@ -22,7 +24,7 @@ SET @post_m2 = (SELECT id FROM examen WHERE codigo = 'POST-M2');
 
 INSERT INTO pregunta (examen_id, posicion, enunciado, idioma, habilidad, concepto, explicacion, referencia_modulo) VALUES
 (@diag_m1, 1, '¿Cuál es el orden correcto de un sistema productivo?', 'ES',
- 'PENSAMIENTO_SECUENCIAL', 'entrada-proceso-salida',
+ 'PENSAMIENTO_SISTEMICO', 'entrada-proceso-salida',
  'Todo sistema productivo sigue el mismo camino: primero entra la materia prima (entrada), luego se transforma (proceso) y al final sale el producto terminado (salida).',
  'm1:0'),
 (@diag_m1, 2, 'En un sistema productivo, ¿qué nombre recibe el material que aún no ha sido transformado?', 'ES',
@@ -42,8 +44,8 @@ INSERT INTO pregunta (examen_id, posicion, enunciado, idioma, habilidad, concept
  'El actuador ejecuta una acción física: empujar, mover o sujetar algo. Es quien "hace" lo que el sistema decide, a diferencia del sensor, que solo detecta.',
  'm1:2'),
 (@diag_m1, 6, 'En un grifo automático de baño que abre el agua solo cuando acercas la mano, ¿qué elemento "detecta" tu mano?', 'ES',
- 'FUNCIONAMIENTO', 'sensor-vs-actuador',
- 'Quien detecta tu mano es el sensor. La válvula que abre el agua es el actuador. Regla rápida: detectar = sensor, ejecutar = actuador.',
+ 'PENSAMIENTO_SISTEMICO', 'cadena-deteccion-accion',
+ 'En el grifo, el sensor detecta tu mano y esa señal es la que hace que el actuador abra la válvula',
  'm1:2'),
 (@diag_m1, 7, 'En una máquina industrial, si la luz de la baliza (semáforo de la máquina) está en color ROJO, esto generalmente significa que:', 'ES',
  'FUNCIONAMIENTO', 'colores-baliza',
@@ -67,47 +69,47 @@ SELECT p.id, v.posicion, v.texto, v.es_correcta
 FROM (
     -- P1
     SELECT 1 AS q, 1 AS posicion, 'Proceso → Entrada → Salida' AS texto, 0 AS es_correcta
-    UNION ALL SELECT 1, 2, 'Entrada → Proceso → Salida', 1
-    UNION ALL SELECT 1, 3, 'Salida → Proceso → Entrada', 0
+    UNION ALL SELECT 1, 2, 'Salida → Proceso → Entrada', 0
+    UNION ALL SELECT 1, 3, 'Entrada → Proceso → Salida', 1
     UNION ALL SELECT 1, 4, 'Entrada → Salida → Proceso', 0
-    -- P2 (OJO: la clave del .docx dice C, pero la correcta es B: materia prima)
-    UNION ALL SELECT 2, 1, 'Producto terminado', 0
-    UNION ALL SELECT 2, 2, 'Materia prima (entrada)', 1
+    -- P2 (OJO: la clave del .docx dice C = Actuador, pero la correcta es 'Materia prima')
+    UNION ALL SELECT 2, 1, 'Materia prima (entrada)', 1
+    UNION ALL SELECT 2, 2, 'Producto terminado', 0
     UNION ALL SELECT 2, 3, 'Actuador', 0
     UNION ALL SELECT 2, 4, 'Proceso', 0
     -- P3
     UNION ALL SELECT 3, 1, 'El lugar donde se guardan las herramientas', 0
-    UNION ALL SELECT 3, 2, 'Un puesto dentro del sistema con una tarea específica', 1
-    UNION ALL SELECT 3, 3, 'Un tipo de sensor', 0
-    UNION ALL SELECT 3, 4, 'El nombre del operario encargado', 0
+    UNION ALL SELECT 3, 2, 'Un tipo de sensor', 0
+    UNION ALL SELECT 3, 3, 'El nombre del operario encargado', 0
+    UNION ALL SELECT 3, 4, 'Un puesto dentro del sistema con una tarea específica', 1
     -- P4
     UNION ALL SELECT 4, 1, 'Empujar una pieza de un lugar a otro', 0
     UNION ALL SELECT 4, 2, 'Detectar algo, como luz, presencia o posición', 1
     UNION ALL SELECT 4, 3, 'Encender una alarma sin motivo', 0
     UNION ALL SELECT 4, 4, 'Transformar la materia prima en producto', 0
     -- P5
-    UNION ALL SELECT 5, 1, 'Detectar la posición de una pieza', 0
-    UNION ALL SELECT 5, 2, 'Ejecutar una acción física, como mover o sujetar algo', 1
+    UNION ALL SELECT 5, 1, 'Ejecutar una acción física, como mover o sujetar algo', 1
+    UNION ALL SELECT 5, 2, 'Detectar la posición de una pieza', 0
     UNION ALL SELECT 5, 3, 'Mostrar en pantalla el estado del sistema', 0
     UNION ALL SELECT 5, 4, 'Guardar los datos del proceso', 0
     -- P6
     UNION ALL SELECT 6, 1, 'El actuador', 0
     UNION ALL SELECT 6, 2, 'La válvula de agua', 0
-    UNION ALL SELECT 6, 3, 'El sensor', 1
-    UNION ALL SELECT 6, 4, 'La tubería', 0
+    UNION ALL SELECT 6, 3, 'La tubería', 0
+    UNION ALL SELECT 6, 4, 'El sensor', 1
     -- P7
     UNION ALL SELECT 7, 1, 'Todo funciona con normalidad', 0
-    UNION ALL SELECT 7, 2, 'Hay que poner atención, algo requiere revisión', 0
-    UNION ALL SELECT 7, 3, 'El sistema se detuvo o hay una emergencia', 1
+    UNION ALL SELECT 7, 2, 'El sistema se detuvo o hay una emergencia', 1
+    UNION ALL SELECT 7, 3, 'Hay que poner atención, algo requiere revisión', 0
     UNION ALL SELECT 7, 4, 'El sistema está en modo de ahorro de energía', 0
     -- P8
     UNION ALL SELECT 8, 1, 'Que una persona controle cada paso de la máquina a mano', 0
-    UNION ALL SELECT 8, 2, 'Que una máquina realice tareas por sí sola, sin que alguien la controle paso a paso', 1
-    UNION ALL SELECT 8, 3, 'Que una fábrica deje de producir por mantenimiento', 0
+    UNION ALL SELECT 8, 2, 'Que una fábrica deje de producir por mantenimiento', 0
+    UNION ALL SELECT 8, 3, 'Que una máquina realice tareas por sí sola, sin que alguien la controle paso a paso', 1
     UNION ALL SELECT 8, 4, 'Que todas las máquinas tengan el mismo color', 0
     -- P9 (EN)
-    UNION ALL SELECT 9, 1, 'To detect light or presence', 0
-    UNION ALL SELECT 9, 2, 'To perform a physical action, like pushing or moving something', 1
+    UNION ALL SELECT 9, 1, 'To perform a physical action, like pushing or moving something', 1
+    UNION ALL SELECT 9, 2, 'To detect light or presence', 0
     UNION ALL SELECT 9, 3, 'To store information about the process', 0
     UNION ALL SELECT 9, 4, 'To turn off the whole factory', 0
     -- P10 (EN)
@@ -140,11 +142,11 @@ INSERT INTO pregunta (examen_id, posicion, enunciado, idioma, habilidad, concept
  'La presión de aire puede tomar muchos valores distintos, por eso es analógica. Las otras opciones solo tienen dos estados (sí/no, encendido/apagado), es decir, son digitales.',
  'm2:1'),
 (@diag_m2, 5, 'En un sistema de automatización, ¿cuál es el orden correcto del recorrido de una señal, desde que es detectada hasta que se muestra en pantalla?', 'ES',
- 'PENSAMIENTO_SECUENCIAL', 'recorrido-senal',
+ 'PENSAMIENTO_SISTEMICO', 'recorrido-senal',
  'La señal nace en el sensor, pasa por el PLC, viaja por la red a través del switch, llega al computador y finalmente se ve en la pantalla: Sensor → PLC → Switch → Computador → Pantalla.',
  'm2:2'),
 (@diag_m2, 6, 'Cuando un sensor envía su información a través de la red, al computador llega:', 'ES',
- 'FUNCIONAMIENTO', 'mensaje-de-red',
+ 'PENSAMIENTO_SISTEMICO', 'mensaje-de-red',
  'Por la red no viaja la electricidad del sensor, sino un mensaje (datos) que describe lo que el sensor detectó.',
  'm2:3'),
 (@diag_m2, 7, '¿Cuál es la función de un SWITCH en una red de datos?', 'ES',
@@ -169,17 +171,17 @@ SELECT p.id, v.posicion, v.texto, v.es_correcta
 FROM (
     -- P1
     SELECT 1 AS q, 1 AS posicion, 'SCADA' AS texto, 0 AS es_correcta
-    UNION ALL SELECT 1, 2, 'Switch', 0
-    UNION ALL SELECT 1, 3, 'PLC', 1
+    UNION ALL SELECT 1, 2, 'PLC', 1
+    UNION ALL SELECT 1, 3, 'Switch', 0
     UNION ALL SELECT 1, 4, 'Cable de red', 0
     -- P2
     UNION ALL SELECT 2, 1, '"Tal vez pase esto, tal vez no"', 0
-    UNION ALL SELECT 2, 2, '"SI pasa esto, ENTONCES haz aquello"', 1
-    UNION ALL SELECT 2, 3, '"Siempre haz lo mismo, sin importar nada"', 0
-    UNION ALL SELECT 2, 4, '"Pregúntale al operador antes de actuar"', 0
+    UNION ALL SELECT 2, 2, '"Siempre haz lo mismo, sin importar nada"', 0
+    UNION ALL SELECT 2, 3, '"Pregúntale al operador antes de actuar"', 0
+    UNION ALL SELECT 2, 4, '"SI pasa esto, ENTONCES haz aquello"', 1
     -- P3
-    UNION ALL SELECT 3, 1, 'Puede tomar muchos valores diferentes', 0
-    UNION ALL SELECT 3, 2, 'Solo tiene dos valores posibles: sí o no (1 o 0)', 1
+    UNION ALL SELECT 3, 1, 'Solo tiene dos valores posibles: sí o no (1 o 0)', 1
+    UNION ALL SELECT 3, 2, 'Puede tomar muchos valores diferentes', 0
     UNION ALL SELECT 3, 3, 'Solo existe dentro de una pantalla de supervisión', 0
     UNION ALL SELECT 3, 4, 'Mide con exactitud la temperatura ambiente', 0
     -- P4
@@ -189,9 +191,9 @@ FROM (
     UNION ALL SELECT 4, 4, 'Una luz que está encendida o apagada', 0
     -- P5
     UNION ALL SELECT 5, 1, 'Pantalla → Switch → PLC → Sensor → Computador', 0
-    UNION ALL SELECT 5, 2, 'Sensor → PLC → Switch → Computador → Pantalla', 1
-    UNION ALL SELECT 5, 3, 'PLC → Sensor → Pantalla → Switch → Computador', 0
-    UNION ALL SELECT 5, 4, 'Switch → Sensor → Computador → PLC → Pantalla', 0
+    UNION ALL SELECT 5, 2, 'PLC → Sensor → Pantalla → Switch → Computador', 0
+    UNION ALL SELECT 5, 3, 'Switch → Sensor → Computador → PLC → Pantalla', 0
+    UNION ALL SELECT 5, 4, 'Sensor → PLC → Switch → Computador → Pantalla', 1
     -- P6
     UNION ALL SELECT 6, 1, 'La misma electricidad que generó el sensor', 0
     UNION ALL SELECT 6, 2, 'Un mensaje con la información de lo que el sensor detectó', 1
@@ -199,19 +201,19 @@ FROM (
     UNION ALL SELECT 6, 4, 'Solamente una fotografía del sensor', 0
     -- P7
     UNION ALL SELECT 7, 1, 'Detectar piezas en una banda transportadora', 0
-    UNION ALL SELECT 7, 2, 'Recibir los mensajes y repartirlos a donde deben ir', 1
-    UNION ALL SELECT 7, 3, 'Mostrar las alarmas en la pantalla', 0
+    UNION ALL SELECT 7, 2, 'Mostrar las alarmas en la pantalla', 0
+    UNION ALL SELECT 7, 3, 'Recibir los mensajes y repartirlos a donde deben ir', 1
     UNION ALL SELECT 7, 4, 'Reemplazar al PLC cuando este falla', 0
     -- P8
-    UNION ALL SELECT 8, 1, 'Para reemplazar los sensores del sistema', 0
-    UNION ALL SELECT 8, 2, 'Para ver el estado, los contadores y las alarmas del proceso', 1
+    UNION ALL SELECT 8, 1, 'Para ver el estado, los contadores y las alarmas del proceso', 1
+    UNION ALL SELECT 8, 2, 'Para reemplazar los sensores del sistema', 0
     UNION ALL SELECT 8, 3, 'Para cocinar o transformar el material', 0
     UNION ALL SELECT 8, 4, 'Para conectar los cables directamente entre máquinas', 0
     -- P9 (EN)
     UNION ALL SELECT 9, 1, 'It physically pushes or moves pieces', 0
-    UNION ALL SELECT 9, 2, 'It follows programmed rules to decide what action to take', 1
-    UNION ALL SELECT 9, 3, 'It only displays alarms on a screen', 0
-    UNION ALL SELECT 9, 4, 'It replaces the need for sensors', 0
+    UNION ALL SELECT 9, 2, 'It only displays alarms on a screen', 0
+    UNION ALL SELECT 9, 3, 'It replaces the need for sensors', 0
+    UNION ALL SELECT 9, 4, 'It follows programmed rules to decide what action to take', 1
     -- P10 (EN)
     UNION ALL SELECT 10, 1, 'Screen → Computer → Switch → PLC → Sensor', 0
     UNION ALL SELECT 10, 2, 'Sensor → PLC → Switch → Computer → Screen', 1

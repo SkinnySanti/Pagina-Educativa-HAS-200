@@ -39,7 +39,7 @@ ALTER TABLE pregunta
 
 ALTER TABLE pregunta
     ADD CONSTRAINT ck_pregunta_habilidad CHECK (habilidad IN (
-        'INGLES', 'FUNCIONAMIENTO', 'TERMINOS_TECNICOS', 'PENSAMIENTO_SECUENCIAL'));
+        'INGLES', 'FUNCIONAMIENTO', 'TERMINOS_TECNICOS', 'PENSAMIENTO_SISTEMICO'));
 
 -- ---------------------------------------------------------------
 -- 3. Seed: los 4 examenes

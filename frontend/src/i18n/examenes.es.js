@@ -62,7 +62,8 @@ export default {
     progress: { title: 'Tu ruta de exámenes', done: 'completados', groups: ['Diagnóstico', 'Post recorrido'] },
     why: {
       title: '¿Por qué iniciar sesión?',
-      items: ['Guarda tu avance en las guías.', 'Presenta las evaluaciones del laboratorio.', 'Consulta tu retroalimentación.'],
+      items: ['Guarda tu avance en las guías.', 'Presenta las evaluaciones del laboratorio.', 'Habla con el Tutor Virtual si tienes dudas.' ,
+              'Accede a tus resultados y retroalimentaciones.'],
     },
   },
   dialog: {

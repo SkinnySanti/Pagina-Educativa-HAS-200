@@ -62,7 +62,8 @@ export default {
     progress: { title: 'Your exam path', done: 'completed', groups: ['Diagnostic', 'Post path'] },
     why: {
       title: 'Why log in?',
-      items: ['Save your progress in the guides.', 'Take the lab exams.', 'Check your feedback.'],
+      items: ['Save your progress in the guides.', 'Take the lab exams.', 'Talk to the Virtual Tutor if you have questions.', 
+              'Access your results and feedback.'],
     },
   },
   dialog: {

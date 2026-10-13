@@ -14,3 +14,5 @@ app:
     issuer: has200-learning
     access-ttl: 15m
     refresh-ttl: 7d
+  guias:
+    pasos-por-modulo: 6

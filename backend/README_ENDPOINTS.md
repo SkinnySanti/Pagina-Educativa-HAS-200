@@ -1,124 +1,251 @@
-# HAS-200 Learning: contexto general del backend (v3)
+# HAS-200 Learning: módulo de autenticación, contrato para el frontend (v1)
 
-> Documento de traspaso. Pégalo como primer mensaje en un chat nuevo del proyecto.
+> Documento de integración Vue ↔ Spring Boot. Describe solo autenticación: endpoints, qué espera cada uno y cómo debe comportarse el cliente.
 
-## 0. Cómo quiero que trabajes conmigo en el backend
+## 1. Resumen
 
-- Actúa **más como soporte y guía que como generador de código**: requisitos, dirección, revisión y explicación.
-- **Genera código solo cuando yo lo pida.** Cuando lo pida, explica cada segmento, bean y componente.
-- Trabajo módulo por módulo y tabla por tabla (entidad → repositorio → DTO → servicio → controlador). En correcciones entrega **solo el parche**, no el proyecto completo.
-- Señálame errores pequeños y detalles de lo que te muestre, con tu opinión.
-- Incluye fuentes y referencias cuando se pueda. Tono informal, en español.
+- **Base:** `http://localhost:8080` en desarrollo. Todas las rutas empiezan por `/api`.
+- **Formato:** JSON en UTF-8 (`Content-Type: application/json`), tanto en peticiones como en respuestas.
+- **Sesión:** dos tokens.
+  - **Token de acceso:** JWT que dura **15 minutos**. Va en el header `Authorization: Bearer <tokenAcceso>`.
+  - **Token de refresco:** valor opaco que dura **7 días** y sirve para pedir un par nuevo. **Rota en cada uso.**
+- **En esta versión ambos tokens se guardan en `localStorage`.** En una versión posterior el refresco pasará a una cookie `HttpOnly` y el contrato cambiará (ver sección 10).
+- **Importante para desarrollo:** el backend **todavía no tiene CORS configurado**. Usa el proxy de Vite (`/api` → `http://localhost:8080`) y llama siempre a rutas relativas (`/api/auth/login`). Sin proxy, el navegador bloqueará las peticiones.
 
-## 1. Proyecto y stack
+## 2. Flujo general
 
-**HAS 200 Learning**: plataforma web bilingüe (ES/EN), 100 % educativa, alrededor del sistema integrado HAS-200 (mini fábrica automatizada de demostración). Incluye guías, exámenes y retroalimentación; el tutor de IA es por ahora solo un aviso.
+1. **Registro** (`/api/auth/register`) crea la cuenta pero **no inicia sesión**. Después hay que llamar a login (o llevar al usuario a la pantalla de login).
+2. **Login** devuelve los dos tokens. Se guardan.
+3. **Peticiones protegidas** llevan el header `Authorization: Bearer ...`.
+4. Si el token de acceso vence (401), se **renueva** con `/api/auth/refresh`. Esa respuesta trae un par nuevo que **reemplaza a ambos**.
+5. **Logout** (`/api/auth/logout`) invalida el refresco en el servidor; el cliente borra todo.
 
-- **Frontend:** Vue 3 + Vite. Ya existe, pero **aún no está conectado** al backend.
-- **Backend:** Spring Boot, Java 21, paquete raíz `com.has200.learning`, estructura por funcionalidad (`auth`, `student`, `exam`, `attempt`, `progress`, `common`).
-- **BD:** MySQL, con nombres de tablas y columnas en **español**. Esquema gestionado con **Flyway**; `ddl-auto=validate`, `open-in-view=false`.
-- **Convenciones ya fijadas:**
-    - Lombok en entidades y `LocalDateTime` para fechas. Todas las fechas se guardan en **UTC** y las asigna la app con un `Clock` UTC inyectado (nunca `LocalDateTime.now()` sin reloj).
-    - DTOs como `record`. Las reglas de formato van con Bean Validation en el DTO; las reglas de negocio, en el servicio; la garantía final, en la BD (`UNIQUE`, `NOT NULL`, `CHECK`).
-    - El servicio devuelve DTOs, no entidades.
-    - Errores uniformes con `ProblemDetail` (`GlobalExceptionHandler`); `ConflictoException` → 409, `NoAutenticadoException` → 401.
-    - Correo normalizado (trim y minúsculas) al registrar y al hacer login.
+## 3. Endpoints
 
-## 2. Reglas de negocio
+| Método | Ruta | Acceso | Respuesta OK |
+|---|---|---|---|
+| POST | `/api/auth/register` | Público | 201 + estudiante |
+| POST | `/api/auth/login` | Público | 200 + tokens |
+| POST | `/api/auth/refresh` | Público | 200 + tokens |
+| POST | `/api/auth/logout` | Público | 204 sin cuerpo |
+| GET | `/api/me` | Protegido | 200 + estudiante |
 
-- Un solo rol (estudiante). Sin ADMIN, sin tabla de roles.
-- Exámenes definidos por el equipo (entran por migraciones/seed); la API solo los lee. Opción múltiple con **una sola correcta**.
-- Contenido del examen sin cambio de idioma: 8 preguntas en español y 2 en inglés (fijo). Orden de preguntas y opciones preestablecido.
-- Cada examen tiene tiempo límite (**máximo 1 hora**). El servidor manda; el cronómetro del frontend es solo visual.
-- Intentos ilimitados, **excepto diagnósticos (1 solo intento)**. Abandonar una diagnóstica **no** consume el intento; solo se consume al **enviarse**.
-- Al terminar: por cada pregunta incorrecta, la respuesta correcta y el módulo donde se estudia. Las correctas nunca viajan al cliente durante el examen.
-- Registro con correo, alias y contraseña (el nombre no se almacena). Sin verificación de correo. Aceptación obligatoria de la política de tratamiento de datos.
+Todo lo que no sea esos cuatro `auth` exige `Authorization: Bearer`.
 
-## 3. Modelo de datos (Flyway)
+### 3.1 POST `/api/auth/register`
 
-**V1 (aplicada):** `estudiante` (correo UNIQUE, alias UNIQUE de máx. 20, `contrasena_hash`, `politica_aceptada_en`, `creado_en`), `examen` (tipo `DIAGNOSTICO | FINAL`, `tiempo_limite_minutos`, `version`), `pregunta` (`posicion`, `enunciado`, `idioma` CHAR(2), `referencia_modulo` p. ej. `m1:3`), `opcion` (`posicion`, `texto`, `es_correcta`), `intento` (`estado`: `EN_CURSO | ENVIADO | VENCIDO`, `iniciado_en`, `vence_en`, `enviado_en`, `aciertos`, `total`, `puntaje`, `clave_intento_unico` UNIQUE nullable) y `respuesta_intento` (PK compuesta `intento_id + pregunta_id`, `opcion_id` nullable = sin responder). El borrado del estudiante hace cascada sobre intentos y respuestas.
+**Cuerpo:**
 
-**V2 (entregada, pendiente de aplicar):** `token_refresco` (`estudiante_id` con cascada, `token_hash` VARCHAR(64) UNIQUE, `creado_en`, `vence_en`, `revocado_en` nullable).
+```json
+{
+  "correo": "ana@correo.com",
+  "alias": "ana_01",
+  "contrasena": "clave12345",
+  "politicaAceptada": true
+}
+```
 
-**Pendiente:** `progreso_guia` (hoy comentada en V1) irá en una **V3**.
+| Campo | Regla |
+|---|---|
+| `correo` | Obligatorio, formato de correo válido, máx. 255 |
+| `alias` | Obligatorio, 3 a 20 caracteres: letras, números o guion bajo (`^[A-Za-z0-9_]{3,20}$`) |
+| `contrasena` | Obligatoria, de 8 a 64 caracteres |
+| `politicaAceptada` | Debe ser `true` (casilla sin marcar por defecto) |
 
-## 4. Seguridad (versión 1)
+- La **confirmación de correo y de contraseña** se valida solo en el frontend. No hace falta enviarla.
+- El servidor limpia espacios y pasa el correo a minúsculas; el correo que devuelve ya está normalizado.
 
-- Login con correo y contraseña; BCrypt. Mismo error 401 ("Credenciales inválidas") para correo inexistente o contraseña mala, con un hash falso para igualar tiempos.
-- **Access token:** JWT HS256 de **15 minutos** (`sub` = id del estudiante, más `alias`, `iss`, `iat`, `exp`). Clave de 32 bytes en Base64 desde la variable de entorno `JWT_SECRET`, validada al arrancar.
-- **Refresh token:** valor aleatorio opaco (256 bits), vigencia de **7 días**, guardado **hasheado** (SHA-256) en BD, con **rotación** en cada uso y **detección de reutilización** (si se presenta uno ya revocado, se revocan todos los del estudiante). Usa `@Transactional(noRollbackFor = NoAutenticadoException.class)` para que esa revocación masiva no se deshaga.
-- Configuración con `@ConfigurationProperties` validadas (`app.jwt.*`). Spring Security como Resource Server stateless; públicos solo `register`, `login`, `refresh` y `logout`; el 401 sale en formato `ProblemDetail`.
-- **Decisión para esta versión:** ambos tokens viajan en el cuerpo JSON y el frontend los guarda en `localStorage`. **Riesgo aceptado:** un XSS podría robarlos. Mitigaciones actuales: access de 15 min, rotación y detección de reutilización. Buenas prácticas del frontend: no usar `v-html` con contenido no confiable y, más adelante, añadir una Content-Security-Policy.
-- **Planificado para una versión posterior:** refresh en cookie `HttpOnly` (`Secure`, `SameSite=Strict`, `Path=/api/auth`), con CORS de lista cerrada y verificación de `Origin` en refresh/logout. El diseño ya está hecho (`CookieProperties`, `RefreshCookieService`, `OrigenValidator`, `SesionEmitida`, controlador leyendo la cookie, `TokenResponse` sin el refresh); se aplica como parche.
+**201:**
 
-## 5. Estado del desarrollo
+```json
+{ "id": 1, "correo": "ana@correo.com", "alias": "ana_01", "creadoEn": "2026-10-07T05:23:10Z" }
+```
 
-### Hecho
-- Proyecto Spring, conexión a MySQL, Flyway funcionando, primer seed y configuración inicial.
-- **Paso 1:** `estudiante` completo (entidad, repositorio, DTOs, servicio, `POST /api/auth/register`), **probado**: 201, 409 (correo o alias duplicado) y 400 (validaciones por campo).
-- Manejo global de errores y bean `Clock` UTC.
+`creadoEn` es una fecha ISO-8601 en **UTC**. Si llega sin el sufijo `Z`, igual debe interpretarse como UTC antes de convertirla a hora local.
 
-### Entregado en el chat, pendiente de verificar
-- **Paso 2:** `V2`, `JwtProperties`, `JwtConfig` (clave, encoder, decoder), `JwtService`, `TokenRefresco` y su repositorio, `AuthService`, `AuthController` (`login`, `refresh`, `logout`), `SecurityConfig` con Resource Server y `GET /api/me`.
-- **Pruebas a hacer:** login devuelve ambos tokens; `/me` da 200 con token, 401 sin token y con token alterado; credenciales malas dan la misma respuesta; `refresh` rota y reutilizar el viejo revoca todo; `logout` invalida el refresh.
+**Errores:** 400 (validación, con detalle por campo) y 409 (correo o alias ya existentes).
 
-## 6. Endpoints
+### 3.2 POST `/api/auth/login`
 
-| Método | Ruta | Estado |
+**Cuerpo:**
+
+```json
+{ "correo": "ana@correo.com", "contrasena": "clave12345" }
+```
+
+| Campo | Regla |
+|---|---|
+| `correo` | Obligatorio, máx. 255 (no se valida el formato aquí) |
+| `contrasena` | Obligatoria, máx. 128 |
+
+**200:**
+
+```json
+{
+  "tipo": "Bearer",
+  "tokenAcceso": "eyJhbGciOi...",
+  "expiraEnSegundos": 900,
+  "tokenRefresco": "q7H2...(43 caracteres)"
+}
+```
+
+- `expiraEnSegundos` es la duración del token de acceso (900). El cliente debe calcular al recibirlo `accessExpiraEn = Date.now() + expiraEnSegundos * 1000` y guardarlo.
+- El backend **no recibe** la casilla de política en el login: la aceptación se registra una sola vez, al crear la cuenta. Si la casilla del login es solo un requisito de la interfaz, no se envía nada. Si se necesita dejar constancia en cada inicio de sesión, habría que añadir un campo en el backend.
+
+**Errores:** 400 (campo vacío o demasiado largo) y 401 (credenciales inválidas).
+
+### 3.3 POST `/api/auth/refresh`
+
+**Cuerpo:**
+
+```json
+{ "tokenRefresco": "q7H2..." }
+```
+
+| Campo | Regla |
+|---|---|
+| `tokenRefresco` | Obligatorio, máx. 128 |
+
+**200:** mismo formato que el login, con un par **nuevo**.
+
+> **El refresco usado queda invalidado al instante.** El cliente debe sustituir **los dos** tokens en `localStorage` con el par nuevo antes de hacer cualquier otra cosa.
+
+**Errores:** 400 (campo faltante) y 401 con uno de estos `detail`:
+- `Token de refresco inválido` (no existe, o ya fue usado).
+- `Token de refresco vencido`.
+- `Sesión inválida` (la cuenta ya no existe).
+
+**Detección de reutilización:** si se presenta un refresco que ya fue usado, el servidor lo interpreta como posible robo, responde 401 y **revoca todos los refrescos de ese estudiante**. Consecuencia práctica: dos renovaciones simultáneas con el mismo token cierran la sesión.
+
+### 3.4 POST `/api/auth/logout`
+
+**Cuerpo:** igual que `/refresh` (`{ "tokenRefresco": "..." }`).
+
+**204 sin cuerpo.** Es idempotente: responde 204 aunque el token no exista o ya esté revocado (siempre que el cuerpo sea válido). Errores: 400 si falta `tokenRefresco`.
+
+- El token de acceso **no se puede revocar** en el servidor: sigue siendo válido hasta que expire (máx. 15 min). "Cerrar sesión" efectivo = llamar a logout **y** borrar los tokens del cliente.
+- El cliente debe borrar `localStorage` **aunque logout falle** (red caída, 401, etc.).
+
+### 3.5 GET `/api/me`
+
+**Header obligatorio:** `Authorization: Bearer <tokenAcceso>`. Sin cuerpo.
+
+**200:**
+
+```json
+{ "id": 1, "correo": "ana@correo.com", "alias": "ana_01", "creadoEn": "2026-10-07T05:23:10Z" }
+```
+
+**401** si el token falta, es inválido o venció, o si la cuenta fue eliminada (`Sesión inválida`). Los datos se leen de la BD, no del token.
+
+## 4. Formato de errores
+
+Los errores siguen la forma de *Problem Details* (`Content-Type: application/problem+json`). Usa **`status`** y **`detail`**. Pueden aparecer campos extra (por ejemplo `instance`); no dependas de ellos.
+
+**400, validación:** trae `errores` con un mensaje por campo.
+
+```json
+{
+  "type": "about:blank",
+  "title": "Bad Request",
+  "status": 400,
+  "detail": "Datos inválidos",
+  "errores": {
+    "alias": "El alias debe tener de 3 a 20 caracteres: letras, números o guion bajo"
+  }
+}
+```
+
+**409, conflicto:**
+
+```json
+{ "type": "about:blank", "title": "Conflicto", "status": 409, "detail": "El correo ya está registrado" }
+```
+
+**401:**
+
+```json
+{ "type": "about:blank", "title": "No autenticado", "status": 401, "detail": "Credenciales inválidas" }
+```
+
+Sin token, o con un token inválido o vencido, el 401 trae `detail: "Token ausente, inválido o vencido"`.
+
+### Mensajes conocidos
+
+| Situación | `detail` |
+|---|---|
+| Correo ya registrado | `El correo ya está registrado` |
+| Alias en uso | `El alias ya está en uso` |
+| Choque simultáneo o alias con distinta capitalización | `El correo o el alias ya están en uso` (no asumas qué campo falló) |
+| Política sin aceptar | `Debes aceptar la política de tratamiento de datos` (en `errores.politicaAceptada`) |
+| Login incorrecto (correo inexistente o contraseña mala) | `Credenciales inválidas` (idéntico en ambos casos, a propósito) |
+
+- Los mensajes por defecto de `@NotBlank`, `@Email` y `@Size` dependen del idioma de la JVM y pueden salir en inglés. Recomendación: validar primero en el frontend y, para los errores del servidor, mapear por **nombre de campo** (`errores.correo`, etc.) con tus propios textos i18n ES/EN.
+- El alias se considera duplicado aunque cambie mayúsculas y minúsculas (depende de la colación de MySQL).
+
+## 5. Resumen de códigos HTTP
+
+| Código | Significa | Qué hacer |
 |---|---|---|
-| POST | `/api/auth/register` | Hecho y probado |
-| POST | `/api/auth/login`, `/refresh`, `/logout` | Entregado, por verificar |
-| GET | `/api/me` | Entregado, por verificar |
-| DELETE | `/api/me` | Pendiente |
-| GET | `/api/exams` | Pendiente |
-| POST | `/api/exams/{id}/attempts` | Pendiente (iniciar o reanudar) |
-| POST | `/api/attempts/{id}/submit` | Pendiente |
-| GET | `/api/attempts/{id}/review` | Pendiente |
-| GET | `/api/me/attempts` | Pendiente |
-| GET / PUT | `/api/me/progress` | Pendiente |
-| POST | `/api/auth/forgot-password`, `/reset-password` | Pendiente (al final) |
+| 200 / 201 / 204 | Correcto | Continuar |
+| 400 | Datos inválidos | Mostrar `errores` por campo |
+| 401 en `/login` | Credenciales inválidas | Mensaje genérico, no indicar cuál campo |
+| 401 en `/refresh` | Refresco inválido, vencido o reutilizado | Borrar tokens y mandar al login |
+| 401 en otra ruta | Acceso vencido o inválido | Intentar **un** refresh y reintentar la petición |
+| 409 | Correo o alias en uso | Mostrar el `detail` |
 
-## 7. Pendientes del backend, en orden
+## 6. Comportamiento esperado del cliente
 
-1. **Verificar el paso 2** con la lista de pruebas de arriba. Aplicar la V2.
-2. **Paso 2b, límite de intentos fallidos de login.** Opción simple: contador en memoria (Caffeine o Bucket4j) por IP y correo, que se reinicia con la app. Alternativa: columnas en una migración nueva.
-3. **Conexión con el frontend:** proxy de Vite hacia `localhost:8080` (evita CORS en desarrollo) o un `CorsConfigurationSource` con el origen exacto. Perfiles `dev`/`prod`.
-4. **Paso 3, `examen` / `pregunta` / `opcion`:** entidades de solo lectura y `GET /api/exams` (tipo, tiempo y si la diagnóstica ya se usó). DTO para rendir el examen **sin** `es_correcta`. Seed del contenido real de los exámenes.
-5. **Paso 4, `intento` / `respuesta_intento`:** iniciar o reanudar, enviar y calificar, revisión. Vencimiento "perezoso" (se califica al consultar o enviar si ya venció, con unos segundos de gracia). `clave_intento_unico` solo se llena al pasar a `ENVIADO` en diagnósticos. Respuestas con PK compuesta (`@EmbeddedId`).
-6. **Historial** de intentos y puntajes (alimenta Retroalimentación).
-7. **Progreso de guías:** migración V3, entidad y `GET/PUT /api/me/progress` (reemplaza el `localStorage` actual de `useGuideProgress.js`).
-8. **`DELETE /api/me`** (derecho de supresión; la cascada de BD limpia intentos y tokens).
-9. **Pruebas automáticas** de reglas críticas: la diagnóstica no admite un segundo intento enviado (ni con dos peticiones simultáneas), un envío fuera de tiempo no cuenta como válido, la respuesta correcta no aparece al iniciar un intento, y el flujo de refresh con rotación y reutilización. Los tests necesitarán `JWT_SECRET` propio.
-10. **Cierre intermedio:** Docker Compose con MySQL y OpenAPI (springdoc). Tarea programada que borre refresh tokens vencidos.
-11. **Recuperación de contraseña por correo** (fase final): token aleatorio de un solo uso guardado hasheado, expiración corta, respuesta idéntica exista o no el correo, Spring Mail con SMTP.
-12. **Endurecimiento (versión posterior):** refresh en cookie HttpOnly (parche ya diseñado), Content-Security-Policy, ventana de gracia para varias pestañas o peticiones simultáneas de refresh, gestión de secretos en producción, HTTPS.
+**Qué guardar** (sugerencia de claves): `has200.accessToken`, `has200.refreshToken` y `has200.accessExpiraEn`. No guardes el perfil del usuario: se pide a `/api/me`.
 
-## 8. Decisiones abiertas
+**Interceptor de peticiones:**
+1. Adjunta `Authorization: Bearer <tokenAcceso>` en toda petición a rutas protegidas.
+2. Si la respuesta es 401 y la ruta **no** es de `/api/auth/*`: llama a `/refresh` **una sola vez**, reintenta la original **una sola vez** con el token nuevo; si el refresh falla, limpia la sesión y redirige al login.
+3. **Excluye `/api/auth/*` del reintento** para no entrar en bucle.
 
-- **Menores de edad:** opción A (plataforma para mayores de 18, con declaración al registrarse) u opción B (aceptar menores con autorización del representante legal). Ley 1581 de 2012 y sus decretos reglamentarios.
-- **Texto de la política de tratamiento de datos** y quién figura como responsable.
-- **Plataforma tipo Moodle** (actividades, guías, evaluaciones): sin decidir; conviene resolverlo antes de Exámenes en el frontend.
-- Si en el futuro se quiere que abandonar la diagnóstica **consuma** el intento (hoy hay una fuga: se pueden ver las preguntas sin enviar).
+**Un solo refresh a la vez (obligatorio):**
+- Si varias peticiones reciben 401 al mismo tiempo, deben esperar **la misma** promesa de refresh, no lanzar una cada una. Si no, la detección de reutilización cierra la sesión.
+- Con varias pestañas abiertas, `localStorage` es compartido: sincroniza con el evento `storage` (o la API Web Locks) para que no refresquen a la vez.
 
-## 9. Lecciones y detalles técnicos ya encontrados
+**Renovación preventiva:** programa una renovación unos 60 segundos antes de `accessExpiraEn`, para que no se corte nada a mitad de una acción.
 
-- `@AllArgsConstructor` de Lombok genera un constructor con **todos** los campos (incluido `id`) y en orden de declaración; mejor usar `@Builder` o un constructor propio. `@Data` en entidades es problemático (`equals`/`hashCode`, `toString` con el hash); preferible `@Getter` y `@ToString.Exclude`.
-- `LocalDateTime` en UTC solo es coherente si **toda** la app usa el `Clock` UTC; el JSON los muestra sin zona, así que conviene exponer UTC con marca de zona y que el frontend convierta a hora local.
-- Si la BD solo guarda la fecha, revisar con `SHOW CREATE TABLE` que la columna sea `datetime` y no `date`.
-- Con `ddl-auto=validate`, una columna `CHAR` no coincide con un `String` mapeado como `VARCHAR`: `pregunta.idioma CHAR(2)` necesitará un ajuste de mapeo (por ejemplo `@JdbcTypeCode(SqlTypes.CHAR)`) al crear su entidad.
-- `examen.version` es la versión del **contenido**: no mapearla con `@Version` (bloqueo optimista). Nómbrala `versionContenido` en la entidad.
-- Los `CHECK` solo se hacen cumplir desde MySQL 8.0.16. La BD debe ser `utf8mb4`.
-- BCrypt procesa máximo 72 bytes: tope de 64 caracteres en la contraseña. No editar migraciones ya aplicadas; crear una nueva.
-- Lanzar una excepción dentro de un `@Transactional` hace rollback por defecto: usar `noRollbackFor` cuando el efecto previo debe persistir.
+**Arranque de la app:**
+1. Lee `localStorage`.
+2. Si hay token de acceso aún vigente, úsalo; si venció pero hay refresco, llama a `/refresh`.
+3. Si no hay nada, estado anónimo.
+4. El guard del router debe **esperar** a que termine este paso antes de decidir si una ruta es accesible. Con la sesión resuelta, carga el perfil con `/api/me`.
 
-## 10. Frontend: lo que falta para integrar con el backend
+**Exámenes:** duran hasta 1 hora y el token de acceso 15 minutos, así que las renovaciones ocurrirán durante el examen. El cronómetro real lo lleva el servidor (el cliente solo lo muestra), y si el refresh fallara a mitad del examen, el estudiante vuelve a iniciar sesión y reanuda el intento. Conviene no perder localmente las respuestas ya marcadas.
 
-Cliente HTTP con interceptor de 401 que renueve con **un solo refresh a la vez**; store de sesión (con ambos tokens en `localStorage` en esta versión); guardas de ruta; pantalla de login/registro con casilla de política (sin marcar por defecto) y confirmación de correo y contraseña; renovación preventiva con `expiraEnSegundos`; vista de Exámenes con etiqueta "EN" en las preguntas en inglés; vista de Retroalimentación; cambiar `useGuideProgress.js` por llamadas al backend. Pendientes de contenido: Guías Módulo 2, assets 3D e imágenes, tutor de IA y plataforma tipo Moodle.
+## 7. Seguridad en el cliente (versión con `localStorage`)
+
+- Cualquier XSS podría leer los tokens. Evita `v-html` con contenido no confiable, no cargues scripts de terceros innecesarios y planifica una Content-Security-Policy.
+- Nunca pongas tokens en la URL ni los imprimas en consola o logs.
+- Aísla todo el manejo de tokens en **un solo módulo** (por ejemplo `authStorage`). Así, cuando el refresco pase a la cookie `HttpOnly`, el cambio queda en un solo lugar.
+
+## 8. Reglas que el frontend debe replicar para validar antes de enviar
+
+- Correo con formato válido y confirmación idéntica; alias con el patrón de 3 a 20 caracteres (`A-Z`, `a-z`, `0-9`, `_`); contraseña de 8 a 64 caracteres y confirmación idéntica; casilla de política sin marcar por defecto y obligatoria para registrar.
+- Recomendación de producto: pedir que el alias **no sea el nombre real**.
+
+## 9. Prueba rápida de integración
+
+1. `register` con datos válidos da 201. Repetirlo da 409. Con `politicaAceptada: false` o un alias inválido da 400 con `errores`.
+2. `login` da dos tokens y `expiraEnSegundos: 900`. Con contraseña mala y con correo inexistente da el **mismo** 401.
+3. `GET /api/me` con el token da 200; sin token o con el token alterado da 401.
+4. `refresh` con el refresco entrega un par nuevo. Repetirlo con el **refresco anterior** da 401 y deja sin efecto el par nuevo (revocación masiva).
+5. `logout` da 204; un `refresh` posterior con ese token da 401.
+
+## 10. Lo que cambiará más adelante (avisos para el frontend)
+
+- **Cookie `HttpOnly` para el refresco:** el refresco desaparecerá de las respuestas JSON; `/refresh` y `/logout` dejarán de recibir cuerpo (el navegador enviará la cookie solo) y las peticiones necesitarán enviar credenciales. Por eso conviene aislar el almacenamiento de tokens (sección 7).
+- **Límite de intentos de login:** se espera un **429 Too Many Requests** tras varios intentos fallidos. El cliente debe mostrar un mensaje de espera y respetar un posible header `Retry-After`.
+- **Nuevos endpoints:** `DELETE /api/me` (eliminar la cuenta) y recuperación de contraseña por correo (`forgot-password` / `reset-password`). Aún sin contrato definido.
+- **CORS:** se configurará cuando se despliegue con orígenes separados; con el proxy de Vite no hace falta en desarrollo.
 
 ## Referencias
-- Ley 1581 de 2012: https://www.saludcapital.gov.co/Normo/gsp/ley_1581_de_2012.pdf
-- Spring Security, Resource Server JWT: https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html
-- OWASP, JWT para Java: https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html
-- OWASP, almacenamiento de contraseñas: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
-- Spring Data JPA: https://docs.spring.io/spring-data/jpa/reference/
-- Flyway: https://documentation.red-gate.com/fd/flyway-documentation-138346877.html
+- RFC 6750, Bearer Token: https://datatracker.ietf.org/doc/html/rfc6750
+- RFC 9457, Problem Details for HTTP APIs: https://www.rfc-editor.org/rfc/rfc9457.html
+- OWASP, HTML5 Security Cheat Sheet (Web Storage): https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html
+- OWASP, JSON Web Token Cheat Sheet for Java: https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html
+- Vite, `server.proxy`: https://vite.dev/config/server-options.html#server-proxy
