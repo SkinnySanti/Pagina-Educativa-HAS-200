@@ -20,6 +20,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
 
+    @ExceptionHandler(ReglaNegocioException.class)
+    ProblemDetail manejarReglaNegocio(ReglaNegocioException exception){
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(exception.getStatus(), exception.getMessage());
+        problemDetail.setProperty("codigo", exception.getCodigo());
+        return problemDetail;
+    }
+
     //Excepciones de Autenticación
     @ExceptionHandler(NoAutenticadoException.class)
     ProblemDetail noAutenticado(NoAutenticadoException exception){

@@ -16,6 +16,8 @@ public interface IntentoRepository extends Repository<Intento, Long> {
     Optional<Intento>
     findFirstByEstudianteIdAndExamenIdAndEstadoAndVenceEnAfterOrderByIniciadoEnDesc(
             Long estudianteId, Long examenId, EstadoIntento estado, Instant ahora);
+    boolean existsByEstudianteIdAndExamenIdAndEstado(
+            Long estudianteId, Long examenId, EstadoIntento estado);
 
     @Query("""
         select i.examen.id as examenId, i.id as intentoId

@@ -27,9 +27,7 @@ public class ExamenService {
     private final IntentoRepository intentoRepository;
     private final ProgresoGuiaRepository progresoGuiaRepository;
     private final IExamenRepository examenRepository;
-
-    @Value("${app.guias.pasos-por-modulo:6}")
-    private int pasosPorModulo;
+    private final GuiaPolicy guiaPolicy;
 
     @Transactional(readOnly = true)
     public List<ExamenResumenDto> listar(Long estudianteId){
@@ -78,7 +76,7 @@ public class ExamenService {
             return EstadoExamen.DISPONIBLE;
         }
         long hechos = pasosCompletados.getOrDefault("m" + e.getModulo(), 0L);
-        return hechos >= pasosPorModulo
+        return guiaPolicy.completa(hechos)
                 ? EstadoExamen.DISPONIBLE
                 : EstadoExamen.BLOQUEADO_GUIA;
     }
