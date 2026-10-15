@@ -198,7 +198,7 @@ public class IntentoService {
                         .filter(x -> x.getId().equals(r.opcionId()))
                         .findFirst().
                         orElseThrow(()-> ReglaNegocioException.invalido(
-                                "La opción " + r.opcionId() + " no pertenece a la pregunta" + pregunta.getId(), "OPCION_INVALIDA"));
+                                "La opción " + r.opcionId() + " no pertenece a la pregunta " + pregunta.getId(), "OPCION_INVALIDA"));
                 elegidas.put(pregunta.getId(), opcion);
             }
         }

@@ -3,8 +3,10 @@ package com.hass200.learning.backend_has200.controller;
 import com.hass200.learning.backend_has200.dto.request.EnviarIntentoRequest;
 import com.hass200.learning.backend_has200.dto.response.IntentoIniciadoDto;
 import com.hass200.learning.backend_has200.dto.response.ResultadoIntentoDto;
+import com.hass200.learning.backend_has200.dto.response.RevisionIntentoDto;
 import com.hass200.learning.backend_has200.exceptions.ReglaNegocioException;
 import com.hass200.learning.backend_has200.service.IntentoService;
+import com.hass200.learning.backend_has200.service.RevisionService;
 import jakarta.validation.Valid;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.*;
 public class IntentoController {
 
     private final IntentoService intentoService;
+    private final RevisionService revisionService;
 
-    public IntentoController(IntentoService intentoService) {
+    public IntentoController(IntentoService intentoService, RevisionService revisionService) {
+        this.revisionService = revisionService;
         this.intentoService = intentoService;
     }
 
@@ -44,5 +48,12 @@ public class IntentoController {
             throw ReglaNegocioException.conflicto(
                     "La evaluación diagnóstica ya fue presentada","DIAGNOSTICO_USADO");
         }
+    }
+
+    @GetMapping("/attempts/{id}/review")
+    public RevisionIntentoDto revision(@PathVariable Long id,
+                                       @AuthenticationPrincipal Jwt jwt){
+
+        return revisionService.revisar(Long.valueOf(jwt.getSubject()), id);
     }
 }
