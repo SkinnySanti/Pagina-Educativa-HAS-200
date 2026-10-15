@@ -1,15 +1,17 @@
 package com.hass200.learning.backend_has200.controller;
 
+import com.hass200.learning.backend_has200.dto.request.EnviarIntentoRequest;
 import com.hass200.learning.backend_has200.dto.response.IntentoIniciadoDto;
+import com.hass200.learning.backend_has200.dto.response.ResultadoIntentoDto;
+import com.hass200.learning.backend_has200.exceptions.ReglaNegocioException;
 import com.hass200.learning.backend_has200.service.IntentoService;
+import jakarta.validation.Valid;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -29,5 +31,18 @@ public class IntentoController {
 
         return ResponseEntity.status(dto.reanudado() ? HttpStatus.OK : HttpStatus.CREATED)
                 .body(dto);
+    }
+
+    @PostMapping("/exams/{id}/submit")
+    public ResultadoIntentoDto enviar (@PathVariable Long id,
+                                       @Valid @RequestBody EnviarIntentoRequest body,
+                                       @AuthenticationPrincipal Jwt jwt){
+        try{
+            return intentoService.enviar(Long.valueOf(jwt.getSubject()),id, body);
+        }catch (DataIntegrityViolationException e){
+            // Red de seguridad: UNIQUE de clave_intento_unico (dos envíos simultáneos del diagnóstico)
+            throw ReglaNegocioException.conflicto(
+                    "La evaluación diagnóstica ya fue presentada","DIAGNOSTICO_USADO");
+        }
     }
 }

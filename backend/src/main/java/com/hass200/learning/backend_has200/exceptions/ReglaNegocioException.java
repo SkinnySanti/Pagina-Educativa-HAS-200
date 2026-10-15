@@ -27,4 +27,8 @@ public class ReglaNegocioException extends RuntimeException {
     public static ReglaNegocioException prohibido(String message, String codigo){
         return new ReglaNegocioException(message, HttpStatus.FORBIDDEN, codigo);
     }
+
+    public static ReglaNegocioException invalido(String message, String codigo){
+        return  new ReglaNegocioException(message, HttpStatus.BAD_REQUEST, codigo);
+    }
 }

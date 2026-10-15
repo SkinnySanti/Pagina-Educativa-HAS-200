@@ -16,3 +16,5 @@ app:
     refresh-ttl: 7d
   guias:
     pasos-por-modulo: 6
+  intentos:
+    segundos-gracia: 10

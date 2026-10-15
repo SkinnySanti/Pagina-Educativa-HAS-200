@@ -2,6 +2,8 @@ package com.hass200.learning.backend_has200.repository;
 
 import com.hass200.learning.backend_has200.models.Intento;
 import com.hass200.learning.backend_has200.models.enums.EstadoIntento;
+import jakarta.persistence.LockModeType;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
@@ -29,6 +31,14 @@ public interface IntentoRepository extends Repository<Intento, Long> {
     List<IntentoEnCursoResumen> listarEnCursoVigentes(
             @Param("estudianteId") Long estudianteId,
             @Param("ahora") Instant ahora);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
+    select i from Intento i
+    where i.id = :id and i.estudiante.id = :estudianteId
+    """)
+    Optional<Intento> bloquearPorIdYEstudiante(@Param("id") Long id,
+                                               @Param("estudianteId") Long estudianteId);
 
     @Query("""
         select distinct i.examen.id
