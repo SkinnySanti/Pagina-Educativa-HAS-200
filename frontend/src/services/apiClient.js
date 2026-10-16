@@ -6,10 +6,11 @@ import * as storage from './authStorage.js'
 // code: 'network' | 'invalid' | 'conflict' | 'validation' | 'rate' | 'session' | 'server'
 // (la interfaz lo traduce con i18n/auth.*.js → server)
 export class ApiError extends Error {
-  constructor(status, { detail = '', fields = null, retryAfter = null, code } = {}) {
+  constructor(status, { detail = '', fields = null, retryAfter = null, code, codigo = null } = {}) {
     super(detail || `HTTP ${status}`)
     this.status = status
     this.detail = detail
+    this.codigo = codigo // código de negocio del backend (p. ej. 'DIAGNOSTICO_USADO'): la UI decide por él, no por `detail`
     this.fields = fields // { correo: '...', alias: '...' } en los 400 de validación
     this.retryAfter = retryAfter // segundos, si llega 429 con Retry-After
     this.code = code || codeFor(status)
@@ -39,6 +40,7 @@ async function toApiError(res) {
   const retry = Number(res.headers.get('Retry-After'))
   return new ApiError(res.status, {
     detail: problem?.detail || '',
+    codigo: typeof problem?.codigo === 'string' ? problem.codigo : null,
     fields: problem?.errores && typeof problem.errores === 'object' ? problem.errores : null,
     retryAfter: Number.isFinite(retry) && retry > 0 ? retry : null,
   })
@@ -110,11 +112,13 @@ export function refreshSession() {
 
 // auth: true  → ruta protegida (Bearer + renovación + un reintento tras 401)
 // auth: false → ruta pública (/api/auth/*): nunca se reintenta (evita bucles)
-export async function request(path, { method = 'GET', body, auth = true } = {}) {
+// raw: true   → devuelve { data, status, serverDate } en vez de solo el JSON (el cronómetro de los exámenes
+//               usa la cabecera Date y distingue 201 de 200)
+export async function request(path, { method = 'GET', body, auth = true, raw = false } = {}) {
   if (!auth) {
     const res = await rawFetch(path, { method, body })
     if (!res.ok) throw await toApiError(res)
-    return readJson(res)
+    return raw ? shape(res) : readJson(res)
   }
 
   if (!storage.hasSession()) throw new ApiError(401, { code: 'session' })
@@ -127,5 +131,9 @@ export async function request(path, { method = 'GET', body, auth = true } = {}) 
     res = await rawFetch(path, { method, body, token: storage.getAccessToken() }) // un solo reintento
   }
   if (!res.ok) throw await toApiError(res)
-  return readJson(res)
+  return raw ? shape(res) : readJson(res)
+}
+
+async function shape(res) {
+  return { data: await readJson(res), status: res.status, serverDate: res.headers.get('Date') }
 }

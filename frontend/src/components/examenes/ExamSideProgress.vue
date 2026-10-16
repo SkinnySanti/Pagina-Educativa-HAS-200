@@ -35,7 +35,7 @@ const pct = computed(() => (props.completedCount / 4) * 100)
           <button type="button" :aria-current="option === o ? 'true' : undefined" @click="emit('select', o)">
             <span class="d">
               <AppIcon v-if="completed(o, i)" name="check" :size="14" />
-              <AppIcon v-else-if="statuses[o][i] !== 'available'" name="lock" :size="12" />
+              <AppIcon v-else-if="statuses[o][i] === 'locked'" name="lock" :size="12" />
               <template v-else>{{ i + 1 }}</template>
             </span>
             <span class="tt">{{ m.tag }} · {{ m.guide }}</span>

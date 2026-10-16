@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 import '../styles/guias.css'
 import AppIcon from '../components/common/AppIcon.vue'
 import RevealOnScroll from '../components/common/RevealOnScroll.vue'
@@ -36,14 +36,19 @@ const progresses = {
   m2: useGuideProgress('m2', modules.m2.length),
 }
 
-const mod = ref('m1')
+// Desde la revisión de un examen se llega con ?modulo=1&paso=3 (paso en base 1, como se ve en pantalla).
+const route = useRoute()
+const qMod = route.query.modulo === '2' ? 'm2' : 'm1'
+const qStep = Number.parseInt(route.query.paso, 10) - 1
+
+const mod = ref(qMod)
 const steps = computed(() => modules[mod.value])
 const total = computed(() => steps.value.length)
 const titles = computed(() => (mod.value === 'm2' ? g.value.m2.toc.steps : g.value.toc.steps))
 const progress = computed(() => progresses[mod.value])
 
 // Si ya avanzó, retoma en el primer paso sin leer; si terminó todo, empieza de nuevo.
-const current = ref(progresses.m1.resumeAt.value)
+const current = ref(qStep >= 0 && qStep < modules[qMod].length ? qStep : progresses[qMod].resumeAt.value)
 const finished = ref(false)
 
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches

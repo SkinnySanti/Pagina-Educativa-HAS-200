@@ -12,6 +12,8 @@ const emit = defineEmits(['update:modelValue'])
 const { t } = useI18n()
 const e = computed(() => t.value.examenes)
 const icons = ['target', 'flag']
+// available/used → check · loading → reloj · locked/login → candado
+const stateIcon = (s) => (s === 'available' || s === 'used' ? 'check' : s === 'loading' ? 'clock' : 'lock')
 </script>
 
 <template>
@@ -28,8 +30,8 @@ const icons = ['target', 'flag']
           <b>{{ o.title }}</b>
           <span>{{ o.text }}</span>
         </span>
-        <span class="ex-state" :class="{ ok: props.statuses[i] === 'available' }">
-          <AppIcon :name="props.statuses[i] === 'available' ? 'check' : 'lock'" :size="14" />
+        <span class="ex-state" :class="{ ok: ['available', 'used'].includes(props.statuses[i]) }">
+          <AppIcon :name="stateIcon(props.statuses[i])" :size="14" />
           {{ e.state[props.statuses[i]] }}
         </span>
       </button>

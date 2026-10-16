@@ -3,7 +3,12 @@ import { computed, ref } from 'vue'
 import { useI18n } from '../../i18n'
 
 // Confirmación antes de comenzar un examen (<dialog> nativo: el foco queda dentro y Esc la cierra).
-defineProps({ name: { type: String, default: '' } })
+// `minutes` sale de tiempoLimiteMinutos (no se hardcodea); `single` avisa del único intento del diagnóstico.
+defineProps({
+  name: { type: String, default: '' },
+  minutes: { type: Number, default: null },
+  single: Boolean,
+})
 const emit = defineEmits(['confirm'])
 const { t } = useI18n()
 const d = computed(() => t.value.examenes.dialog)
@@ -19,7 +24,8 @@ function confirm() {
 <template>
   <dialog ref="dlg" aria-labelledby="exam-dlg-title" @click="onBackdrop">
     <h3 id="exam-dlg-title">{{ d.title }}</h3>
-    <p>{{ d.text(name) }}</p>
+    <p>{{ d.text(name, minutes) }}</p>
+    <p v-if="single" class="single">{{ d.single }}</p>
     <div class="acts">
       <button type="button" class="btn btn-ghost" @click="dlg.close()">{{ d.cancel }}</button>
       <button type="button" class="btn btn-primary" @click="confirm">{{ d.confirm }}</button>
@@ -36,5 +42,6 @@ dialog {
 dialog::backdrop { background: var(--overlay); }
 h3 { font-size: 20px; margin-bottom: 8px; }
 p { color: var(--ink-2); font-size: 14.5px; margin-bottom: 16px; }
+.single { margin-top: -6px; padding: 10px 12px; border-radius: 12px; background: var(--tint-pr); color: var(--ink-pr); font-weight: 600; }
 .acts { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
 </style>

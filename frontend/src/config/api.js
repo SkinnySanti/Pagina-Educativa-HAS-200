@@ -19,6 +19,14 @@ export const AUTH_ENDPOINTS = {
   me: '/api/me',                  // GET   protegido → 200 + estudiante
 }
 
+// Endpoints de exámenes (CONTEXTO_FRONTEND_EXAMENES_v1.md, secciones 4 a 7). Todos exigen sesión.
+export const EXAM_ENDPOINTS = {
+  list: '/api/exams',                                  // GET   → los 4 exámenes con su `estado`
+  start: (examId) => `/api/exams/${examId}/attempts`,  // POST  → 201 (nuevo) o 200 (reanudado) + preguntas + venceEn
+  submit: (attemptId) => `/api/exams/${attemptId}/submit`, // POST { respuestas } → 200 { aciertos, total, puntaje }
+  review: (attemptId) => `/api/attempts/${attemptId}/review`, // GET   → errores con respuesta correcta y explicación
+}
+
 // Claves de localStorage donde se guardan los tokens (solo las toca services/authStorage.js).
 export const STORAGE_KEYS = {
   access: 'has200.accessToken',
