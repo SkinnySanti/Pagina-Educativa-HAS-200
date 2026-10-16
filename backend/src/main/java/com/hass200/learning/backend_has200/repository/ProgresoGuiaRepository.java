@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.Instant;
 import java.util.List;
 
-public interface    ProgresoGuiaRepository extends Repository<ProgresoGuia, ProgresoGuiaId> {
+public interface ProgresoGuiaRepository extends Repository<ProgresoGuia, ProgresoGuiaId> {
 
     List<ProgresoGuia> findByIdEstudianteId(Long estudianteId);
 
@@ -26,4 +26,12 @@ public interface    ProgresoGuiaRepository extends Repository<ProgresoGuia, Prog
                    @Param("modulo") String modulo,
                    @Param("paso") int paso,
                    @Param("creadoEn") Instant creadoEn);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = """
+    DELETE FROM progreso_guia
+    WHERE estudiante_id = :estudianteId AND modulo = :modulo
+    """, nativeQuery = true)
+    int borrarModulo(@Param("estudianteId") Long estudianteId,
+                     @Param("modulo") String modulo);
 }
