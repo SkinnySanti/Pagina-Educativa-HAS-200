@@ -38,7 +38,7 @@ const pct = computed(() => (props.completedCount / 4) * 100)
               <AppIcon v-else-if="statuses[o][i] === 'locked'" name="lock" :size="12" />
               <template v-else>{{ i + 1 }}</template>
             </span>
-            <span class="tt">{{ m.tag }} · {{ m.guide }}</span>
+            <span class="tt">{{ m.tag }} · {{m.guide }}</span>
           </button>
         </li>
       </ul>

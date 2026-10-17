@@ -7,7 +7,7 @@
 // URL base del servidor Spring, sin "/" al final. Se define en .env (ver .env.example):
 //   VITE_API_BASE_URL=https://api.midominio.com
 // Vacío = rutas relativas ("/api/..."): en desarrollo pasan por el proxy de vite.config.js
-// (el backend aún no tiene CORS, así que en desarrollo déjala VACÍA).
+// En desarrollo déjala VACÍA).
 export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/+$/, '')
 
 // Endpoints de autenticación (README_ENDPOINTS.md, sección 3).
@@ -26,6 +26,12 @@ export const EXAM_ENDPOINTS = {
   submit: (attemptId) => `/api/exams/${attemptId}/submit`, // POST { respuestas } → 200 { aciertos, total, puntaje }
   review: (attemptId) => `/api/attempts/${attemptId}/review`, // GET   → errores con respuesta correcta y explicación
 }
+
+// Progreso de las guías (CONTEXTO v1.1, sección 10.5). Todas devuelven 200 con el estado completo { m1: [...], m2: [...] }.
+//   GET    /api/me/progress              → estado completo
+//   PUT    /api/me/progress              { modulo: 'm1', paso: 3 } → idempotente; paso en base 0 (0 a 5)
+//   DELETE /api/me/progress/{modulo}     → reinicia solo ese módulo
+export const PROGRESS_ENDPOINT = '/api/me/progress'
 
 // Claves de localStorage donde se guardan los tokens (solo las toca services/authStorage.js).
 export const STORAGE_KEYS = {

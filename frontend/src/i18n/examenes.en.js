@@ -6,7 +6,7 @@ export default {
     badge: 'Exams module',
     title: 'Put what you learned to the test',
     text: 'Two kinds of exam, one per module. Each exam has 10 questions, 2 of them in English.',
-    chips: ['2 exam types', '10 questions per exam', '2 questions in English', 'Up to 60 minutes'],
+    chips: ['2 exam types', '10 questions per exam', '2 questions in English', 'Up to 30 minutes'],
   },
   notice: {
     title: 'Log in to take the exams',
@@ -31,7 +31,7 @@ export default {
   before: {
     title: 'Before you start',
     items: [
-      'Each exam lasts up to 60 minutes.',
+      'Each exam lasts up to 30 minutes.',
       'Look for a quiet environment without distractions.',
       'You will encounter 10 questions and 2 are in English.',
       'If your session drops, log in again and resume your attempt; your marked answers are kept in this browser.',
@@ -46,7 +46,7 @@ export default {
     // Values that come from the server (totalPreguntas, preguntasEnIngles, tiempoLimiteMinutos): not hardcoded.
     meta: {
       questions: (n, en) => `${n} questions · ${en} in English`,
-      time: (min) => (min ? `${min} min` : 'Up to 60 min'),
+      time: (min) => (min ? `${min} min` : 'Up to 30 min'),
       score: 'Score when finished',
     },
     start: 'Start exam',
@@ -54,6 +54,7 @@ export default {
     starting: 'Starting…',
     loading: 'Loading…',
     review: 'View review',
+    goGuide: 'Go to the guide',
     lastReview: 'View last review',
     used: 'You already took this diagnostic: it only has one attempt. You can view your review.',
     usedNoReview: 'You already took this diagnostic: it only has one attempt. The review of that attempt is not available in this browser.',
@@ -70,8 +71,8 @@ export default {
         'Finish the 6 steps of the Module 1 guide to unlock it.',
         'Finish the 6 steps of the Module 2 guide to unlock it.',
       ],
-      // Temporary: remove once guide progress is saved on the server (PUT /api/me/progress).
-      pendingSync: 'You already finished this guide, but the server has not recorded your progress yet. It will unlock once your progress is saved to your account.',
+      // The guide shows as complete but the server has not confirmed it yet (the last step failed or is still saving).
+      pendingSync: 'You already finished this guide, but your latest progress is not confirmed in your account yet. Open the guide to retry saving it.',
     },
   },
   side: {
@@ -85,7 +86,7 @@ export default {
   dialog: {
     title: 'Before you start',
     text: (name, min) =>
-      `${name}. It has 10 questions (2 in English) and lasts ${min ? `${min} minutes` : 'up to 60 minutes'}; the clock runs on the server. If your session drops, log in again and resume your attempt.`,
+      `${name}. It has 10 questions (2 in English) and lasts ${min ? `${min} minutes` : 'up to 30 minutes'}. If your session drops, log in again and resume your attempt.`,
     single: 'This is a diagnostic assessment: you can only submit it once. If you leave without submitting, the clock keeps running.',
     cancel: 'Cancel',
     confirm: 'Start',
@@ -127,7 +128,7 @@ export default {
       INGLES: 'English',
       FUNCIONAMIENTO: 'Operation',
       TERMINOS_TECNICOS: 'Technical terms',
-      PENSAMIENTO_SECUENCIAL: 'Sequential thinking',
+      PENSAMIENTO_SISTEMICO: 'Systems thinking',
     },
     // `concepto` arrives as a stable key (16 in total, 8 per module). The ones missing from the backend context
     // still need to be filled in: meanwhile a readable version of the key is shown (e.g. "Funcion actuador").

@@ -53,6 +53,26 @@ export default {
     readSuffix: 'read',
   },
 
+  // Syncing progress with the account (GET/PUT/DELETE /api/me/progress)
+  sync: {
+    loginHint: 'You can read the guide without an account, but your progress will not be saved and will not unlock the post learning-path exam.',
+    loginCta: 'Log in',
+    loadError: 'We could not load your saved progress. If you continue, what you already completed will not show.',
+    saveError: 'We could not save your progress. Until it is saved, your post learning-path exam stays locked.',
+    retry: 'Retry',
+    reset: {
+      button: 'Restart this guide',
+      title: 'Restart guide',
+      text: (n) =>
+        `This restarts your progress in Guide ${n} and locks the post learning-path exam until you complete it again; your previous attempts are not deleted.`,
+      confirm: 'Yes, restart',
+      cancel: 'Cancel',
+      working: 'Restarting…',
+      networkError: 'We could not reach the server. Check your connection and try again.',
+      genericError: 'We could not restart the guide. Please try again in a moment.',
+    },
+  },
+
   s1: {
     title: 'A factory always does the same thing: in, process, out',
     kicker: 'Explore the examples',

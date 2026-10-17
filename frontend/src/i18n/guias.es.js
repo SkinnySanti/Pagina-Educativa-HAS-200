@@ -54,6 +54,26 @@ export default {
     readSuffix: 'leído',
   },
 
+  // Sincronización del avance con la cuenta (GET/PUT/DELETE /api/me/progress)
+  sync: {
+    loginHint: 'Puedes leer la guía sin cuenta, pero tu avance no se guardará y no desbloqueará el examen post recorrido.',
+    loginCta: 'Iniciar sesión',
+    loadError: 'No pudimos cargar tu avance guardado. Si sigues, no se verá lo que ya completaste.',
+    saveError: 'No pudimos guardar tu avance. Mientras no se guarde, tu examen post recorrido seguirá bloqueado.',
+    retry: 'Reintentar',
+    reset: {
+      button: 'Reiniciar esta guía',
+      title: 'Reiniciar guía',
+      text: (n) =>
+        `Esto reinicia tu avance en la Guía ${n} y bloquea el examen post recorrido hasta que la completes de nuevo; tus intentos anteriores no se borran.`,
+      confirm: 'Sí, reiniciar',
+      cancel: 'Cancelar',
+      working: 'Reiniciando…',
+      networkError: 'No pudimos conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.',
+      genericError: 'No pudimos reiniciar la guía. Inténtalo de nuevo en un momento.',
+    },
+  },
+
   s1: {
     title: 'Una fábrica siempre hace lo mismo: entra, procesa, sale',
     kicker: 'Explora los ejemplos',

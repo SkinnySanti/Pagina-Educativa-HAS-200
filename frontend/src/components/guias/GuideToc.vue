@@ -8,8 +8,9 @@ const props = defineProps({
   seen: { type: Object, required: true }, // Set con los pasos leídos
   finished: Boolean,
   steps: { type: Array, required: true }, // títulos de los pasos del módulo activo
+  canReset: Boolean, // con sesión y con avance que reiniciar
 })
-const emit = defineEmits(['go'])
+const emit = defineEmits(['go', 'reset'])
 const { t } = useI18n()
 const g = computed(() => t.value.guias)
 const total = computed(() => props.steps.length)
@@ -60,6 +61,10 @@ watch(
         </button>
       </li>
     </ol>
+
+    <button v-if="canReset" type="button" class="reset" @click="emit('reset')">
+      <AppIcon name="refresh" :size="14" />{{ g.sync.reset.button }}
+    </button>
   </aside>
 </template>
 
@@ -90,6 +95,11 @@ li button:hover .d { transform: scale(1.12); }
 li.done .d { background: var(--green-cta); border-color: var(--green-cta); color: var(--on-cta); }
 li.on button { background: var(--tint-blue); color: var(--blue-900); font-weight: 600; box-shadow: inset 3px 0 0 var(--blue-900); }
 li.on .d { background: var(--blue-900); border-color: var(--blue-900); color: var(--on-accent); }
+.reset {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 6px 4px; background: none; border: 0;
+  border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ink-2); text-decoration: underline;
+}
+.reset:hover { color: var(--danger); }
 
 @media (max-width: 1040px) {
   .toc { position: static; }

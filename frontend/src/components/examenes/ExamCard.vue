@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 import AppIcon from '../common/AppIcon.vue'
 import { useI18n } from '../../i18n'
 
@@ -10,7 +11,7 @@ const props = defineProps({
   option: { type: Number, required: true }, // 0 diagnóstica · 1 post recorrido
   module: { type: Number, required: true }, // 0 = Módulo 1 · 1 = Módulo 2
   status: { type: String, required: true },
-  guide: { type: Object, required: true }, // { done, count, total } del avance LOCAL de la guía de este módulo
+  guide: { type: Object, required: true }, // { done, count, total, ready } del avance de la guía de este módulo (servidor)
   exam: { type: Object, default: null }, // fila de GET /api/exams (tiempoLimiteMinutos, intentoEnCursoId…)
   busy: Boolean, // se está iniciando ESTE examen (botón deshabilitado: evita dos intentos)
   disabled: Boolean, // hay otro examen abierto en pantalla
@@ -34,12 +35,14 @@ const showLock = computed(() => props.status === 'locked' || props.status === 'l
 const lockText = computed(() => {
   const lock = e.value.card.lock
   if (props.status === 'login') return props.option === 0 ? lock.login : lock.loginGuide[props.module]
-  // El servidor aún no recibe el avance de las guías (falta PUT /api/me/progress): si localmente ya está completa, se explica.
+  // El servidor sigue diciendo "bloqueado" aunque la guía aparece completa: el último paso aún no se confirmó en la cuenta.
   if (props.guide.done) return lock.pendingSync
   return lock.guide[props.module]
 })
-// Barra de avance de la guía: solo con sesión y mientras falta terminarla (Módulo 1 tiene 6 pasos).
-const showProgress = computed(() => props.status === 'locked' && props.guide.total && !props.guide.done)
+// Barra de avance de la guía: solo con sesión, ya cargado el avance, y mientras falta terminarla.
+const showProgress = computed(() => props.status === 'locked' && props.guide.total && props.guide.ready !== false && !props.guide.done)
+// Enlace directo a la guía de este módulo (la guía retoma en el primer paso sin leer).
+const guideTo = computed(() => ({ path: '/guias', query: { modulo: String(props.module + 1) } }))
 const pct = computed(() => (props.guide.total ? (props.guide.count / props.guide.total) * 100 : 0))
 </script>
 
@@ -77,6 +80,9 @@ const pct = computed(() => (props.guide.total ? (props.guide.count / props.guide
         </div>
         <span class="pp">{{ e.card.steps(guide.count, guide.total) }}</span>
       </template>
+      <RouterLink v-if="status === 'locked'" :to="guideTo" class="golink">
+        {{e.card.goGuide }}<AppIcon name="chevron-right" :size="14" />
+      </RouterLink>
     </div>
 
     <div v-else-if="used" class="lockbox info">
@@ -138,6 +144,8 @@ h3 { font-size: 19px; font-weight: 700; margin-top: 4px; }
 .bar { height: 8px; border-radius: 9px; background: var(--line); overflow: hidden; margin: 10px 0 4px; }
 .bar i { display: block; height: 100%; background: var(--grad); transition: width 0.4s ease; }
 .pp { font-size: 12.5px; font-weight: 600; color: var(--blue-900); }
+.golink { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 13.5px; font-weight: 700; color: var(--blue-900); text-decoration: none; border-radius: 6px; margin-left: 12px;}
+.golink:hover { text-decoration: underline; }
 
 .acts { margin-top: auto; display: grid; gap: 8px; }
 .acts:empty { display: none; }

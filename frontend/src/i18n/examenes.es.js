@@ -6,7 +6,7 @@ export default {
     badge: 'Módulo de exámenes',
     title: 'Pon a prueba lo aprendido',
     text: 'Dos tipos de examen, uno por cada módulo. Cada examen tiene 10 preguntas, 2 de ellas en inglés.',
-    chips: ['2 tipos de examen', '10 preguntas por examen', '2 preguntas en inglés', 'Hasta 60 minutos'],
+    chips: ['2 tipos de examen', '10 preguntas por examen', '2 preguntas en inglés', 'Hasta 30 minutos'],
   },
   notice: {
     title: 'Inicia sesión para presentar los exámenes',
@@ -31,7 +31,7 @@ export default {
   before: {
     title: 'Antes de empezar',
     items: [
-      'Cada examen dura hasta 60 minutos.',
+      'Cada examen dura hasta 30 minutos.',
       'Busca un entorno tranquilo y sin distracciones.',
       'Te encontrarás con 10 preguntas y 2 están en inglés.',
       'Si tu sesión se interrumpe, vuelve a entrar y retoma tu intento; tus respuestas marcadas se conservan en este navegador.',
@@ -46,7 +46,7 @@ export default {
     // Datos que vienen del servidor (totalPreguntas, preguntasEnIngles, tiempoLimiteMinutos): no se hardcodean.
     meta: {
       questions: (n, en) => `${n} preguntas · ${en} en inglés`,
-      time: (min) => (min ? `${min} min` : 'Hasta 60 min'),
+      time: (min) => (min ? `${min} min` : 'Hasta 30 min'),
       score: 'Puntaje al terminar',
     },
     start: 'Comenzar examen',
@@ -54,6 +54,7 @@ export default {
     starting: 'Iniciando…',
     loading: 'Cargando…',
     review: 'Ver revisión',
+    goGuide: 'Ir a la guía',
     lastReview: 'Ver última revisión',
     used: 'Ya presentaste esta evaluación diagnóstica: solo tiene un intento. Puedes ver tu revisión.',
     usedNoReview: 'Ya presentaste esta evaluación diagnóstica: solo tiene un intento. La revisión de ese intento no está disponible en este navegador.',
@@ -70,8 +71,8 @@ export default {
         'Termina los 6 pasos de la guía del Módulo 1 para desbloquearlo.',
         'Termina los 6 pasos de la guía del Módulo 2 para desbloquearlo.',
       ],
-      // Temporal: se quita cuando el avance de las guías se guarde en el servidor (PUT /api/me/progress).
-      pendingSync: 'Ya terminaste esta guía, pero el servidor aún no registra tu avance. Se desbloqueará cuando tu progreso se guarde en tu cuenta.',
+      // La guía figura completa pero el servidor aún no lo confirma (falló o sigue guardándose el último paso).
+      pendingSync: 'Ya terminaste esta guía, pero tu último avance aún no se confirma en tu cuenta. Abre la guía para reintentar guardarlo.',
     },
   },
   side: {
@@ -85,7 +86,7 @@ export default {
   dialog: {
     title: 'Antes de comenzar',
     text: (name, min) =>
-      `${name}. Tiene 10 preguntas (2 en inglés) y dura ${min ? `${min} minutos` : 'hasta 60 minutos'}; el tiempo corre en el servidor. Si tu sesión se interrumpe, inicia sesión de nuevo y reanuda tu intento.`,
+      `${name}. Tiene 10 preguntas (2 en inglés) y dura ${min ? `${min} minutos` : 'hasta 30 minutos'}. Si tu sesión se interrumpe, inicia sesión de nuevo y reanuda tu intento.`,
     single: 'Es una evaluación diagnóstica: solo puedes enviarla una vez. Si sales sin enviarla, el tiempo sigue corriendo.',
     cancel: 'Cancelar',
     confirm: 'Comenzar',
@@ -127,7 +128,7 @@ export default {
       INGLES: 'Inglés',
       FUNCIONAMIENTO: 'Funcionamiento',
       TERMINOS_TECNICOS: 'Términos técnicos',
-      PENSAMIENTO_SECUENCIAL: 'Pensamiento secuencial',
+      PENSAMIENTO_SISTEMICO: 'Pensamiento sistémico',
     },
     // `concepto` llega como clave estable (16 en total, 8 por módulo). Falta completar las que no aparecen en el
     // contexto del backend: mientras tanto se muestra la clave legible (ej. "Funcion actuador").

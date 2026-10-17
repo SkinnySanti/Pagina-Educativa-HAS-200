@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import '../styles/guias.css'
 import AppIcon from '../components/common/AppIcon.vue'
@@ -8,6 +8,7 @@ import GuideHero from '../components/guias/GuideHero.vue'
 import ModulePicker from '../components/guias/ModulePicker.vue'
 import GuideToc from '../components/guias/GuideToc.vue'
 import GuideFinish from '../components/guias/GuideFinish.vue'
+import GuideResetDialog from '../components/guias/GuideResetDialog.vue'
 import Step1Flow from '../components/guias/steps/Step1Flow.vue'
 import Step2Stations from '../components/guias/steps/Step2Stations.vue'
 import Step3Quiz from '../components/guias/steps/Step3Quiz.vue'
@@ -20,7 +21,7 @@ import M2Step3Journey from '../components/guias/m2/M2Step3Journey.vue'
 import M2Step4Network from '../components/guias/m2/M2Step4Network.vue'
 import M2Step5Scada from '../components/guias/m2/M2Step5Scada.vue'
 import M2Step6Match from '../components/guias/m2/M2Step6Match.vue'
-import { useGuideProgress } from '../composables/useGuideProgress'
+import { useGuideProgress, useGuideSync } from '../composables/useGuideProgress'
 import { useI18n } from '../i18n'
 
 const { t } = useI18n()
@@ -41,6 +42,8 @@ const route = useRoute()
 const qMod = route.query.modulo === '2' ? 'm2' : 'm1'
 const qStep = Number.parseInt(route.query.paso, 10) - 1
 
+const hasQueryStep = qStep >= 0 && qStep < modules[qMod].length
+
 const mod = ref(qMod)
 const steps = computed(() => modules[mod.value])
 const total = computed(() => steps.value.length)
@@ -51,6 +54,48 @@ const progress = computed(() => progresses[mod.value])
 const current = ref(qStep >= 0 && qStep < modules[qMod].length ? qStep : progresses[qMod].resumeAt.value)
 const finished = ref(false)
 
+// El avance llega del servidor DESPUÉS de montar la página: cuando llega, se retoma en el primer paso sin leer,
+// salvo que el estudiante ya se haya movido o venga de la revisión de un examen con ?paso=.
+const sync = useGuideSync()
+let touched = false
+watch(sync.loadState, (s) => {
+  if (s === 'ready' && !touched && !hasQueryStep) current.value = progresses[mod.value].resumeAt.value
+})
+
+// Aviso de sincronización: sin sesión el avance no se guarda; con sesión, si falló cargarlo o guardarlo.
+const banner = computed(() => {
+  if (!sync.loggedIn.value) return { kind: 'info', text: g.value.sync.loginHint, login: true }
+  if (sync.loadState.value === 'error') return { kind: 'err', text: g.value.sync.loadError, retry: true }
+  if (sync.saveError.value) return { kind: 'err', text: g.value.sync.saveError, retry: true }
+  return null
+})
+const loginTo = computed(() => ({ name: 'login', query: { redirect: route.fullPath } }))
+
+// Reiniciar la guía (DELETE /api/me/progress/{modulo}) con confirmación; es pesimista: solo cambia si el servidor confirma.
+const canReset = computed(() => sync.loggedIn.value && sync.loadState.value === 'ready' && progress.value.count.value > 0)
+const resetDlg = ref(null)
+const resetBusy = ref(false)
+const resetError = ref('')
+function askReset() {
+  resetError.value = ''
+  resetDlg.value?.open()
+}
+async function confirmReset() {
+  resetBusy.value = true
+  resetError.value = ''
+  try {
+    await progress.value.reset()
+    resetDlg.value?.close()
+    finished.value = false
+    current.value = 0
+    toTop()
+  } catch (e) {
+    resetError.value = e?.code === 'network' ? g.value.sync.reset.networkError : g.value.sync.reset.genericError
+  } finally {
+    resetBusy.value = false
+  }
+}
+
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 function toTop() {
   document.getElementById('guia-layout')?.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' })
@@ -59,6 +104,7 @@ function toTop() {
 const focusTitle = () => document.getElementById('guia-paso')?.focus({ preventScroll: true })
 
 function selectModule(key) {
+  touched = true
   if (key !== mod.value) {
     mod.value = key
     finished.value = false
@@ -67,6 +113,7 @@ function selectModule(key) {
   toTop()
 }
 function go(i) {
+  touched = true
   finished.value = false
   current.value = i
   toTop()
@@ -93,6 +140,12 @@ const prev = () => current.value > 0 && go(current.value - 1)
     <GuideHero :module="mod" />
     <RevealOnScroll><ModulePicker :active="mod" @select="selectModule" /></RevealOnScroll>
 
+    <p v-if="banner" class="card sync" :class="banner.kind" :role="banner.kind === 'err' ? 'alert' : 'status'">
+      <AppIcon :name="banner.kind === 'err' ? 'alert' : 'lock'" :size="18" /><span>{{ banner.text }}</span>
+      <RouterLink v-if="banner.login" :to="loginTo" class="btn btn-ghost">{{ g.sync.loginCta }}</RouterLink>
+      <button v-if="banner.retry" type="button" class="btn btn-ghost" @click="sync.retry()">{{ g.sync.retry }}</button>
+    </p>
+
     <div id="guia-layout" class="layout">
       <div class="col">
         <Transition name="gstep" mode="out-in" @after-enter="focusTitle">
@@ -112,8 +165,18 @@ const prev = () => current.value > 0 && go(current.value - 1)
         </nav>
       </div>
 
-      <GuideToc :current="current" :seen="progress.seen.value" :finished="finished" :steps="titles" @go="go" />
+      <GuideToc
+        :current="current"
+        :seen="progress.seen.value"
+        :finished="finished"
+        :steps="titles"
+        :can-reset="canReset"
+        @go="go"
+        @reset="askReset"
+      />
     </div>
+
+    <GuideResetDialog ref="resetDlg" :module="mod" :busy="resetBusy" :error="resetError" @confirm="confirmReset" />
   </div>
 </template>
 
@@ -130,6 +193,12 @@ const prev = () => current.value > 0 && go(current.value - 1)
 .col { display: grid; gap: 18px; min-width: 0; }
 
 .pager { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+
+.sync { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 12px 16px; font-size: 14px; font-weight: 600; }
+.sync span { flex: 1 1 240px; }
+.sync.info { background: var(--tint-blue); color: var(--ink); }
+.sync.err { background: var(--danger-tint); color: var(--danger); }
+.sync .btn { padding: 8px 14px; font-size: 14px; }
 
 .gstep-enter-active, .gstep-leave-active { transition: opacity 0.2s ease, transform 0.2s ease; }
 .gstep-enter-from { opacity: 0; transform: translateY(8px); }

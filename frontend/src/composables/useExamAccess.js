@@ -1,6 +1,6 @@
 import { computed, ref, watch } from 'vue'
 import { useAuth } from './useAuth.js'
-import { MODULE1_STEPS, MODULE2_STEPS, useGuideProgress } from './useGuideProgress.js'
+import { MODULE1_STEPS, MODULE2_STEPS, useGuideProgress, whenGuideSynced } from './useGuideProgress.js'
 import * as examService from '../services/examService.js'
 import * as examStorage from '../services/examStorage.js'
 
@@ -24,11 +24,12 @@ export function useExamAccess() {
   const m1 = useGuideProgress('m1', MODULE1_STEPS)
   const m2 = useGuideProgress('m2', MODULE2_STEPS)
 
-  // Avance LOCAL de las guías: solo alimenta la barra de la tarjeta. El desbloqueo lo decide el servidor
-  // (leyendo progreso_guia), que hoy no recibe el avance hasta que exista PUT /api/me/progress (§11).
+  // Avance de las guías (viene de GET /api/me/progress): alimenta la barra de la tarjeta. El desbloqueo lo decide
+  // el servidor, que lee ese mismo progreso para calcular BLOQUEADO_GUIA; por eso, tras marcar un paso o reiniciar,
+  // la lista de exámenes se vuelve a pedir (ver reload).
   const guides = computed(() => [
-    { done: m1.complete.value, count: m1.count.value, total: MODULE1_STEPS },
-    { done: m2.complete.value, count: m2.count.value, total: MODULE2_STEPS },
+    { done: m1.complete.value, count: m1.count.value, total: MODULE1_STEPS, ready: m1.ready.value },
+    { done: m2.complete.value, count: m2.count.value, total: MODULE2_STEPS, ready: m2.ready.value },
   ])
 
   /* ───────────── Lista de exámenes (GET /api/exams) ───────────── */
@@ -49,6 +50,8 @@ export function useExamAccess() {
     const mine = ++seq
     if (loadState.value !== 'ready') loadState.value = 'loading' // al refrescar no se parpadea: se conserva la lista
     try {
+      // Si un PUT/DELETE de progreso sigue en vuelo, se espera: cambia el estado del post en el servidor (§10.5).
+      await whenGuideSynced()
       const data = await examService.listExams()
       if (mine !== seq) return
       exams.value = Array.isArray(data) ? data : []

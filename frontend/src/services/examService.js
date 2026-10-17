@@ -20,7 +20,7 @@ export async function startAttempt(examId) {
   return { ...data, skewMs }
 }
 
-/** POST /api/exams/{id}/submit → { intentoId, estado, aciertos, total, puntaje, enviadoEn }. */
+/** POST /api/attempts/{id}/submit → { intentoId, estado, aciertos, total, puntaje, enviadoEn }. */
 export const submitAttempt = (attemptId, respuestas) =>
   request(EXAM_ENDPOINTS.submit(attemptId), { method: 'POST', body: { respuestas } })
 
