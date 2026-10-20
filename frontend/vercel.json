@@ -1,6 +1,5 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
-  ],
-  "path": "/:pathMatch(.*)*", "component": "NotFoundView"
+  ]
 }

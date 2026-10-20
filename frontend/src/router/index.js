@@ -19,7 +19,6 @@ const routes = [
   { path: '/juegos', name: 'juegos', component: JuegosView },
   { path: '/login', name: 'login', component: AuthView, meta: { layout: 'auth', mode: 'login' } },
   { path: '/registro', name: 'registro', component: AuthView, meta: { layout: 'auth', mode: 'register' } },
-  { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 
 const router = createRouter({
