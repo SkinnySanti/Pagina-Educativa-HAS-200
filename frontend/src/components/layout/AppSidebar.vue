@@ -17,6 +17,7 @@ const items = [
   { key: 'inicio', icon: 'home', to: '/' },
   { key: 'guias', icon: 'book', to: '/guias' },
   { key: 'examenes', icon: 'clipboard', to: '/examenes' },
+  { key: 'juegos', icon: 'puzzle', to: '/juegos' },
   { key: 'feedback', icon: 'chat', to: null },
 ]
 </script>

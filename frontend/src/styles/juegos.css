@@ -1,0 +1,20 @@
+/* Estilos compartidos de la página de Juegos. Todo cuelga de .juegos (raíz de JuegosView)
+   y las clases propias llevan prefijo ju- para no chocar con Inicio, Guías ni Exámenes.
+   Los valores (radios, sombras, hover) son los mismos de Exámenes. */
+
+.juegos .btn { gap: 8px; }
+.juegos .btn.sm { padding: 8px 14px; font-size: 14px; }
+.juegos .btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+.juegos .btn-ghost { background: var(--surface); color: var(--ink-2); border-color: var(--line); }
+.juegos .btn-ghost:hover:not(:disabled) {
+  color: var(--blue-900); border-color: var(--blue-900);
+  transform: translateY(-1px); box-shadow: var(--shadow-card);
+}
+
+/* pastilla de módulo (Módulo 1 / Módulo 2) */
+.ju-pill {
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+  background: var(--tint-blue); color: var(--blue-900);
+}
+.ju-pill.ok { background: var(--tint-green); color: var(--ink-teal); }

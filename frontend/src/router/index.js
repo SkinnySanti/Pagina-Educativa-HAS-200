@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import InicioView from '../views/InicioView.vue'
 import GuiasView from '../views/GuiasView.vue'
 import ExamenesView from '../views/ExamenesView.vue'
+import JuegosView from '../views/JuegosView.vue'
 import AuthView from '../views/AuthView.vue'
 import { useAuth, authReady } from '../composables/useAuth'
 
@@ -14,6 +15,8 @@ const routes = [
   { path: '/guias', name: 'guias', component: GuiasView },
   // Pública a propósito: la página reacciona a la sesión (sin sesión se ve, pero no se presenta nada).
   { path: '/examenes', name: 'examenes', component: ExamenesView },
+  // Pública: los juegos de Educaplay son de repaso y no requieren sesión.
+  { path: '/juegos', name: 'juegos', component: JuegosView },
   { path: '/login', name: 'login', component: AuthView, meta: { layout: 'auth', mode: 'login' } },
   { path: '/registro', name: 'registro', component: AuthView, meta: { layout: 'auth', mode: 'register' } },
   { path: '/:pathMatch(.*)*', redirect: '/' },

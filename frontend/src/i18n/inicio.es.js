@@ -3,11 +3,13 @@
 import guias from './guias.es.js'
 import auth from './auth.es.js'
 import examenes from './examenes.es.js'
+import juegos from './juegos.es.js'
 
 export default {
   guias,
   auth,
   examenes,
+  juegos,
   brand: 'HAS 200 Learning',
   skip: 'Saltar al contenido',
   nav: {
@@ -15,6 +17,7 @@ export default {
     inicio: 'Inicio',
     guias: 'Guías',
     examenes: 'Exámenes',
+    juegos: 'Juegos',
     feedback: 'Retroalimentación',
     soon: 'Pronto',
     soonTitle: 'Disponible pronto',
