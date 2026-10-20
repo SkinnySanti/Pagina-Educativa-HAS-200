@@ -26,6 +26,11 @@ export default {
     pending: 'Creando cuenta…',
     hasAccount: '¿Ya tienes cuenta?',
   },
+  // Aviso cuando la primera petición tarda (el servidor despierta tras un rato sin uso).
+  slow: {
+    title: 'Esto puede llevar varios segundos…',
+    text: 'El servidor estaba en reposo y se está reactivando. No cierres ni recargues la página.',
+  },
   fields: {
     email: 'Correo electrónico',
     emailConfirm: 'Confirmar correo electrónico',

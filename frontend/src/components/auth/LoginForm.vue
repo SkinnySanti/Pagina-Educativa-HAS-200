@@ -4,6 +4,7 @@ import { RouterLink, useRoute, useRouter } from 'vue-router'
 import AuthField from './AuthField.vue'
 import { useFormFields } from '../../composables/useFormFields'
 import { useAuth } from '../../composables/useAuth'
+import { useSlowHint } from '../../composables/useSlowHint'
 import { serverMessage } from '../../utils/serverMessage'
 import { vEmail, vRequired } from '../../utils/validators'
 import { useI18n } from '../../i18n'
@@ -13,6 +14,7 @@ const a = computed(() => t.value.auth)
 const route = useRoute()
 const router = useRouter()
 const { login } = useAuth()
+const { slow, run } = useSlowHint()
 
 const form = useFormFields({
   email: { validate: vEmail },
@@ -34,7 +36,7 @@ async function onSubmit() {
   }
   pending.value = true
   try {
-    await login({ email: form.clean('email'), password: form.values.password })
+    await run(() => login({ email: form.clean('email'), password: form.values.password }))
     // Vuelve a donde iba (ruta protegida) o al inicio. Solo rutas internas ("/algo", nunca "//sitio.com").
     const to = String(route.query.redirect || '')
     router.push(to.startsWith('/') && !to.startsWith('//') ? to : '/')
@@ -79,9 +81,18 @@ async function onSubmit() {
 
     <p v-if="failure" class="status error" role="alert">{{ serverMessage(a, failure) }}</p>
 
-    <button class="btn btn-primary submit" type="submit" :disabled="pending">
+    <button class="btn btn-primary submit" type="submit" :disabled="pending" :aria-busy="pending">
+      <span v-if="pending" class="spin" aria-hidden="true"></span>
       {{ pending ? a.login.pending : a.login.submit }}
     </button>
+
+    <!-- Aviso de arranque en frío: aparece si la petición lleva varios segundos en curso -->
+    <div aria-live="polite">
+      <p v-if="slow" class="status info slow-hint">
+        <strong>{{ a.slow.title }}</strong>
+        <span>{{ a.slow.text }}</span>
+      </p>
+    </div>
 
     <p class="switch">
       {{ a.login.noAccount }}

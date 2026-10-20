@@ -118,12 +118,24 @@
   display: inline; text-align: left; /* si el texto es largo, se parte de forma natural junto al resto de la frase */
 }
 .submit { width: 100%; margin-top: 4px; }
+.submit { gap: 10px; }
 .submit:disabled { opacity: 0.7; cursor: progress; transform: none; box-shadow: none; }
+/* Rueda de carga dentro del botón mientras se espera al servidor */
+.spin {
+  flex: none; width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid currentColor; border-right-color: transparent;
+  animation: authSpin 0.7s linear infinite;
+}
+@keyframes authSpin { to { transform: rotate(360deg); } }
 .status {
   background: var(--tint-green); color: var(--ink); border-left: 4px solid var(--teal-600);
   border-radius: 10px; padding: 12px 14px; font-size: 13.5px;
 }
 .status.error { background: var(--danger-tint); border-left-color: var(--danger); }
+/* Aviso informativo de arranque en frío (no es un error) */
+.slow-hint { display: flex; flex-direction: column; gap: 2px; animation: authFormIn 0.35s ease both; }
+.slow-hint strong { font-size: 14px; }
+.slow-hint span { color: var(--ink-2); font-size: 13px; }
 .switch { text-align: center; font-size: 14px; color: var(--ink-2); }
 
 /* Cambio de formulario: el actual se desvanece y entra el otro */

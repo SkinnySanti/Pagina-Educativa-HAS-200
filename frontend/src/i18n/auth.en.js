@@ -22,6 +22,11 @@ export default {
     pending: 'Creating account…',
     hasAccount: 'Already have an account?',
   },
+  // Notice shown when the first request is slow (the server wakes up after a period of inactivity).
+  slow: {
+    title: 'This may take a few seconds…',
+    text: 'The server was idle and is starting up again. Please do not close or reload the page.',
+  },
   fields: {
     email: 'Email',
     emailConfirm: 'Confirm email',

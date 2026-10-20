@@ -6,6 +6,7 @@ import AppIcon from '../common/AppIcon.vue'
 import PolicyDialog from './PolicyDialog.vue'
 import { useFormFields } from '../../composables/useFormFields'
 import { useAuth } from '../../composables/useAuth'
+import { useSlowHint } from '../../composables/useSlowHint'
 import { serverMessage } from '../../utils/serverMessage'
 import { vAlias, vEmail, vNewPassword } from '../../utils/validators'
 import { useI18n } from '../../i18n'
@@ -14,6 +15,7 @@ const { t } = useI18n()
 const a = computed(() => t.value.auth)
 const router = useRouter()
 const { register } = useAuth()
+const { slow, run } = useSlowHint()
 
 const form = useFormFields({
   email: { validate: vEmail },
@@ -83,12 +85,14 @@ async function onSubmit() {
   }
   pending.value = true
   try {
-    await register({
-      email: form.clean('email'),
-      alias: form.clean('alias'),
-      password: form.values.password,
-      policyAccepted: accepted.value,
-    })
+    await run(() =>
+      register({
+        email: form.clean('email'),
+        alias: form.clean('alias'),
+        password: form.values.password,
+        policyAccepted: accepted.value,
+      }),
+    )
     // El registro NO inicia sesión (el backend no devuelve tokens): se lleva al login con un aviso.
     router.push({ path: '/login', query: { registered: '1' } })
   } catch (e) {
@@ -188,9 +192,18 @@ async function onSubmit() {
 
     <p v-if="failure" class="status error full" role="alert">{{ serverMessage(a, failure) }}</p>
 
-    <button class="btn btn-primary submit full" type="submit" :disabled="pending">
+    <button class="btn btn-primary submit full" type="submit" :disabled="pending" :aria-busy="pending">
+      <span v-if="pending" class="spin" aria-hidden="true"></span>
       {{ pending ? a.register.pending : a.register.submit }}
     </button>
+
+    <!-- Aviso de arranque en frío: aparece si la petición lleva varios segundos en curso -->
+    <div class="full" aria-live="polite">
+      <p v-if="slow" class="status info slow-hint">
+        <strong>{{ a.slow.title }}</strong>
+        <span>{{ a.slow.text }}</span>
+      </p>
+    </div>
 
     <p class="switch full">
       {{ a.register.hasAccount }}
