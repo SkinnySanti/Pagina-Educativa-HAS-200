@@ -38,7 +38,7 @@ export default {
       title: 'Word search',
       text: 'Find the technical terms hidden in the grid.',
       heading: 'Find the HAS-200 terms',
-      steps: ['Look horizontally, vertically and diagonally.', 'Select the first and last letter of each word.', 'Find them all before time runs out.'],
+      steps: ['Look horizontally, vertically and diagonally.', 'Select the first and last letter of each word.', 'Find them all in the least time possible.'],
     },
     cruci: {
       title: 'Crossword',

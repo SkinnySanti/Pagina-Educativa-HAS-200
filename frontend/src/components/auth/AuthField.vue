@@ -1,4 +1,5 @@
 <script setup>
+import RichText from '../common/RichText.vue'
 import { computed, ref, useId } from 'vue'
 import AppIcon from '../common/AppIcon.vue'
 import { useI18n } from '../../i18n'
@@ -56,7 +57,11 @@ const describedBy = computed(() => [props.error && `${id}-err`, props.hint && `$
         </button>
       </span>
     </div>
-    <p v-if="hint" :id="`${id}-hint`" class="hint">{{ hint }}</p>
+    <p v-if="hint || $slots.hint" :id="`${id}-hint`" class="hint">
+      <slot name="hint">
+        <RichText :text="hint" />
+      </slot>
+    </p>
     <p v-if="error" :id="`${id}-err`" class="err" role="alert">
       <AppIcon name="alert" :size="16" /><span>{{ error }}</span>
     </p>

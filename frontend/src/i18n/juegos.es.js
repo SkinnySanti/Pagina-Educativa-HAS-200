@@ -38,7 +38,7 @@ export default {
       title: 'Sopa de letras',
       text: 'Encuentra los términos técnicos escondidos en la cuadrícula.',
       heading: 'Encuentra los términos del HAS-200',
-      steps: ['Busca en horizontal, vertical y diagonal.', 'Selecciona la primera y la última letra de cada palabra.', 'Encuentra todas antes de que acabe el tiempo.'],
+      steps: ['Busca en horizontal, vertical y diagonal.', 'Selecciona la primera y la última letra de cada palabra.', 'Encuentra todas en el menor tiempo posible.'],
     },
     cruci: {
       title: 'Crucigrama',

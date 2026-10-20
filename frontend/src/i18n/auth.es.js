@@ -42,7 +42,7 @@ export default {
     passwordConfirm: 'Repite tu contraseña',
   },
   hints: {
-    alias: '3 a 20 caracteres: letras, números o guion bajo (sin tildes ni espacios). Que no sea tu nombre real.',
+    alias: '3 a 20 caracteres: letras, números o guion bajo (sin tildes ni espacios). **Que no sea tu nombre real.**',
     password: 'Entre 8 y 64 caracteres, con al menos una letra y un número.',
   },
   showPassword: 'Mostrar contraseña',
