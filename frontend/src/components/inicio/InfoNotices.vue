@@ -7,20 +7,21 @@ const { t } = useI18n()
 
 <template>
   <section class="notices" aria-label="Avisos">
-    <article class="card notice bilingual">
-      <div class="ico"><AppIcon name="globe" :size="26" /></div>
-      <div>
-        <h2>{{ t.bilingual.title }}</h2>
-        <p>{{ t.bilingual.text }}</p>
-      </div>
-    </article>
-
     <article class="card notice tutor">
-      <div class="ico"><AppIcon name="sparkles" :size="26" /></div>
+      <div class="ico"><AppIcon name="robot" :size="26" /></div>
       <div>
         <h2>{{ t.aiTutor.title }}</h2>
         <p>{{ t.aiTutor.text }}</p>
         <span class="badge">{{ t.aiTutor.badge }}</span>
+      </div>
+    </article>
+
+    <article class="card notice feedback">
+      <div class="ico"><AppIcon name="chat" :size="26" /></div>
+      <div>
+        <h2>{{ t.feedback.title }}</h2>
+        <p>{{ t.feedback.text }}</p>
+        <span class="badge">{{ t.feedback.badge }}</span>
       </div>
     </article>
   </section>
@@ -34,8 +35,8 @@ const { t } = useI18n()
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .notice:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
-.bilingual { border-top-color: var(--blue-900); }
 .tutor { border-top-color: var(--teal-600); }
+.feedback { border-top-color: var(--blue-900); }
 
 .ico {
   flex: none; width: 44px; height: 44px; border-radius: 12px;
@@ -44,6 +45,7 @@ const { t } = useI18n()
   transition: transform 0.25s ease;
 }
 .tutor .ico { background: var(--tint-green); color: var(--teal-600); }
+.feedback .ico { background: var(--tint-blue); color: var(--blue-900); }
 .notice:hover .ico { transform: scale(1.1) rotate(-6deg); }
 
 h2 { font-size: 18px; font-weight: 700; }

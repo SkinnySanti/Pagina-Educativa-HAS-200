@@ -18,6 +18,7 @@ export default {
     guias: 'Guías',
     examenes: 'Exámenes',
     juegos: 'Juegos',
+    tutor: 'Tutor virtual',
     feedback: 'Retroalimentación',
     soon: 'Pronto',
     soonTitle: 'Disponible pronto',
@@ -68,12 +69,12 @@ export default {
         cta: 'Entrar al módulo',
       },
       {
-        title: 'Guías con ejercicios',
-        bullets: ['Practica lo aprendido con actividades guiadas.', 'A tu propio ritmo, paso a paso.'],
+        title: 'Juegos educativos',
+        bullets: ['Repasa conceptos con sopas de letras, crucigramas y más.', 'Juega las veces que quieras, sin afectar tus exámenes.'],
         cta: 'Entrar al módulo',
       },
       {
-        title: 'Dos exámenes finales',
+        title: 'Exámenes',
         bullets: ['Evalúa tu dominio del HAS-200.', 'Obtén tu puntaje al terminar cada uno.'],
         cta: 'Entrar al módulo',
       },
@@ -95,13 +96,14 @@ export default {
       erp: { label: 'V · ERP', inScope: false, desc: 'El sistema de toda la empresa: inventario, compras, finanzas y más.' },
     },
   },
-  bilingual: {
-    title: '¿Por qué importa el inglés aquí?',
-    text: 'Buena parte de los términos técnicos del HAS-200 vienen del inglés: por ejemplo, el "cerebro" de la máquina se llama PLC. Los conocerás a fondo, en los dos idiomas, en las guías.',
-  },
   aiTutor: {
-    title: 'Un tutor de IA a tu disposición',
-    text: 'En el módulo Tutor de IA podrás resolver dudas sobre el HAS-200 y las guías cuando lo necesites, a tu propio ritmo, como si tuvieras un compañero de estudio disponible todo el tiempo.',
+    title: 'Un tutor virtual a tu disposición',
+    text: 'En el módulo Tutor virtual podrás resolver dudas sobre el HAS-200 y las guías cuando lo necesites, a tu propio ritmo, como si tuvieras un compañero de estudio disponible todo el tiempo.',
+    badge: 'Próximamente en tu menú',
+  },
+  feedback: {
+    title: 'Retroalimentación de tus exámenes',
+    text: 'Al terminar un examen podrás ver en qué preguntas fallaste, cuál era la respuesta correcta y en qué módulo repasar ese tema. En Retroalimentación encontrarás esos resultados para seguir mejorando.',
     badge: 'Próximamente en tu menú',
   },
 }

@@ -18,6 +18,7 @@ export default {
     guias: 'Guides',
     examenes: 'Exams',
     juegos: 'Games',
+    tutor: 'Virtual tutor',
     feedback: 'Feedback',
     soon: 'Soon',
     soonTitle: 'Coming soon',
@@ -68,12 +69,12 @@ export default {
         cta: 'Enter module',
       },
       {
-        title: 'Practice guides',
-        bullets: ['Practice what you learned with guided activities.', 'At your own pace, step by step.'],
+        title: 'Educational games',
+        bullets: ['Review concepts with word searches, crosswords and more.', 'Play as often as you like; they don\'t affect your exams.'],
         cta: 'Enter module',
       },
       {
-        title: 'Two final exams',
+        title: 'Exams',
         bullets: ['Test your command of the HAS-200.', 'Get your score once you finish each one.'],
         cta: 'Enter module',
       },
@@ -95,13 +96,14 @@ export default {
       erp: { label: 'V · ERP', inScope: false, desc: 'The company-wide system: inventory, purchasing, finance and more.' },
     },
   },
-  bilingual: {
-    title: 'Why does English matter here?',
-    text: 'Many of the HAS-200\'s technical terms come from English: for example, the machine\'s "brain" is called a PLC. You\'ll get to know them in depth, in both languages, in the guides.',
-  },
   aiTutor: {
-    title: 'An AI tutor at your service',
-    text: "In the AI Tutor module you'll be able to solve doubts about the HAS-200 and the guides whenever you need to, at your own pace, like having a study companion available at all times.",
+    title: 'A virtual tutor at your service',
+    text: "In the Virtual Tutor module you'll be able to solve doubts about the HAS-200 and the guides whenever you need to, at your own pace, like having a study companion available at all times.",
+    badge: 'Coming soon to your menu',
+  },
+  feedback: {
+    title: 'Feedback on your exams',
+    text: "When you finish an exam you'll see which questions you missed, the correct answer and the module where you can review that topic. In Feedback you'll find those results so you can keep improving.",
     badge: 'Coming soon to your menu',
   },
 }

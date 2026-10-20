@@ -65,6 +65,7 @@ const paths = {
   crossword: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v6H3M15 21v-6h6M9 9h6v6"/>',
   sort: '<path d="M4 7h10M4 12h7M4 17h4"/><path d="M17 5v14M14 16l3 3 3-3"/>',
   cards: '<rect x="3" y="5" width="9" height="13" rx="2"/><rect x="12" y="7" width="9" height="13" rx="2"/><path d="M7.5 9.5v4M5.5 11.5h4"/>',
+  robot: '<path d="M12 3v3"/><circle cx="12" cy="2.8" r="0.9" fill="currentColor"/><rect x="4" y="6" width="16" height="13" rx="4"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><path d="M9.5 16h5"/><path d="M2 11.5v3M22 11.5v3"/>',
   expand: '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
 }
 </script>

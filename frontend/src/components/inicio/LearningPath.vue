@@ -5,10 +5,10 @@ import { useGuideProgress } from '../../composables/useGuideProgress.js'
 import { useI18n } from '../../i18n/index.js'
 
 const { t } = useI18n()
-const icons = ['book', 'pencil', 'flag']
+const icons = ['book', 'puzzle', 'flag']
 
 // Cada tarjeta apunta a su módulo. null = todavía no existe (botón deshabilitado).
-const links = ['/guias', null, '/examenes']
+const links = ['/guias', '/juegos', '/examenes']
 // Avance de la guía informativa (se comparte con la página de Guías).
 const guide = useGuideProgress()
 </script>
@@ -37,7 +37,7 @@ const guide = useGuideProgress()
 
     <div class="arrow-down" aria-hidden="true"><AppIcon name="chevron-right" :size="20" /></div>
 
-    <!-- Los 3 módulos siguientes, como tarjetas de un índice: ícono, título, 2 bullets y botón. -->
+    <!-- Los 3 módulos siguientes (guías, juegos, exámenes), como tarjetas de un índice: ícono, título, 2 bullets y botón. -->
     <ol class="modules">
       <li v-for="(m, i) in t.path.modules" :key="m.title" class="card mod">
         <div class="ico"><AppIcon :name="icons[i]" :size="24" /></div>
