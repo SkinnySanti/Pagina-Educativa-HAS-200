@@ -5,6 +5,7 @@ import GuiasView from '../views/GuiasView.vue'
 import ExamenesView from '../views/ExamenesView.vue'
 import JuegosView from '../views/JuegosView.vue'
 import AuthView from '../views/AuthView.vue'
+import TutorView from '../views/TutorView.vue'
 import { useAuth, authReady } from '../composables/useAuth'
 
 // Un módulo nuevo = una ruta nueva aquí + un ítem en AppSidebar.vue.
@@ -17,6 +18,8 @@ const routes = [
   { path: '/examenes', name: 'examenes', component: ExamenesView },
   // Pública: los juegos de Educaplay son de repaso y no requieren sesión.
   { path: '/juegos', name: 'juegos', component: JuegosView },
+  // Protegida: el tutor necesita sesión (el backend limita el uso por estudiante y protege la API key).
+  { path: '/tutor', name: 'tutor', component: TutorView, meta: { requiresAuth: true } },
   { path: '/login', name: 'login', component: AuthView, meta: { layout: 'auth', mode: 'login' } },
   { path: '/registro', name: 'registro', component: AuthView, meta: { layout: 'auth', mode: 'register' } },
 ]

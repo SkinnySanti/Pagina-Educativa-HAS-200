@@ -243,9 +243,51 @@ Sin token, o con un token inválido o vencido, el 401 trae `detail: "Token ausen
 - **Nuevos endpoints:** `DELETE /api/me` (eliminar la cuenta) y recuperación de contraseña por correo (`forgot-password` / `reset-password`). Aún sin contrato definido.
 - **CORS:** se configurará cuando se despliegue con orígenes separados; con el proxy de Vite no hace falta en desarrollo.
 
+## 11. Tutor virtual
+
+> Chat con un modelo de IA (Groq) que responde dudas sobre el HAS-200 y las guías. El frontend **nunca** habla con Groq: llama a este endpoint y el backend usa la API key, que vive solo en la variable de entorno `GROQ_API_KEY`.
+
+| Método | Ruta | Acceso | Respuesta OK |
+|---|---|---|---|
+| POST | `/api/tutor/chat` | Protegido (Bearer) | 200 + `{ respuesta, restantesHoy }` |
+
+**Cuerpo:**
+
+```json
+{
+  "mensaje": "¿Qué hace un PLC?",
+  "historial": [
+    { "rol": "user", "contenido": "¿Qué es el HAS-200?" },
+    { "rol": "assistant", "contenido": "Es una mini fábrica automática…" }
+  ],
+  "idioma": "es"
+}
+```
+
+- `mensaje`: obligatorio, máximo **600** caracteres.
+- `historial`: opcional, máximo 20 turnos (`rol` = `user` | `assistant`). Lo guarda el frontend en memoria; **el backend no guarda conversaciones**. Solo se reenvían al modelo los últimos `app.tutor.max-mensajes-historial`.
+- `idioma`: opcional, `es` (por defecto) o `en`.
+
+**Errores** (formato Problem Details de la sección 4; el frontend decide por `codigo`, no por `detail`):
+
+| HTTP | `codigo` | Cuándo |
+|---|---|---|
+| 400 | (validación, con `errores`) | mensaje vacío o demasiado largo, rol inválido |
+| 401 | (sin código) | token ausente, inválido o vencido |
+| 429 | `TUTOR_LIMITE_USUARIO` | el estudiante agotó sus preguntas de las últimas 24 h |
+| 429 | `TUTOR_LIMITE_RITMO` | demasiadas preguntas en un minuto |
+| 429 | `TUTOR_LIMITE_GLOBAL` | tope de todo el sitio, o Groq saturado en todos los modelos |
+| 503 | `TUTOR_NO_DISPONIBLE` | falta `GROQ_API_KEY`, Groq rechazó la key o no respondió |
+
+Una pregunta que falla por 503 o por saturación de Groq **no** descuenta del límite del estudiante.
+
+**Configuración** (`application.yaml`, prefijo `app.tutor`): modelos en orden de preferencia (si uno se satura o falla se usa el siguiente), límites por estudiante y globales, tokens máximos de respuesta y tiempo de espera. El conocimiento del tutor está en `src/main/resources/tutor/` (`prompt-sistema.md` y `conocimiento-has200.md`).
+
 ## Referencias
 - RFC 6750, Bearer Token: https://datatracker.ietf.org/doc/html/rfc6750
 - RFC 9457, Problem Details for HTTP APIs: https://www.rfc-editor.org/rfc/rfc9457.html
 - OWASP, HTML5 Security Cheat Sheet (Web Storage): https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html
 - OWASP, JSON Web Token Cheat Sheet for Java: https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html
 - Vite, `server.proxy`: https://vite.dev/config/server-options.html#server-proxy
+- Groq, límites de uso: https://console.groq.com/docs/rate-limits
+- Groq, compatibilidad con la API de OpenAI: https://console.groq.com/docs/openai

@@ -42,3 +42,10 @@ export const STORAGE_KEYS = {
 
 // Cuánto antes de que venza el token de acceso se renueva solo (ms). Doc: ~60 s.
 export const REFRESH_MARGIN_MS = 60_000
+
+// Tutor virtual (backend/README_ENDPOINTS.md, sección "Tutor virtual"). Exige sesión.
+//   POST /api/tutor/chat  { mensaje, historial: [{ rol: 'user'|'assistant', contenido }], idioma: 'es'|'en' }
+//        → 200 { respuesta, restantesHoy }
+// La API key de Groq NO está en el frontend: la usa solo el backend (variable de entorno GROQ_API_KEY).
+export const TUTOR_ENDPOINT = '/api/tutor/chat'
+export const TUTOR_MAX_CHARS = 600 // debe coincidir con @Size(max = 600) de TutorChatRequest

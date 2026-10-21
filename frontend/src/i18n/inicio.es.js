@@ -4,12 +4,14 @@ import guias from './guias.es.js'
 import auth from './auth.es.js'
 import examenes from './examenes.es.js'
 import juegos from './juegos.es.js'
+import tutor from './tutor.es.js'
 
 export default {
   guias,
   auth,
   examenes,
   juegos,
+  tutor,
   brand: 'HAS 200 Learning',
   skip: 'Saltar al contenido',
   nav: {
@@ -99,7 +101,7 @@ export default {
   aiTutor: {
     title: 'Un tutor virtual a tu disposición',
     text: 'En el módulo Tutor virtual podrás resolver dudas sobre el HAS-200 y las guías cuando lo necesites, a tu propio ritmo, como si tuvieras un compañero de estudio disponible todo el tiempo.',
-    badge: 'Próximamente en tu menú',
+    badge: 'Ya disponible en tu menú',
   },
   feedback: {
     title: 'Retroalimentación de tus exámenes',

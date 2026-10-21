@@ -23,8 +23,7 @@ management:
   endpoint:
     health:
       show-details: never
-
-
+      
 app:
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS}
@@ -38,3 +37,22 @@ app:
     pasos-por-modulo: 6
   intentos:
     segundos-gracia: 10
+  # ── Tutor Virtual (Groq) ── La API key NO se escribe aquí: se define como variable de entorno GROQ_API_KEY.
+  # Si no existe, la app arranca igual y el tutor responde "no disponible".
+  tutor:
+    api-key: ${GROQ_API_KEY:}
+    base-url: https://api.groq.com/openai/v1
+    # En orden de preferencia. Cada modelo tiene su propia cuota gratuita en Groq; si uno se satura se usa el siguiente.
+    modelos:
+      - openai/gpt-oss-120b
+      - openai/gpt-oss-20b
+      - llama-3.1-8b-instant
+    razonamiento: low          # solo aplica a los modelos openai/gpt-oss-*
+    temperatura: 0.3
+    max-tokens-respuesta: 700
+    max-mensajes-historial: 6
+    limite-por-minuto: 3       # por estudiante
+    limite-por-dia: 12         # por estudiante (24 h móviles)
+    limite-global-por-minuto: 6   # todo el sitio
+    limite-global-por-dia: 150    # todo el sitio
+    timeout: 30s

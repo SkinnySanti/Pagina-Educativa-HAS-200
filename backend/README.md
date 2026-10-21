@@ -77,6 +77,7 @@
 | GET | `/api/me/attempts` | Pendiente |
 | GET / PUT | `/api/me/progress` | Pendiente |
 | POST | `/api/auth/forgot-password`, `/reset-password` | Pendiente (al final) |
+| POST | `/api/tutor/chat` | Código entregado, por verificar (ver `README_ENDPOINTS.md`, sección 11) |
 
 ## 7. Pendientes del backend, en orden
 
@@ -97,6 +98,7 @@
 
 - **Menores de edad:** opción A (plataforma para mayores de 18, con declaración al registrarse) u opción B (aceptar menores con autorización del representante legal). Ley 1581 de 2012 y sus decretos reglamentarios.
 - **Texto de la política de tratamiento de datos** y quién figura como responsable.
+- **Tutor virtual y datos personales:** las preguntas de los estudiantes (menores de edad) se procesan con un servicio externo (Groq). Revisar su política de datos y mencionar el tutor y a Groq como encargado externo en la política de tratamiento de datos.
 - **Plataforma tipo Moodle** (actividades, guías, evaluaciones): sin decidir; conviene resolverlo antes de Exámenes en el frontend.
 - Si en el futuro se quiere que abandonar la diagnóstica **consuma** el intento (hoy hay una fuga: se pueden ver las preguntas sin enviar).
 
