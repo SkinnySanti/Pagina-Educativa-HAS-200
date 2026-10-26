@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/api/auth/register", "/api/auth/login",
                                          "/api/auth/refresh", "/api/auth/logout" ,
-                                        "/api/me/listar", "/actuator/health/**").permitAll()
+                                         "/actuator/health/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(o -> o
                         .jwt(Customizer.withDefaults())

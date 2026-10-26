@@ -5,4 +5,3 @@ spring:
     password: ${PASSWORD}
   jpa:
     show-sql: true
-

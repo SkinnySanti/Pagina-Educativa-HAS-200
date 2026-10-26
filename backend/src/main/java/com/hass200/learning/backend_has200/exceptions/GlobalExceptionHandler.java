@@ -1,5 +1,6 @@
 package com.hass200.learning.backend_has200.exceptions;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +18,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT,
                 exception.getMessage());
         problemDetail.setTitle("Conflicto");
+        return problemDetail;
+    }
+
+    @ExceptionHandler(ConflictoException.class)
+    ProblemDetail manejarConflictosRegistrar(ConflictoException exception){
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(exception.getStatus(), exception.getMessage());
+        problemDetail.setProperty("codigo", exception.getCodigo());
         return problemDetail;
     }
 

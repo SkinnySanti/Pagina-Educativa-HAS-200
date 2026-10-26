@@ -34,26 +34,26 @@ public class EstudianteService{
         this.encoder = encoder;
         this.reloj = reloj;
     }
-
-    //endpoint para dev
-    public List<EstudianteResponse> listar(){
-        log.info("Listando estudiantes");
-        return repository.findAll().stream()
-                .map(EstudianteResponse::from)
-                .toList();
-    }
+//
+//    //endpoint para dev
+//    public List<EstudianteResponse> listar(){
+//        log.info("Listando estudiantes");
+//        return repository.findAll().stream()
+//                .map(EstudianteResponse::from)
+//                .toList();
+//    }
 
     @Transactional
     public EstudianteResponse registrar(RegistroRequest request){
         String correo = request.correo().trim().toLowerCase(Locale.ROOT);
         String alias = request.alias().trim();
 
-        if(repository.existsByCorreo(request.correo())){
-            throw new ConflictoException("El correo ya está registrado");
+        if(repository.existsByCorreo(correo)){
+            throw ConflictoException.conflicto("Este correo ya está en uso", "CORREO_EN_USO");
         }
 
-        if(repository.existsByAlias(request.alias())){
-            throw new ConflictoException("Este alias ya está en uso");
+        if(repository.existsByAlias(alias)){
+            throw ConflictoException.conflicto("Este alias ya está en uso", "ALIAS_EN_USO");
         }
 
         Instant ahora = Instant.now(reloj);

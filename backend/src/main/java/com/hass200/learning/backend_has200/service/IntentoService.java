@@ -37,7 +37,6 @@ public class IntentoService {
     private final GuiaPolicy guiaPolicy;
     private final IExamenRepository examenRepository;
     private final EntityManager entityManager;
-    private final ThreadPoolTaskExecutorBuilder threadPoolTaskExecutorBuilder;
 
     public IntentoService(IEstudianteRepository estudianteRepository, IntentoRepository intentoRepository,
                           IpreguntaRepository preguntaRepository, Clock clock, GuiaPolicy guiaPolicy,
@@ -49,7 +48,6 @@ public class IntentoService {
         this.guiaPolicy = guiaPolicy;
         this.examenRepository = examenRepository;
         this.entityManager = entityManager;
-        this.threadPoolTaskExecutorBuilder = threadPoolTaskExecutorBuilder;
     }
 
     @Transactional

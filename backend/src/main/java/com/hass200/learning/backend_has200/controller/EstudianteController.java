@@ -29,12 +29,12 @@ public class EstudianteController {
         return estudianteService.perfil(Long.valueOf(jwt.getSubject()));
     }
 
-    @GetMapping("/listar")
-    @ResponseStatus(HttpStatus.OK)
-    public List<EstudianteResponse> listar(){
-        log.info("Validando petición GET");
-        return estudianteService.listar();
-    }
+//    @GetMapping("/listar")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<EstudianteResponse> listar(){
+//        log.info("Validando petición GET");
+//        return estudianteService.listar();
+//    }
 
 //    @DeleteMapping("/eliminar")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
