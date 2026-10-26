@@ -46,10 +46,10 @@ ALTER TABLE pregunta
 -- ---------------------------------------------------------------
 
 INSERT INTO examen (codigo, tipo, modulo, tiempo_limite_minutos, version) VALUES 
-    ('DIAG-M1', 'DIAGNOSTICO', 1, 30, 1),
-    ('DIAG-M2', 'DIAGNOSTICO', 2, 30, 1),
-    ('POST-M1', 'POST_RECORRIDO', 1, 30, 1),
-    ('POST-M2', 'POST_RECORRIDO', 2, 30, 1);
+    ('DIAG-M1', 'DIAGNOSTICO', 1, 20, 1),
+    ('DIAG-M2', 'DIAGNOSTICO', 2, 20, 1),
+    ('POST-M1', 'POST_RECORRIDO', 1, 20, 1),
+    ('POST-M2', 'POST_RECORRIDO', 2, 20, 1);
 
 
 

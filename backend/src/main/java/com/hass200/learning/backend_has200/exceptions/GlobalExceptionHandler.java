@@ -14,14 +14,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ConflictoException.class)
-    ProblemDetail conflicto(ConflictoException exception){
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT,
-                exception.getMessage());
-        problemDetail.setTitle("Conflicto");
-        return problemDetail;
-    }
-
-    @ExceptionHandler(ConflictoException.class)
     ProblemDetail manejarConflictosRegistrar(ConflictoException exception){
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(exception.getStatus(), exception.getMessage());
         problemDetail.setProperty("codigo", exception.getCodigo());

@@ -53,6 +53,6 @@ app:
     max-mensajes-historial: 6
     limite-por-minuto: 3       # por estudiante
     limite-por-dia: 12         # por estudiante (24 h móviles)
-    limite-global-por-minuto: 6   # todo el sitio
+    limite-global-por-minuto: 10   # todo el sitio
     limite-global-por-dia: 150    # todo el sitio
     timeout: 30s
