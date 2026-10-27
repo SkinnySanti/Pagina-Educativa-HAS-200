@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router'
 import AppIcon from '../components/common/AppIcon.vue'
 import TutorHero from '../components/tutor/TutorHero.vue'
 import TutorChat from '../components/tutor/TutorChat.vue'
+import TutorAudios from '../components/tutor/TutorAudios.vue'
 import TutorSide from '../components/tutor/TutorSide.vue'
 import { useI18n } from '../i18n'
 
@@ -24,7 +25,10 @@ const c = computed(() => t.value.tutor.crumbs)
     <TutorHero />
 
     <div class="layout">
-      <div class="col"><TutorChat /></div>
+      <div class="col">
+        <TutorChat />
+        <TutorAudios />
+      </div>
       <aside class="side"><TutorSide /></aside>
     </div>
   </div>
@@ -40,7 +44,7 @@ const c = computed(() => t.value.tutor.crumbs)
 .crumbs b { color: var(--blue-900); font-weight: 600; }
 
 .layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; align-items: start; }
-.col { min-width: 0; }
+.col { min-width: 0; display: grid; gap: 24px; }
 .side { position: sticky; top: calc(var(--header-h) + 16px); display: grid; gap: 16px; }
 
 @media (max-width: 1040px) {
