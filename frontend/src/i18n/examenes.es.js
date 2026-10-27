@@ -124,6 +124,7 @@ export default {
     unanswered: 'No respondida',
     retry: 'Reintentar',
     study: (g, s) => `Repasar en Guía ${g} · Paso ${s}`,
+    askTutor: 'Preguntar al Tutor Virtual',
     skills: {
       INGLES: 'Inglés',
       FUNCIONAMIENTO: 'Funcionamiento',

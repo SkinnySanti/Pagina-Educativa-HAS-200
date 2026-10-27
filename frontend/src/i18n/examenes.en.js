@@ -124,6 +124,7 @@ export default {
     unanswered: 'Not answered',
     retry: 'Retry',
     study: (g, s) => `Review in Guide ${g} · Step ${s}`,
+    askTutor: 'Ask the Virtual Tutor',
     skills: {
       INGLES: 'English',
       FUNCIONAMIENTO: 'Operation',

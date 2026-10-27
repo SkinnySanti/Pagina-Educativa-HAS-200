@@ -66,7 +66,7 @@ function guideLink(ref) {
 
       <div v-else-if="reviewState === 'error'" class="alert" role="alert">
         <AppIcon name="alert" :size="18" />
-        <span>{{ reviewError }}</span>
+        <span class="alert-txt">{{ reviewError }}</span>
         <button type="button" class="link" @click="emit('retry')">{{ r.retry }}</button>
       </div>
 
@@ -77,7 +77,7 @@ function guideLink(ref) {
       <ol v-else-if="review" class="errs">
         <li v-for="er in review.errores" :key="er.preguntaId" class="err">
           <p class="eh">
-            <span class="qn">{{ x.questionN(er.posicion) }}</span>
+            <span class="qn"><AppIcon name="flag" :size="14" />{{ x.questionN(er.posicion) }}</span>
             <span v-if="er.idioma === 'en'" class="en" :title="x.englishTitle">EN</span>
             <span class="chip">{{ skill(er.habilidad) }}</span>
             <span class="chip alt">{{ concept(er.concepto) }}</span>
@@ -87,7 +87,7 @@ function guideLink(ref) {
 
           <div class="cmp">
             <div class="ans no">
-              <span class="lbl"><AppIcon name="alert" :size="14" />{{ r.yours }}</span>
+              <span class="lbl"><AppIcon name="flag" :size="14" />{{ r.yours }}</span>
               <p :lang="er.opcionMarcada ? er.idioma : undefined" :class="{ none: !er.opcionMarcada }">
                 {{ er.opcionMarcada ? er.opcionMarcada.texto : r.unanswered }}
               </p>
@@ -98,11 +98,16 @@ function guideLink(ref) {
             </div>
           </div>
 
-          <p class="why">{{ er.explicacion }}</p>
+          <p class="why"><AppIcon name="bulb" :size="18" /><span>{{ er.explicacion }}</span></p>
 
-          <RouterLink v-if="guideLink(er.referenciaModulo)" :to="guideLink(er.referenciaModulo).to" class="btn btn-ghost study">
-            <AppIcon name="book" :size="16" />{{ r.study(guideLink(er.referenciaModulo).mod, guideLink(er.referenciaModulo).step) }}
-          </RouterLink>
+          <div class="acts">
+            <RouterLink v-if="guideLink(er.referenciaModulo)" :to="guideLink(er.referenciaModulo).to" class="btn btn-ghost study">
+              <AppIcon name="book" :size="16" />{{ r.study(guideLink(er.referenciaModulo).mod, guideLink(er.referenciaModulo).step) }}
+            </RouterLink>
+            <RouterLink to="/tutor" class="btn btn-ghost study">
+              <AppIcon name="robot" :size="16" />{{ r.askTutor }}
+            </RouterLink>
+          </div>
         </li>
       </ol>
     </section>
@@ -123,34 +128,58 @@ function guideLink(ref) {
 .bar { height: 10px; border-radius: 9px; background: var(--line); overflow: hidden; }
 .bar i { display: block; height: 100%; background: var(--grad); transition: width 0.6s ease; }
 
-.review h4 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+.review h4 { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
 .perfect { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 12px; background: var(--tint-out); color: var(--ink-out); font-weight: 700; }
-.alert { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 14px; border-radius: 12px; background: var(--danger-tint); color: var(--danger); font-size: 14px; font-weight: 600; }
-.link { background: none; border: 0; padding: 4px; font-weight: 700; color: inherit; text-decoration: underline; cursor: pointer; border-radius: 6px; }
 
-.errs { list-style: none; display: grid; gap: 14px; }
-.err { display: grid; gap: 10px; padding: 16px 18px; border: 2px solid var(--line); border-radius: 14px; background: var(--surface); }
+/* Aviso si la revisión no carga: ámbar suave (mismo "tono de atención" de Guías), no rojo. */
+.alert {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 14px; border-radius: 12px;
+  background: var(--tint-pr); color: var(--ink-pr); border: 1px solid var(--pr); font-size: 14px; font-weight: 600;
+}
+.alert svg { flex: none; }
+.alert-txt { flex: 1 1 200px; color: var(--ink); font-weight: 500; }
+.link { background: none; border: 0; padding: 4px 6px; font-weight: 700; color: var(--ink-pr); text-decoration: underline; cursor: pointer; border-radius: 6px; }
+
+/* Tarjetas de revisión: superficie neutra + franja ámbar a la izquierda; el color solo marca, el texto va en --ink. */
+.errs { list-style: none; display: grid; gap: 16px; }
+.err {
+  display: grid; gap: 12px; padding: 18px 20px; background: var(--surface);
+  border: 1px solid var(--line); border-left: 5px solid var(--pr); border-radius: 14px; box-shadow: var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.err:hover { transform: translateY(-1px); box-shadow: var(--shadow-lift); }
 .eh { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-.qn { font-size: 13px; font-weight: 700; color: var(--teal-600); }
-.en { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: var(--tint-pr); color: var(--ink-pr); }
+.qn { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: var(--tint-pr); color: var(--ink-pr); }
+.en { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: var(--tint-blue); color: var(--ink-in); }
 .chip { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--tint-in); color: var(--ink-in); }
 .chip.alt { background: var(--tint-muted); color: var(--ink-2); }
-.eq { font-size: 16.5px; font-weight: 600; line-height: 1.4; }
+.eq { font-size: 16.5px; font-weight: 600; line-height: 1.45; color: var(--ink); }
 
+/* Tu respuesta vs. correcta: dos cajas con borde tenue y etiqueta de color; el texto de la respuesta siempre en --ink. */
 .cmp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.ans { padding: 10px 12px; border-radius: 12px; display: grid; gap: 4px; font-size: 14.5px; }
-.ans.no { background: var(--tint-pr); }
-.ans.ok { background: var(--tint-out); }
-.lbl { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; }
+.ans { padding: 12px 14px; border-radius: 12px; display: grid; gap: 6px; font-size: 14.5px; line-height: 1.45; color: var(--ink); border: 1px solid transparent; }
+.ans.no { background: var(--tint-pr); border-color: var(--pr); border-style: dashed; }
+.ans.ok { background: var(--tint-out); border-color: var(--out); }
+.lbl { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; }
 .ans.no .lbl { color: var(--ink-pr); }
 .ans.ok .lbl { color: var(--ink-out); }
 .none { font-style: italic; color: var(--ink-2); }
-.why { font-size: 14px; color: var(--ink-2); line-height: 1.5; }
-.study { justify-self: start; padding: 9px 14px; font-size: 14px; }
+
+/* Explicación como callout azul (el color de marca): es lo que el estudiante debe leer con calma. */
+.why {
+  display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 12px;
+  background: var(--tint-blue); color: var(--ink); font-size: 14.5px; line-height: 1.55;
+}
+.why svg { flex: none; margin-top: 2px; color: var(--blue-900); }
+.acts { display: flex; flex-flow: row wrap; align-items: center; justify-content: flex-start; gap: 10px; }
+.acts .btn { flex: 0 0 auto; width: auto; }
+.study { padding: 9px 14px; font-size: 14px; }
 
 @media (max-width: 720px) {
   .result { padding: 18px 16px; }
+  .err { padding: 16px 14px; }
   .cmp { grid-template-columns: minmax(0, 1fr); }
+  .acts .btn { flex: 1 1 auto; }
   .rhead .btn { width: 100%; }
 }
 </style>
