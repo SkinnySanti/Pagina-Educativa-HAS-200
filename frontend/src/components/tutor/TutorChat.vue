@@ -1,5 +1,6 @@
 <script setup>
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import AppIcon from '../common/AppIcon.vue'
 import RichText from '../common/RichText.vue'
 import { useI18n } from '../../i18n'
@@ -10,6 +11,8 @@ const { t } = useI18n()
 const c = computed(() => t.value.tutor.chat)
 const { messages, sending, errorKey, remaining, send, reset } = useTutorChat()
 
+const route = useRoute()
+const router = useRouter()
 const draft = ref('')
 const input = ref(null)
 const log = ref(null)
@@ -56,7 +59,18 @@ function newConversation() {
 }
 
 watch(() => [messages.value.length, sending.value, errorKey.value], scrollDown)
-onMounted(scrollDown)
+onMounted(async () => {
+  scrollDown()
+  // Enlace desde Retroalimentación: /tutor?q=pregunta → se deja la pregunta escrita para que el estudiante la revise y la envíe.
+  const q = route.query.q
+  if (typeof q === 'string' && q.trim()) {
+    draft.value = q.slice(0, TUTOR_MAX_CHARS)
+    router.replace({ path: route.path, query: {} })
+    await nextTick()
+    autosize()
+    input.value?.focus()
+  }
+})
 </script>
 
 <template>

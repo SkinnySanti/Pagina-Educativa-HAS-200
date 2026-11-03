@@ -66,6 +66,8 @@ const paths = {
   sort: '<path d="M4 7h10M4 12h7M4 17h4"/><path d="M17 5v14M14 16l3 3 3-3"/>',
   cards: '<rect x="3" y="5" width="9" height="13" rx="2"/><rect x="12" y="7" width="9" height="13" rx="2"/><path d="M7.5 9.5v4M5.5 11.5h4"/>',
   robot: '<path d="M12 3v3"/><circle cx="12" cy="2.8" r="0.9" fill="currentColor"/><rect x="4" y="6" width="16" height="13" rx="4"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><path d="M9.5 16h5"/><path d="M2 11.5v3M22 11.5v3"/>',
+  chart: '<path d="M4 20V4"/><path d="M4 20h16"/><rect x="7.5" y="12" width="3" height="5" rx="1"/><rect x="12.5" y="8" width="3" height="9" rx="1"/><rect x="17.5" y="5" width="3" height="12" rx="1"/>',
+  download: '<path d="M12 4v11"/><path d="m7.5 11 4.5 4.5 4.5-4.5"/><path d="M5 20h14"/>',
   expand: '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
 }
 </script>

@@ -1,0 +1,65 @@
+// Datos de ejemplo de la Retroalimentación (los de la vista previa aprobada).
+// Solo se usan en desarrollo (npm run dev) cuando el servidor todavía no expone
+// GET /api/me/attempts y GET /api/me/feedback (responde 404). En producción NUNCA se usan.
+export const FEEDBACK_SAMPLE = {
+  attempts: [
+    { id: 20, modulo: 2, tipo: 'POST_RECORRIDO', estado: 'VENCIDO', puntaje: null, aciertos: null, total: 10, segundos: null, fecha: '2026-10-18T15:40:00Z' },
+    { id: 18, modulo: 1, tipo: 'POST_RECORRIDO', estado: 'ENVIADO', puntaje: 80, aciertos: 8, total: 10, segundos: 530, fecha: '2026-10-15T14:11:00Z' },
+    { id: 15, modulo: 2, tipo: 'POST_RECORRIDO', estado: 'ENVIADO', puntaje: 50, aciertos: 5, total: 10, segundos: 730, fecha: '2026-10-12T16:02:00Z' },
+    { id: 12, modulo: 1, tipo: 'POST_RECORRIDO', estado: 'ENVIADO', puntaje: 70, aciertos: 7, total: 10, segundos: 605, fecha: '2026-10-08T14:11:00Z' },
+    { id: 8, modulo: 2, tipo: 'DIAGNOSTICO', estado: 'ENVIADO', puntaje: 40, aciertos: 4, total: 10, segundos: 580, fecha: '2026-10-05T16:20:00Z' },
+    { id: 5, modulo: 1, tipo: 'DIAGNOSTICO', estado: 'ENVIADO', puntaje: 50, aciertos: 5, total: 10, segundos: 680, fecha: '2026-10-02T15:00:00Z' },
+  ],
+  compare: {
+    1: {
+      diag: { id: 5, puntaje: 50 },
+      post: { id: 18, puntaje: 80 },
+      skills: {
+        INGLES: { diag: [1, 2], post: [2, 2] },
+        FUNCIONAMIENTO: { diag: [1, 3], post: [3, 3] },
+        TERMINOS_TECNICOS: { diag: [2, 3], post: [2, 3] },
+        PENSAMIENTO_SISTEMICO: { diag: [1, 2], post: [1, 2] },
+      },
+    },
+    2: {
+      diag: { id: 8, puntaje: 40 },
+      post: { id: 15, puntaje: 50 },
+      skills: {
+        INGLES: { diag: [1, 2], post: [1, 2] },
+        FUNCIONAMIENTO: { diag: [1, 2], post: [2, 2] },
+        TERMINOS_TECNICOS: { diag: [1, 4], post: [2, 4] },
+        PENSAMIENTO_SISTEMICO: { diag: [1, 2], post: [0, 2] },
+      },
+    },
+  },
+  errors: [
+    { modulo: 1, habilidad: 'PENSAMIENTO_SISTEMICO', concepto: 'cadena-deteccion-accion', ref: 'm1:2', idioma: 'es',
+      enunciado: 'Un sensor detecta una pieza al final de la banda. ¿Qué pasa a continuación en la cadena?',
+      marcada: 'Se apaga la baliza de inmediato', correcta: 'El sistema procesa la señal y un actuador ejecuta la acción',
+      explicacion: 'Todo sistema automático sigue la cadena detección → decisión → acción. El sensor detecta; después se procesa la señal y un actuador actúa.' },
+    { modulo: 1, habilidad: 'TERMINOS_TECNICOS', concepto: 'automatizacion', ref: 'm1:4', idioma: 'es',
+      enunciado: '¿Qué es la automatización?',
+      marcada: 'Reemplazar el diseño del producto', correcta: 'Usar tecnología para que un proceso se ejecute con mínima intervención humana',
+      explicacion: 'Automatizar es lograr que un proceso funcione solo o casi solo, con tecnología que mida, decida y actúe.' },
+    { modulo: 2, habilidad: 'TERMINOS_TECNICOS', concepto: 'funcion-plc', ref: 'm2:0', idioma: 'es',
+      enunciado: '¿Cuál es la función principal del PLC en el HAS-200?',
+      marcada: 'Almacenar la materia prima', correcta: 'Leer las señales de los sensores y decidir qué debe hacer cada actuador',
+      explicacion: 'El PLC es el cerebro del sistema: recibe entradas, aplica la lógica del programa y ordena las salidas.' },
+    { modulo: 2, habilidad: 'INGLES', concepto: 'funcion-plc', ref: 'm2:0', idioma: 'en',
+      enunciado: 'What does a PLC do in an automated system?',
+      marcada: 'It moves products along the belt', correcta: 'It reads inputs and controls outputs based on a program',
+      explicacion: 'PLC = controlador lógico programable. Lee entradas (sensores) y activa salidas (actuadores) según su programa.' },
+    { modulo: 2, habilidad: 'TERMINOS_TECNICOS', concepto: 'senal-analogica', ref: 'm2:1', idioma: 'es',
+      enunciado: '¿Cuál de estos ejemplos es una señal analógica?',
+      marcada: 'Un sensor que indica presencia o ausencia', correcta: 'Un valor de temperatura que varía de forma continua',
+      explicacion: 'Una señal analógica toma muchos valores (como la temperatura). Presencia o ausencia es una señal digital: solo dos estados.' },
+    { modulo: 2, habilidad: 'PENSAMIENTO_SISTEMICO', concepto: 'recorrido-senal', ref: 'm2:2', idioma: 'es',
+      enunciado: '¿Cuál es el recorrido correcto de una señal, desde que se detecta hasta que se actúa?',
+      marcada: null, correcta: 'Sensor → PLC → actuador',
+      explicacion: 'La señal nace en el sensor, viaja al PLC, que decide, y sale hacia el actuador que ejecuta la acción.' },
+    { modulo: 2, habilidad: 'PENSAMIENTO_SISTEMICO', concepto: 'mensaje-de-red', ref: 'm2:3', idioma: 'es',
+      enunciado: 'Un mensaje viaja del PLC al SCADA. ¿Qué dispositivo de red lo dirige hasta el destino correcto?',
+      marcada: 'La baliza', correcta: 'El switch',
+      explicacion: 'El switch conecta los equipos de la red de datos y reenvía cada mensaje solo al dispositivo de destino.' },
+  ],
+}

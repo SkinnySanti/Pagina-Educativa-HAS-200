@@ -5,6 +5,7 @@ import auth from './auth.es.js'
 import examenes from './examenes.es.js'
 import juegos from './juegos.es.js'
 import tutor from './tutor.es.js'
+import retro from './retro.es.js'
 
 export default {
   guias,
@@ -12,6 +13,7 @@ export default {
   examenes,
   juegos,
   tutor,
+  retro,
   brand: 'HAS 200 Learning',
   skip: 'Saltar al contenido',
   nav: {
@@ -106,6 +108,6 @@ export default {
   feedback: {
     title: 'Retroalimentación de tus exámenes',
     text: 'Al terminar un examen podrás ver en qué preguntas fallaste, cuál era la respuesta correcta y en qué módulo repasar ese tema. En Retroalimentación encontrarás esos resultados para seguir mejorando.',
-    badge: 'Próximamente en tu menú',
+    badge: 'Ya disponible en tu menú',
   },
 }

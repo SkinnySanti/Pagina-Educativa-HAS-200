@@ -5,6 +5,7 @@ import auth from './auth.en.js'
 import examenes from './examenes.en.js'
 import juegos from './juegos.en.js'
 import tutor from './tutor.en.js'
+import retro from './retro.en.js'
 
 export default {
   guias,
@@ -12,6 +13,7 @@ export default {
   examenes,
   juegos,
   tutor,
+  retro,
   brand: 'HAS 200 Learning',
   skip: 'Skip to content',
   nav: {
@@ -106,6 +108,6 @@ export default {
   feedback: {
     title: 'Feedback on your exams',
     text: "When you finish an exam you'll see which questions you missed, the correct answer and the module where you can review that topic. In Feedback you'll find those results so you can keep improving.",
-    badge: 'Coming soon to your menu',
+    badge: 'Now available in your menu',
   },
 }

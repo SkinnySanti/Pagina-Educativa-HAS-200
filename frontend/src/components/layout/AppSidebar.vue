@@ -19,7 +19,7 @@ const items = [
   { key: 'juegos', icon: 'puzzle', to: '/juegos' },
   { key: 'examenes', icon: 'clipboard', to: '/examenes' },
   { key: 'tutor', icon: 'robot', to: '/tutor' },
-  { key: 'feedback', icon: 'chat', to: null },
+  { key: 'feedback', icon: 'chat', to: '/retroalimentacion' },
 ]
 </script>
 

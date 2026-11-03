@@ -6,10 +6,10 @@ import ExamenesView from '../views/ExamenesView.vue'
 import JuegosView from '../views/JuegosView.vue'
 import AuthView from '../views/AuthView.vue'
 import TutorView from '../views/TutorView.vue'
+import RetroalimentacionView from '../views/RetroalimentacionView.vue'
 import { useAuth, authReady } from '../composables/useAuth'
 
 // Un módulo nuevo = una ruta nueva aquí + un ítem en AppSidebar.vue.
-// Retroalimentación se agrega cuando esté terminada.
 // meta.layout 'auth' = pantalla sin menú lateral (ver App.vue).
 const routes = [
   { path: '/', name: 'inicio', component: InicioView },
@@ -20,6 +20,8 @@ const routes = [
   { path: '/juegos', name: 'juegos', component: JuegosView },
   // Protegida: el tutor necesita sesión (el backend limita el uso por estudiante y protege la API key).
   { path: '/tutor', name: 'tutor', component: TutorView, meta: { requiresAuth: true } },
+  // Pública a propósito (como /examenes): sin sesión se ve la página con el aviso de acceso; con sesión, los datos propios.
+  { path: '/retroalimentacion', name: 'retroalimentacion', component: RetroalimentacionView },
   { path: '/login', name: 'login', component: AuthView, meta: { layout: 'auth', mode: 'login' } },
   { path: '/registro', name: 'registro', component: AuthView, meta: { layout: 'auth', mode: 'register' } },
 ]

@@ -49,3 +49,15 @@ export const REFRESH_MARGIN_MS = 60_000
 // La API key de Groq NO está en el frontend: la usa solo el backend (variable de entorno GROQ_API_KEY).
 export const TUTOR_ENDPOINT = '/api/tutor/chat'
 export const TUTOR_MAX_CHARS = 600 // debe coincidir con @Size(max = 600) de TutorChatRequest
+
+// Retroalimentación (CONTEXTO v1.1, §11). Exige sesión. Cada estudiante solo ve lo suyo.
+//   GET /api/me/attempts → [{ id, modulo, tipo: 'DIAGNOSTICO'|'POST_RECORRIDO', estado: 'ENVIADO'|'VENCIDO',
+//                             puntaje, aciertos, total, segundos, fecha }]            (más reciente primero)
+//   GET /api/me/feedback → { modulos: [{ modulo, diagnostico, post, errores }] }
+//        diagnostico / post (o null si aún no hay): { intentoId, puntaje, habilidades: { INGLES: { aciertos, total }, … } }
+//        errores: los de ErrorRevisionDto del intento post más reciente (o de la diagnóstica si aún no hay post)
+// Si el servidor devuelve otra forma, solo hay que ajustar normalize() en services/feedbackService.js.
+export const FEEDBACK_ENDPOINTS = {
+  attempts: '/api/me/attempts',
+  feedback: '/api/me/feedback',
+}

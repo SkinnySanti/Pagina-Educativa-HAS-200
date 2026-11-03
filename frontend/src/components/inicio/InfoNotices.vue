@@ -12,7 +12,6 @@ const { t } = useI18n()
       <div>
         <h2>{{ t.aiTutor.title }}</h2>
         <p>{{ t.aiTutor.text }}</p>
-        <span class="badge">{{ t.aiTutor.badge }}</span>
       </div>
     </article>
 
@@ -21,7 +20,6 @@ const { t } = useI18n()
       <div>
         <h2>{{ t.feedback.title }}</h2>
         <p>{{ t.feedback.text }}</p>
-        <span class="badge">{{ t.feedback.badge }}</span>
       </div>
     </article>
   </section>

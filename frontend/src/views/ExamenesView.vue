@@ -1,6 +1,6 @@
 <script setup>
 import { computed, nextTick, ref, watch } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import '../styles/examenes.css'
 import AppIcon from '../components/common/AppIcon.vue'
 import LogoMark from '../components/common/LogoMark.vue'
@@ -82,6 +82,25 @@ watch(phase, async (p) => {
   await nextTick()
   scrollToId('exam-take')
 })
+// Enlace desde Retroalimentación → /examenes?revision=ID&tipo=DIAGNOSTICO|POST_RECORRIDO&modulo=1|2:
+// cuando la lista de exámenes ya llegó, se abre la revisión de ese intento y se limpia la URL.
+const route = useRoute()
+const router = useRouter()
+watch(
+  () => [access.loadState.value, route.query.revision],
+  ([state, rev]) => {
+    if (state !== 'ready' || !rev) return
+    const id = Number(rev)
+    const opt = optionOf(String(route.query.tipo))
+    const ex = access.examOf(opt, Number(route.query.modulo) - 1)
+    router.replace({ path: route.path, query: {} })
+    if (!ex || !Number.isInteger(id) || id <= 0) return
+    option.value = opt
+    session.openReview(ex, id)
+  },
+  { immediate: true },
+)
+
 // Si la sesión se cierra (logout, refresh vencido) el recuadro se retira; las marcas quedan guardadas para reanudar.
 watch(isLoggedIn, (ok) => !ok && session.close())
 
