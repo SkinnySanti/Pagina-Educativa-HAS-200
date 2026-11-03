@@ -47,4 +47,14 @@ public interface IntentoRepository extends Repository<Intento, Long> {
           and i.estado = com.hass200.learning.backend_has200.models.enums.EstadoIntento.ENVIADO
         """)
     List<Long> listarExamenIdsEnviados(@Param("estudianteId") Long estudianteId);
+
+    // Historial de la Retroalimentación: intentos ya cerrados (enviados o vencidos) del estudiante, el más reciente primero.
+    @Query("""
+        select i from Intento i
+        join fetch i.examen
+        where i.estudiante.id = :estudianteId
+          and i.estado <> com.hass200.learning.backend_has200.models.enums.EstadoIntento.EN_CURSO
+        order by coalesce(i.enviadoEn, i.iniciadoEn) desc, i.id desc
+        """)
+    List<Intento> listarCerradosConExamen(@Param("estudianteId") Long estudianteId);
 }
