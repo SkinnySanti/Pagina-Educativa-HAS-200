@@ -83,6 +83,50 @@ export default {
     ],
   },
 
+
+  // Information view shown when logged out (TutorIntro*): what the tutor is, how to use it and why login is required.
+  intro: {
+    notice: {
+      title: 'Log in to talk to the tutor',
+      text: 'The tutor needs to know who you are to keep track of your daily questions and protect the service. In the meantime, here is how it works.',
+      cta: 'Log in',
+    },
+    uses: {
+      badge: 'Virtual tutor',
+      title: 'What is the tutor for?',
+      lead: 'It is an AI assistant that keeps you company while you study the HAS-200, available whenever you need it.',
+      items: [
+        { icon: 'book', title: 'Solve doubts about the guides', text: 'Sensors, actuators, PLC, data network or SCADA explained in simple words.' },
+        { icon: 'bulb', title: 'Everyday examples', text: "If a concept isn't clear, ask for a comparison with something familiar." },
+        { icon: 'check', title: 'Check what you understood', text: 'Tell it in your own words what you learned and ask it to review it.' },
+        { icon: 'target', title: 'Get ready for the lab', text: 'Review the key topics before your visit and your exams.' },
+      ],
+    },
+    preview: {
+      title: 'What a conversation looks like',
+      tag: 'Illustrative example',
+      alt: 'Example of a question to the tutor and its answer',
+      question: 'What does a PLC do?',
+      answer: "It's the brain of the HAS-200: it reads the sensors' signals, runs its program and updates the outputs, like motors and lights. Want an everyday example?",
+    },
+    steps: {
+      title: 'How to use it',
+      items: [
+        { icon: 'log-in', title: 'Log in', text: 'Sign in with your email and password (or create your account in a minute).' },
+        { icon: 'chat', title: 'Type your question', text: 'The more specific, the better the answer. You can keep asking about what it replies.' },
+        { icon: 'book', title: 'Confirm in the guides', text: 'The tutor can make mistakes: double-check what matters with the guides.' },
+      ],
+    },
+    why: {
+      title: 'Why do I need to log in?',
+      items: [
+        'Each student has a number of questions per day.',
+        'It prevents misuse and protects the service.',
+        'Your account is the same one you use for guides and exams.',
+      ],
+    },
+  },
+
   side: {
     howTitle: 'How to get the most out of it',
     how: [

@@ -18,8 +18,9 @@ const routes = [
   { path: '/examenes', name: 'examenes', component: ExamenesView },
   // Pública: los juegos de Educaplay son de repaso y no requieren sesión.
   { path: '/juegos', name: 'juegos', component: JuegosView },
-  // Protegida: el tutor necesita sesión (el backend limita el uso por estudiante y protege la API key).
-  { path: '/tutor', name: 'tutor', component: TutorView, meta: { requiresAuth: true } },
+  // Pública a propósito (como /examenes): sin sesión se ve la vista informativa con el botón de login;
+  // con sesión, el chat. El backend sigue exigiendo JWT en /api/tutor/chat (limita el uso por estudiante).
+  { path: '/tutor', name: 'tutor', component: TutorView },
   // Pública a propósito (como /examenes): sin sesión se ve la página con el aviso de acceso; con sesión, los datos propios.
   { path: '/retroalimentacion', name: 'retroalimentacion', component: RetroalimentacionView },
   { path: '/login', name: 'login', component: AuthView, meta: { layout: 'auth', mode: 'login' } },

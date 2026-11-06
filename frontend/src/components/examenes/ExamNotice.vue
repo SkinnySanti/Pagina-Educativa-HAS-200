@@ -26,7 +26,7 @@ const n = computed(() => t.value.examenes.notice)
 <style scoped>
 .notice {
   display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-  padding: 18px 22px; background: var(--tint-blue); border: 2px solid var(--tint-blue);
+  padding: 18px 22px; border: 2px solid var(--tint-blue);
 }
 .ico {
   flex: none; width: 46px; height: 46px; border-radius: 12px; background: var(--surface-2); color: var(--blue-900);

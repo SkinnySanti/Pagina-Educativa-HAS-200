@@ -4,7 +4,10 @@ spring:
     username: ${PROD_DATASOURCE_USERNAME}
     password: ${PROD_DATASOURCE_PASSWORD}
     hikari:
-      maximum-pool-size: 5
-      minimum-idle: 1
+      maximum-pool-size: 10
+      minimum-idle: 10
+      connection-timeout: 15000 # 15 segundos
+      max-lifetime: 1500000 # 25 minutos (25 * 60 * 1000)
+      keepalive-time: 300000 # 5 minutos (5 * 60 * 1000)
   jpa:
     show-sql: false

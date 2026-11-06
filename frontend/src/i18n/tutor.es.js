@@ -83,6 +83,50 @@ export default {
     ],
   },
 
+
+  // Vista informativa sin sesión (TutorIntro*): qué es el tutor, cómo se usa y por qué hace falta iniciar sesión.
+  intro: {
+    notice: {
+      title: 'Inicia sesión para hablar con el tutor',
+      text: 'El tutor necesita saber quién eres para llevar la cuenta de tus preguntas del día. Mientras tanto, aquí te contamos cómo funciona.',
+      cta: 'Iniciar sesión',
+    },
+    uses: {
+      badge: 'Tutor virtual',
+      title: '¿Para qué sirve el tutor?',
+      lead: 'Es un asistente de inteligencia artificial que te acompaña mientras estudias el HAS-200, disponible cuando lo necesites.',
+      items: [
+        { icon: 'book', title: 'Resuelve dudas de las guías', text: 'Sensores, actuadores, PLC, red de datos o SCADA explicados con palabras sencillas.' },
+        { icon: 'bulb', title: 'Ejemplos de la vida diaria', text: 'Si un concepto no te queda claro, pídele una comparación con algo cotidiano.' },
+        { icon: 'check', title: 'Revisa lo que entendiste', text: 'Cuéntale con tus palabras lo que aprendiste y pídele que lo revise.' },
+        { icon: 'target', title: 'Prepárate para el laboratorio', text: 'Repasa los temas clave antes de tu visita y de tus exámenes.' },
+      ],
+    },
+    preview: {
+      title: 'Así se ve una conversación',
+      tag: 'Ejemplo ilustrativo',
+      alt: 'Ejemplo de una pregunta al tutor y su respuesta',
+      question: '¿Qué hace un PLC?',
+      answer: 'Es el cerebro del HAS-200: lee las señales de los sensores, ejecuta su programa y actualiza las salidas, como los motores y las luces. ¿Quieres un ejemplo de la vida diaria?',
+    },
+    steps: {
+      title: 'Así se usa',
+      items: [
+        { icon: 'log-in', title: 'Inicia sesión', text: 'Entra con tu correo y contraseña (o crea tu cuenta en un minuto).' },
+        { icon: 'chat', title: 'Escribe tu pregunta', text: 'Mientras más concreta, mejor la respuesta. Puedes seguir preguntando sobre lo que te conteste.' },
+        { icon: 'book', title: 'Confirma en las guías', text: 'El tutor puede equivocarse: contrasta lo importante con las guías.' },
+      ],
+    },
+    why: {
+      title: '¿Por qué necesito iniciar sesión?',
+      items: [
+        'Cada estudiante tiene un número de preguntas al día.',
+        'Evita el uso indebido y protege el servicio.',
+        'Tu cuenta es la misma que usas en guías y exámenes.',
+      ],
+    },
+  },
+
   side: {
     howTitle: 'Cómo sacarle el mejor provecho',
     how: [

@@ -309,7 +309,7 @@
 .re-info .t { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .re-info h3 { font-size: 17px; font-weight: 700; }
 .re-info p { font-size: 14px; color: var(--ink-2); line-height: 1.45; }
-.re-steps { padding: 22px; display: grid; gap: 6px; list-style: none; }
+.re-steps { padding: 22px; display: grid; gap: 6px; list-style: none; height: 100%; }
 .re-steps li { display: flex; gap: 14px; align-items: flex-start; padding: 10px 8px; border-radius: 12px; }
 .re-steps li:hover { background: var(--hover); }
 .re-steps .d { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--green-cta); color: var(--green-cta); display: grid; place-items: center; font-size: 13px; font-weight: 700; margin-top: 1px; }
