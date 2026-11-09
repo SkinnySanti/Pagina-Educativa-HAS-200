@@ -6,7 +6,7 @@ export default {
     badge: 'Módulo de exámenes',
     title: 'Pon a prueba lo aprendido',
     text: 'Dos tipos de examen, uno por cada módulo. Cada examen tiene 10 preguntas, 2 de ellas en inglés.',
-    chips: ['2 tipos de examen', '10 preguntas por examen', '2 preguntas en inglés', 'Hasta 30 minutos'],
+    chips: ['2 tipos de examen', '10 preguntas por examen', '2 preguntas en inglés', 'Hasta 20 minutos'],
   },
   notice: {
     title: 'Inicia sesión para presentar los exámenes',
@@ -31,7 +31,7 @@ export default {
   before: {
     title: 'Antes de empezar',
     items: [
-      'Cada examen dura hasta 30 minutos.',
+      'Cada examen dura hasta 20 minutos.',
       'Busca un entorno tranquilo y sin distracciones.',
       'Te encontrarás con 10 preguntas y 2 están en inglés.',
       'Si tu sesión se interrumpe, vuelve a entrar y retoma tu intento; tus respuestas marcadas se conservan en este navegador.',
@@ -46,7 +46,7 @@ export default {
     // Datos que vienen del servidor (totalPreguntas, preguntasEnIngles, tiempoLimiteMinutos): no se hardcodean.
     meta: {
       questions: (n, en) => `${n} preguntas · ${en} en inglés`,
-      time: (min) => (min ? `${min} min` : 'Hasta 30 min'),
+      time: (min) => (min ? `${min} min` : 'Hasta 20 min'),
       score: 'Puntaje al terminar',
     },
     start: 'Comenzar examen',
@@ -86,7 +86,7 @@ export default {
   dialog: {
     title: 'Antes de comenzar',
     text: (name, min) =>
-      `${name}. Tiene 10 preguntas (2 en inglés) y dura ${min ? `${min} minutos` : 'hasta 30 minutos'}. Si tu sesión se interrumpe, inicia sesión de nuevo y reanuda tu intento.`,
+      `${name}. Tiene 10 preguntas (2 en inglés) y dura ${min ? `${min} minutos` : 'hasta 20 minutos'}. Si tu sesión se interrumpe, inicia sesión de nuevo y reanuda tu intento.`,
     single: 'Es una evaluación diagnóstica: solo puedes enviarla una vez. Si sales sin enviarla, el tiempo sigue corriendo.',
     cancel: 'Cancelar',
     confirm: 'Comenzar',
