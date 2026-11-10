@@ -28,6 +28,16 @@ export default {
     missingTitle: 'Juego por configurar',
     missingText: 'Este juego aún no tiene su enlace de Educaplay. Pronto estará disponible.',
   },
+  credits: {
+    title: 'Créditos',
+    text: 'Este juego fue creado por el equipo de HAS 200 Learning (Perez Santiago, Grandas José) con Educaplay, plataforma de actividades educativas de ADR Formación.',
+    open: 'Ver en Educaplay ↗',
+    refLabel: 'Referencia',
+    author: 'Equipo HAS 200 Learning (Perez Santiago, Grandas José)',
+    year: '2026',
+    kind: 'Actividad interactiva',
+    site: 'Educaplay',
+  },
   side: {
     how: '¿Cómo se juega?',
     tipTitle: 'Consejo',
@@ -35,24 +45,28 @@ export default {
   },
   games: {
     sopa: {
+      refTitle: 'Sopa de letras: conceptos clave del HAS 200',
       title: 'Sopa de letras',
       text: 'Encuentra los términos técnicos escondidos en la cuadrícula.',
       heading: 'Encuentra los términos del HAS-200',
       steps: ['Busca en horizontal, vertical y diagonal.', 'Selecciona la primera y la última letra de cada palabra.', 'Encuentra todas en el menor tiempo posible.'],
     },
     cruci: {
+      refTitle: 'Crucigrama: del sensor a la pantalla',
       title: 'Crucigrama',
       text: 'Completa las casillas leyendo cada pista sobre el sistema.',
       heading: 'Completa el crucigrama de señales y redes',
       steps: ['Toca una casilla para ver su pista.', 'Escribe la respuesta con el teclado.', 'Las palabras se cruzan: úsalas como ayuda.'],
     },
     ordenar: {
+      refTitle: 'Palabras clave del HAS 200',
       title: 'Ordenar palabras',
       text: 'Pon las letras en el orden correcto para formar la palabra.',
       heading: 'Ordena las letras para formar la palabra correcta',
       steps: ['Lee las letra que aparecen desorganizadas.', 'Tócalas o arrástralas para ponerlas en orden.', 'Comprueba tu palabra al terminar.'],
     },
     memoria: {
+      refTitle: 'Memoria: automatización industrial HAS 200',
       title: 'Memorizar',
       text: 'Voltea las tarjetas y encuentra las parejas de cada concepto.',
       heading: 'Encuentra las parejas del HAS-200',

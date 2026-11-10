@@ -28,6 +28,16 @@ export default {
     missingTitle: 'Game not set up yet',
     missingText: 'This game does not have its Educaplay link yet. It will be available soon.',
   },
+  credits: {
+    title: 'Credits',
+    text: 'This game was created by the HAS 200 Learning team with Educaplay, an educational activity platform by ADR Formación.',
+    open: 'View on Educaplay ↗',
+    refLabel: 'Reference',
+    author: 'HAS 200 Learning Team',
+    year: '2026',
+    kind: 'Interactive activity',
+    site: 'Educaplay',
+  },
   side: {
     how: 'How to play',
     tipTitle: 'Tip',
@@ -35,24 +45,28 @@ export default {
   },
   games: {
     sopa: {
+      refTitle: 'Sopa de letras: conceptos clave del HAS 200',
       title: 'Word search',
       text: 'Find the technical terms hidden in the grid.',
       heading: 'Find the HAS-200 terms',
       steps: ['Look horizontally, vertically and diagonally.', 'Select the first and last letter of each word.', 'Find them all in the least time possible.'],
     },
     cruci: {
+      refTitle: 'Crucigrama: del sensor a la pantalla',
       title: 'Crossword',
       text: 'Fill in the squares by reading each clue about the system.',
       heading: 'Complete the signals and networks crossword',
       steps: ['Tap a square to see its clue.', 'Type your answer with the keyboard.', 'Words cross each other: use them as hints.'],
     },
     ordenar: {
+      refTitle: 'Palabras clave del HAS 200',
       title: 'Order words',
       text: 'Put the letters in the correct order to form the word.',
       heading: 'Order the letters to form the correct word',
       steps: ['Read the letters that appear disorganized.', 'Tap or drag them into order.', 'Check your word when you finish.'],
     },
     memoria: {
+      refTitle: 'Memoria: automatización industrial HAS 200',
       title: 'Memory',
       text: 'Flip the cards and find the pairs for each concept.',
       heading: 'Find the HAS-200 pairs',

@@ -8,6 +8,7 @@ import GamePicker from '../components/juegos/GamePicker.vue'
 import GameBeforePlay from '../components/juegos/GameBeforePlay.vue'
 import GameStage from '../components/juegos/GameStage.vue'
 import GameSide from '../components/juegos/GameSide.vue'
+import GameCredits from '../components/juegos/GameCredits.vue'
 import { JUEGOS } from '../config/juegos'
 import { useI18n } from '../i18n'
 
@@ -47,6 +48,7 @@ const info = computed(() => j.value.games[game.value.id])
             </div>
             <GameBeforePlay />
             <GameStage :game="game" />
+            <GameCredits :game="game" />
           </div>
         </Transition>
       </div>
