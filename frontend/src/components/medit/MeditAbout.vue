@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { EJES } from '../../config/medit'
+import { EJES, UNIVERSIDAD_URL } from '../../config/medit'
 import { useI18n } from '../../i18n'
 
 const { t } = useI18n()
@@ -22,6 +22,12 @@ const ejes = computed(() => t.value.medit.ejes)
         </div>
       </li>
     </ul>
+    <div class="official">
+      <p>{{ a.officialText }}</p>
+      <a class="btn btn-primary" :href="UNIVERSIDAD_URL" target="_blank" rel="noopener noreferrer">
+        {{ a.official }} ↗
+      </a>
+    </div>
   </section>
 </template>
 
@@ -42,6 +48,10 @@ em {
 }
 .ejes b { display: block; font-size: 16px; margin-bottom: 2px; }
 .ejes span { font-size: 14px; line-height: 1.4; color: var(--ink-2); }
+
+.official { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 10px; }
+.official p { font-size: 14px; color: var(--ink-2); }
+a.btn { text-decoration: none; }
 
 @media (max-width: 1040px) { .ejes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) {

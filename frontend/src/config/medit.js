@@ -1,10 +1,14 @@
 // Estructura de la página MEDIT (/medit). Los textos viven en src/i18n/medit.es.js y medit.en.js,
 // con la misma clave `id`. Aquí solo van los datos que no se traducen: íconos, rutas y enlaces.
 
+// ►Sitio oficial de la Universidad: destino del botón «Visita la página oficial de la universidad»
+//   (debajo de los 4 ejes, en «¿Qué es el MEDIT?»). Cambia la URL aquí si hace falta; abre en pestaña nueva.
+export const UNIVERSIDAD_URL = 'https://www.ucundinamarca.edu.co/modelo-medit'
+
 // Los 4 ejes estructurales del MEDIT (se muestran en «¿Qué es el MEDIT?»).
 export const EJES = ['etica', 'aprendizaje', 'tecnologia', 'conocimiento']
 
-// Cómo se integró el MEDIT: un eje del modelo → una parte concreta de la plataforma.
+// ► Cómo se integró el MEDIT: un eje del modelo → una parte concreta de la plataforma.
 //   to: ruta interna a la que lleva el botón de la tarjeta.
 export const INTEGRACION = [
   { id: 'etica', icon: 'lock', to: '/juegos' },
@@ -24,7 +28,7 @@ export const CAMPO = [
 // ► Documentos oficiales de la Universidad (se abren en pestaña nueva).
 //   Para agregar uno: una fila aquí y su texto en `recursos.docs` de los archivos i18n, con la misma clave `id`.
 export const RECURSOS = [
-  { id: 'libro', url: 'https://www.ucundinamarca.edu.co/documents/rectoria/2023/LIBRO-MEDIT%20.pdf' },
+  { id: 'libro', url: 'https://www.ucundinamarca.edu.co/libro-medit-2025' },
   {
     id: 'cap3',
     url: 'https://www.ucundinamarca.edu.co/documents/rectoria/2024/CAP-3-LA-CIENCIA-TECNOLOGIA-INVESTIGACION-E-INNOVACION-EN-EL-MODELO-EDUCATIVO-DIGITAL-TRANSMODERN-MEDIT.pdf',

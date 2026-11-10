@@ -15,6 +15,8 @@ export default {
     title: '¿Qué es el MEDIT?',
     text: 'El Modelo Educativo Digital Transmoderno orienta la vida académica de la Universidad de Cundinamarca. El Consejo Académico lo adoptó con el Acuerdo 017 del 3 de diciembre de 2019 y busca educar para la vida, los valores democráticos, la civilidad y la libertad.',
     ejesTitle: 'Sus cuatro ejes estructurales',
+    officialText: 'Para conocer más sobre la Universidad:',
+    official: 'Visita la página oficial de la universidad',
   },
   ejes: {
     etica: { title: 'Ética', text: 'Principios y valores que orientan la conducta de toda la comunidad universitaria.' },

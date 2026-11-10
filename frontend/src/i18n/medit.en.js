@@ -15,6 +15,8 @@ export default {
     title: 'What is MEDIT?',
     text: 'The Transmodern Digital Educational Model (MEDIT in Spanish) guides the academic life of the Universidad de Cundinamarca. The Academic Council adopted it with Agreement 017 of December 3, 2019, and it aims to educate for life, democratic values, civility and freedom.',
     ejesTitle: 'Its four structural axes',
+    officialText: 'To learn more about the University:',
+    official: 'Visit the university’s official website',
   },
   ejes: {
     etica: { title: 'Ethics', text: 'Principles and values that guide the conduct of the whole university community.' },
