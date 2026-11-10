@@ -7,6 +7,7 @@ import JuegosView from '../views/JuegosView.vue'
 import AuthView from '../views/AuthView.vue'
 import TutorView from '../views/TutorView.vue'
 import RetroalimentacionView from '../views/RetroalimentacionView.vue'
+import MeditView from '../views/MeditView.vue'
 import { useAuth, authReady } from '../composables/useAuth'
 
 // Un módulo nuevo = una ruta nueva aquí + un ítem en AppSidebar.vue.
@@ -23,6 +24,8 @@ const routes = [
   { path: '/tutor', name: 'tutor', component: TutorView },
   // Pública a propósito (como /examenes): sin sesión se ve la página con el aviso de acceso; con sesión, los datos propios.
   { path: '/retroalimentacion', name: 'retroalimentacion', component: RetroalimentacionView },
+  // Pública e informativa: qué es el MEDIT de la UdeC y cómo se integró en la plataforma.
+  { path: '/medit', name: 'medit', component: MeditView },
   { path: '/login', name: 'login', component: AuthView, meta: { layout: 'auth', mode: 'login' } },
   { path: '/registro', name: 'registro', component: AuthView, meta: { layout: 'auth', mode: 'register' } },
 ]

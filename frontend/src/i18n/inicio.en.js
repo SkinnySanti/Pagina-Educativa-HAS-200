@@ -6,6 +6,7 @@ import examenes from './examenes.en.js'
 import juegos from './juegos.en.js'
 import tutor from './tutor.en.js'
 import retro from './retro.en.js'
+import medit from './medit.en.js'
 
 export default {
   guias,
@@ -14,6 +15,7 @@ export default {
   juegos,
   tutor,
   retro,
+  medit,
   brand: 'HAS 200 Learning',
   skip: 'Skip to content',
   nav: {
@@ -24,6 +26,7 @@ export default {
     juegos: 'Games',
     tutor: 'Virtual tutor',
     feedback: 'Feedback',
+    medit: 'MEDIT',
     soon: 'Soon',
     soonTitle: 'Coming soon',
   },

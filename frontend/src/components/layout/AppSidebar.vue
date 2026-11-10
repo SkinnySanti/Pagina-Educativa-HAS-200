@@ -20,6 +20,7 @@ const items = [
   { key: 'examenes', icon: 'clipboard', to: '/examenes' },
   { key: 'tutor', icon: 'robot', to: '/tutor' },
   { key: 'feedback', icon: 'chat', to: '/retroalimentacion' },
+  { key: 'medit', icon: 'layers', to: '/medit' },
 ]
 </script>
 
