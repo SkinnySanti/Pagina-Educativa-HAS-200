@@ -70,13 +70,20 @@ export default {
     },
   },
   campo: {
+    badge: 'Learning Field Methodology',
     title: 'The learning field in the platform',
-    text: 'MEDIT proposes a learning field with planning, technological interaction, data analysis and feedback. In HAS 200 Learning it goes like this.',
+    text: 'This is where we explain how the Learning Field Methodology of the Universidad de Cundinamarca was applied in the platform. Each of its 9 phases relies on a module or feature of HAS 200 Learning.',
+    phase: 'Phase',
     steps: {
-      planeacion: { title: 'Planning', text: 'The guides and the learning path set what to study and when.' },
-      interaccion: { title: 'Technological interaction', text: 'The virtual tutor and the games support your study.' },
-      datos: { title: 'Data collection', text: 'The exams record the results of every attempt.' },
-      retro: { title: 'Feedback', text: 'The diagnostic is compared with the final exam and a report is generated.' },
+      planeacion: { title: 'Planning', module: 'Guides and learning path', text: 'The learning path sets which guides and exams come next and in what order.' },
+      socializacion: { title: 'Prior socialization of content', module: 'Diagnostic assessment', text: 'Before the guides, the page presents the path and the diagnostic assessment measures your starting point.' },
+      interaccion: { title: 'Technological interaction', module: 'Games', text: 'The interactive games let you practice HAS-200 concepts with technology as the mediator.' },
+      participacion: { title: 'Participation', module: 'Guides', text: 'You do the guides at your own pace, solve interactive challenges and can restart them whenever you want.' },
+      colaborativo: { title: 'Collaborative and co-creative work', module: 'Virtual tutor', text: 'The AI tutor supports you in building knowledge: it helps you acquire and work through what you are learning.' },
+      datos: { title: 'Data collection', module: 'Exams', text: 'Each attempt stores your score and your answers.' },
+      analisis: { title: 'Data analysis', module: 'Feedback', text: 'The diagnostic results are compared with those of the final exam.' },
+      retro: { title: 'Feedback, improvement and transformation', module: 'Feedback', text: 'After an exam you see the correct answer and the module where to review it, and you can get a PDF report.' },
+      logro: { title: 'Learning achievement', module: 'Exams', text: 'The final exam of each module shows whether you reached what was expected.' },
     },
   },
   recursos: {
@@ -87,6 +94,7 @@ export default {
     source: 'Universidad de Cundinamarca',
     docs: {
       libro: { title: 'MEDIT book', text: 'The full model: components, axes, principles and values.' },
+      metodologia: { title: 'Learning Field Methodology', text: 'The 9 phases through which MEDIT is applied in the learning process.' },
       cap3: { title: 'Chapter 3: science, technology, research and innovation', text: 'How the model understands technology and the learning field.' },
       cap4: { title: 'Chapter 4: principles and values', text: 'The principles that guide the work and the values the model pursues.' },
     },

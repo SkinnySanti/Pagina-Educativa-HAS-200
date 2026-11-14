@@ -70,13 +70,20 @@ export default {
     },
   },
   campo: {
+    badge: 'Metodología Campo de Aprendizaje',
     title: 'El campo de aprendizaje en la plataforma',
-    text: 'El MEDIT plantea un campo de aprendizaje con planeación, interacción tecnológica, análisis de datos y retroalimentación. En HAS 200 Learning se recorre así.',
+    text: 'Aquí se explica cómo se aplicó en la plataforma la Metodología Campo de Aprendizaje de la Universidad de Cundinamarca. Cada una de sus 9 fases se apoya en un módulo o una función de HAS 200 Learning.',
+    phase: 'Fase',
     steps: {
-      planeacion: { title: 'Planeación', text: 'Las guías y la ruta de aprendizaje ordenan qué estudiar y en qué momento.' },
-      interaccion: { title: 'Interacción tecnológica', text: 'El tutor virtual y los juegos acompañan el estudio.' },
-      datos: { title: 'Recolección de datos', text: 'Los exámenes registran los resultados de cada intento.' },
-      retro: { title: 'Retroalimentación', text: 'Se compara el diagnóstico con el examen final y se genera un reporte.' },
+      planeacion: { title: 'Planeación', module: 'Guías y ruta de aprendizaje', text: 'La ruta de aprendizaje define qué guías y exámenes siguen y en qué orden.' },
+      socializacion: { title: 'Socialización previa de contenido', module: 'Evaluación diagnóstica', text: 'Antes de las guías, la página presenta la ruta y la evaluación diagnóstica mide tu punto de partida.' },
+      interaccion: { title: 'Interacción tecnológica', module: 'Juegos', text: 'Los juegos interactivos permiten practicar los conceptos del HAS-200 con la tecnología como mediadora.' },
+      participacion: { title: 'La participación', module: 'Guías', text: 'Haces las guías a tu ritmo, resuelves retos interactivos y puedes reiniciarlas cuando quieras.' },
+      colaborativo: { title: 'Trabajo colaborativo y cocreativo', module: 'Tutor virtual', text: 'El tutor con IA te acompaña a construir conocimiento: te ayuda a adquirir y a resolver lo que vas aprendiendo.' },
+      datos: { title: 'Recolección de datos', module: 'Exámenes', text: 'Cada intento guarda tu puntaje y tus respuestas.' },
+      analisis: { title: 'Análisis de datos', module: 'Retroalimentación', text: 'Se comparan los resultados del diagnóstico con los del examen final.' },
+      retro: { title: 'Retroalimentación, mejora y transformación', module: 'Retroalimentación', text: 'Al terminar un examen ves la respuesta correcta y el módulo donde repasarla, y puedes sacar un reporte en PDF.' },
+      logro: { title: 'Logro del aprendizaje', module: 'Exámenes', text: 'Los exámenes finales de cada módulo muestran si alcanzaste lo esperado.' },
     },
   },
   recursos: {
@@ -87,6 +94,7 @@ export default {
     source: 'Universidad de Cundinamarca',
     docs: {
       libro: { title: 'Libro del MEDIT', text: 'El modelo completo: componentes, ejes, principios y valores.' },
+      metodologia: { title: 'Metodología Campo de Aprendizaje', text: 'Las 9 fases con las que el MEDIT se aplica en el proceso de formación.' },
       cap3: { title: 'Capítulo 3: ciencia, tecnología, investigación e innovación', text: 'Cómo entiende el modelo la tecnología y el campo de aprendizaje.' },
       cap4: { title: 'Capítulo 4: principios y valores', text: 'Los principios que orientan el trabajo y los valores que el modelo busca.' },
     },

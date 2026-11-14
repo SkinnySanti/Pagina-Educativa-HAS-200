@@ -34,7 +34,7 @@ const r = computed(() => t.value.medit.recursos)
 .rec { display: grid; gap: 16px; }
 h2 { font-size: 22px; font-weight: 700; }
 .head p { color: var(--ink-2); margin-top: 4px; }
-.grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.grid { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
 .doc {
   height: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 22px;
   color: inherit; text-decoration: none; border: 2px solid transparent;
@@ -53,6 +53,5 @@ b { font-size: 17px; font-weight: 700; line-height: 1.3; }
 .doc:hover .open { text-decoration: underline; text-underline-offset: 3px; }
 .note { font-size: 13px; color: var(--ink-2); }
 
-@media (max-width: 1040px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .grid { grid-template-columns: minmax(0, 1fr); } .doc { padding: 18px; } }
 </style>
