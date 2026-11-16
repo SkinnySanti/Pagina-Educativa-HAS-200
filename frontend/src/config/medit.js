@@ -3,7 +3,7 @@
 
 // ► Sitio oficial de la Universidad: destino del botón «Visita la página oficial de la universidad»
 //   (debajo de los 4 ejes, en «¿Qué es el MEDIT?»). Cambia la URL aquí si hace falta; abre en pestaña nueva.
-export const UNIVERSIDAD_URL = 'https://www.ucundinamarca.edu.co'
+export const UNIVERSIDAD_URL = 'https://www.ucundinamarca.edu.co/modelo-medit'
 
 // Los 4 ejes estructurales del MEDIT (se muestran en «¿Qué es el MEDIT?»).
 export const EJES = ['etica', 'aprendizaje', 'tecnologia', 'conocimiento']
@@ -35,7 +35,7 @@ export const CAMPO = [
 // ► Documentos oficiales de la Universidad (se abren en pestaña nueva).
 //   Para agregar uno: una fila aquí y su texto en `recursos.docs` de los archivos i18n, con la misma clave `id`.
 export const RECURSOS = [
-  { id: 'libro', url: 'https://www.ucundinamarca.edu.co/documents/rectoria/2023/LIBRO-MEDIT%20.pdf' },
+  { id: 'libro', url: 'https://www.ucundinamarca.edu.co/libro-medit-2025' },
   { id: 'metodologia', url: 'https://www.ucundinamarca.edu.co/documents/rectoria/2022/METODOLOGIA_CAMPO_DE_APRENDIZAJE.pdf' },
   {
     id: 'cap3',
